@@ -1,0 +1,1426 @@
+FES-TRAP-MIB DEFINITIONS ::= BEGIN
+
+-- Copyright: (c) 2006 SED Systems, a division of Calian Ltd.
+
+-- Version: 1.0
+-- Source:  C:\sedsystems/wdir/project/xml/Snmp/\FES-STATUS-MIB-AllanPark.xml
+-- Created: 10 May 2007 16:51:50
+
+IMPORTS
+	enterprises, NOTIFICATION-TYPE, MODULE-IDENTITY
+		FROM SNMPv2-SMI
+	mncPreviousState,
+	mncTrapSource,
+	mncTrapSeverity,
+	mncSystemStatus,
+	mncServerOnline,
+	rxStatus,
+	txStatus,
+	primaryTrackingStatus,
+	backupTrackingStatus,
+	rxChannelUnitGroup1SpareOnline,
+	rxChannelUnitGroup2SpareOnline,
+	rxChannelUnitGroup3SpareOnline,
+	rxChannelUnitGroup4SpareOnline,
+	rxChannelUnitGroup1SpareOutputCU,
+	rxChannelUnitGroup2SpareOutputCU,
+	rxChannelUnitGroup3SpareOutputCU,
+	rxChannelUnitGroup4SpareOutputCU,
+	txChannelUnitGroup1SpareOnline,
+	txChannelUnitGroup2SpareOnline,
+	txChannelUnitGroup1SpareInputCU,
+	txChannelUnitGroup2SpareInputCU,
+	payloadPilotRcvrOnline,
+	rhcpCommBDCOnline,
+	lhcpCommBDCOnline,
+	rxOscillatorOnline,
+	primaryLhcpLnaOnline,
+	primaryRhcpLnaOnline,
+	backupLhcpLnaOnline,
+	backupRhcpLnaOnline,
+	spectrumAnalyzerOnline,
+	cmdTxPathOnline,
+	lhcpCommTxPathOnline,
+	rhcpCommTxPathOnline,
+	txOscillatorOnline,
+	pilotGeneratorOnline,
+	activeCommTxAntenna,
+	activeCmdTxAntenna,
+	activeRxAntenna,
+	rxChannelUnit1Status,
+	rxChannelUnit2Status,
+	rxChannelUnit3Status,
+	rxChannelUnit4Status,
+	rxChannelUnit5Status,
+	rxChannelUnit6Status,
+	rxChannelUnit7Status,
+	rxChannelUnit8Status,
+	rxChannelUnit9Status,
+	rxChannelUnit10Status,
+	rxChannelUnit11Status,
+	rxChannelUnit12Status,
+	rxChannelUnit13Status,
+	rxChannelUnit14Status,
+	rxChannelUnit15Status,
+	rxChannelUnit16Status,
+	rxChannelUnit17Status,
+	rxChannelUnit18Status,
+	rxChannelUnit19Status,
+	rxChannelUnit20Status,
+	rxChannelUnit21Status,
+	rxChannelUnit22Status,
+	rxChannelUnit23Status,
+	rxChannelUnit24Status,
+	downlinkLhcpCUChassis1TempSensorStatus,
+	downlinkLhcpCUChassis2TempSensorStatus,
+	downlinkRhcpCUChassis1TempSensorStatus,
+	downlinkRhcpCUChassis2TempSensorStatus,
+	txChannelUnit1Status,
+	txChannelUnit2Status,
+	txChannelUnit3Status,
+	txChannelUnit4Status,
+	txChannelUnit5Status,
+	txChannelUnit6Status,
+	txChannelUnit7Status,
+	txChannelUnit8Status,
+	txChannelUnit9Status,
+	txChannelUnit10Status,
+	uplinkLhcpCUChassisTempSensorStatus,
+	uplinkRhcpCUChassisTempSensorStatus,
+	payloadPilotRcvr1Status,
+	payloadPilotRcvr2Status,
+	tlmDC1Status,
+	tlmDC2Status,
+	tlmDC3Status,
+	rhcpCommBDCPrimaryStatus,
+	rhcpCommBDCSpareStatus,
+	lhcpCommBDCPrimaryStatus,
+	lhcpCommBDCSpareStatus,
+	rxOscillator1Status,
+	rxOscillator2Status,
+	primaryLhcpLna1Status,
+	primaryLhcpLna1AStatus,
+	primaryRhcpLna2Status,
+	primaryRhcpLna2AStatus,
+	primaryLnaControllerStatus,
+	backupLhcpLna1Status,
+	backupLhcpLna1AStatus,
+	backupRhcpLna2Status,
+	backupRhcpLna2AStatus,
+	backupLnaControllerStatus,
+	cmdUC1Status,
+	cmdUC2Status,
+	cmdTwta1Status,
+	cmdTwta2Status,
+	lhcpCommBUCPrimaryStatus,
+	lhcpCommBUCSpareStatus,
+	rhcpCommBUCPrimaryStatus,
+	rhcpCommBUCSpareStatus,
+	lhcpCommTwtaPrimaryStatus,
+	lhcpCommTwtaSpareStatus,
+	rhcpCommTwtaPrimaryStatus,
+	rhcpCommTwtaSpareStatus,
+	txOscillator1Status,
+	txOscillator2Status,
+	pilotGenerator1Status,
+	pilotGenerator2Status,
+	primaryPathAttenuatorControllerStatus,
+	backupPathAttenuatorControllerStatus,
+	acuPrimaryStatus,
+	acuBackupStatus,
+	tltPrimaryStatus,
+	tltBackupStatus,
+	deicerPrimaryStatus,
+	deicerBackupStatus,
+	dehydrator1Status,
+	spectrumAnalyzer1Status,
+	spectrumAnalyzer2Status,
+	dehydrator2Status,
+	hvac1Status,
+	hvac2Status,
+	uplinkMCUStatus,
+	downlinkMCUStatus,
+	systemPowerSupply1Module1Status,
+	systemPowerSupply1Module2Status,
+	systemPowerSupply1Module3Status,
+	systemPowerSupply1Module4Status,
+	systemPowerSupply2Module1Status,
+	systemPowerSupply2Module2Status,
+	ttcRackFanTrayStatus,
+	ulpcRackFanTrayStatus,
+	hpa1RackFanTrayStatus,
+	hpa2RackFanTrayStatus,
+	uplinkRackFanTrayStatus,
+	downlinkLhcpFanTrayStatus,
+	downlinkRhcpFanTrayStatus,
+	ttcRackTempSensor1Status,
+	ttcRackTempSensor2Status,
+	ulpcRackTempSensor1Status,
+	ulpcRackTempSensor2Status,
+	hpa1RackTempSensor1Status,
+	hpa1RackTempSensor2Status,
+	hpa2RackTempSensor1Status,
+	hpa2RackTempSensor2Status,
+	uplinkRackTempSensor1Status,
+	uplinkRackTempSensor2Status,
+	downlinkLhcpRackTempSensor1Status,
+	downlinkLhcpRackTempSensor2Status,
+	downlinkRhcpRackTempSensor1Status,
+	downlinkRhcpRackTempSensor2Status,
+	pprDistAmp1Status,
+	pprDistAmp2Status,
+	pprDistAmp3Status,
+	tenMhzDistAmp1Status,
+	tenMhzDistAmp2Status,
+	tenMhzDistAmp3Status,
+	mncAServerStatus,
+	mncBServerStatus,
+	systemPowerSupply3Module1Status,
+	systemPowerSupply3Module2Status,
+	systemPowerSupply3Module3Status,
+	systemPowerSupply3Module4Status,
+	systemPowerSupply2Module3Status,
+	systemPowerSupply2Module4Status,
+	systemPowerSupply4Module1Status,
+	systemPowerSupply4Module2Status
+		FROM FES-STATUS-MIB;
+
+mnc MODULE-IDENTITY
+	LAST-UPDATED "200705101651Z"
+	ORGANIZATION "SED Systems, a division of Calian Ltd."
+	CONTACT-INFO "http://www.sedsystems.ca/"
+	DESCRIPTION  "The HNS Terrestar MIB document"
+	::= { enterprises 9633 7 }
+
+-- sed begins
+
+sed OBJECT IDENTIFIER ::= { enterprises 9633 }
+
+-- sed ends
+
+-- mncTrap begins
+
+mncTrap OBJECT IDENTIFIER ::= { mnc 1 }
+
+-- mncTrap ends
+
+mncSummaryStatusTraps OBJECT IDENTIFIER ::= { mncTrap 100 }
+
+mncSystemFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, mncSystemStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the MNC System Status changes."
+::= { mncSummaryStatusTraps 100 }
+
+mncServerOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, mncServerOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the online MNC server changes."
+::= { mncSummaryStatusTraps 102 }
+
+mncOverallStatusTraps OBJECT IDENTIFIER ::= { mncTrap 200 }
+
+rxFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Receive Summary Status changes."
+::= { mncOverallStatusTraps 200 }
+
+txFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, txStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Transmit Summary Status changes."
+::= { mncOverallStatusTraps 201 }
+
+primaryTrackingFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, primaryTrackingStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Primary Antenna Tracking Summary Status changes."
+::= { mncOverallStatusTraps 202 }
+
+backupTrackingFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, backupTrackingStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Backup Antenna Tracking Summary Status changes."
+::= { mncOverallStatusTraps 203 }
+
+mncIFEquipmentSelectStatusTraps OBJECT IDENTIFIER ::= { mncTrap 300 }
+
+rxChannelUnitGroup1SpareOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnitGroup1SpareOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Receive Channel Unit Group 1 Spare Online changes."
+::= { mncIFEquipmentSelectStatusTraps 300 }
+
+rxChannelUnitGroup2SpareOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnitGroup2SpareOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Receive Channel Unit Group 2 Spare Online changes."
+::= { mncIFEquipmentSelectStatusTraps 301 }
+
+rxChannelUnitGroup3SpareOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnitGroup3SpareOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Receive Channel Unit Group 3 Spare Online changes."
+::= { mncIFEquipmentSelectStatusTraps 302 }
+
+rxChannelUnitGroup4SpareOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnitGroup4SpareOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Receive Channel Unit Group 4 Spare Online changes."
+::= { mncIFEquipmentSelectStatusTraps 303 }
+
+rxChannelUnitGroup1SpareOutputCUUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnitGroup1SpareOutputCU } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Receive Channel Unit Group 1 Spare Output CU changes."
+::= { mncIFEquipmentSelectStatusTraps 304 }
+
+rxChannelUnitGroup2SpareOutputCUUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnitGroup2SpareOutputCU } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Receive Channel Unit Group 2 Spare Output CU changes."
+::= { mncIFEquipmentSelectStatusTraps 305 }
+
+rxChannelUnitGroup3SpareOutputCUUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnitGroup3SpareOutputCU } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Receive Channel Unit Group 3 Spare Output CU changes."
+::= { mncIFEquipmentSelectStatusTraps 306 }
+
+rxChannelUnitGroup4SpareOutputCUUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnitGroup4SpareOutputCU } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Receive Channel Unit Group 4 Spare Output CU changes."
+::= { mncIFEquipmentSelectStatusTraps 307 }
+
+txChannelUnitGroup1SpareOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, txChannelUnitGroup1SpareOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Transmit Channel Unit Group 1 Spare Online changes."
+::= { mncIFEquipmentSelectStatusTraps 308 }
+
+txChannelUnitGroup2SpareOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, txChannelUnitGroup2SpareOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Transmit Channel Unit Group 2 Spare Online changes."
+::= { mncIFEquipmentSelectStatusTraps 309 }
+
+txChannelUnitGroup1SpareInputCUUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, txChannelUnitGroup1SpareInputCU } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Transmit Channel Unit Group 1 Spare Input CU changes."
+::= { mncIFEquipmentSelectStatusTraps 310 }
+
+txChannelUnitGroup2SpareInputCUUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, txChannelUnitGroup2SpareInputCU } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Transmit Channel Unit Group 2 Spare Input CU changes."
+::= { mncIFEquipmentSelectStatusTraps 311 }
+
+mncRFEquipmentSelectStatusTraps OBJECT IDENTIFIER ::= { mncTrap 400 }
+
+payloadPilotRcvrOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, payloadPilotRcvrOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Paylioad Pilot Receiver Online changes."
+::= { mncRFEquipmentSelectStatusTraps 400 }
+
+rhcpCommBDCOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rhcpCommBDCOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the RHCP Communication BDC Online changes."
+::= { mncRFEquipmentSelectStatusTraps 401 }
+
+lhcpCommBDCOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, lhcpCommBDCOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the LHCP Communication BDC Online changes."
+::= { mncRFEquipmentSelectStatusTraps 402 }
+
+rxOscillatorOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxOscillatorOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Receive Oscillator Online changes."
+::= { mncRFEquipmentSelectStatusTraps 403 }
+
+primaryLhcpLnaOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, primaryLhcpLnaOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Primary LHCP LNA Online changes."
+::= { mncRFEquipmentSelectStatusTraps 404 }
+
+primaryRhcpLnaOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, primaryRhcpLnaOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Primary RHCP LNA Online changes."
+::= { mncRFEquipmentSelectStatusTraps 405 }
+
+backupLhcpLnaOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, backupLhcpLnaOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Backup LHCP LNA Online changes."
+::= { mncRFEquipmentSelectStatusTraps 406 }
+
+backupRhcpLnaOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, backupRhcpLnaOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Backup RHCP LNA Online changes."
+::= { mncRFEquipmentSelectStatusTraps 407 }
+
+spectrumAnalyzerOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, spectrumAnalyzerOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Spectrum Analyzer Online changes."
+::= { mncRFEquipmentSelectStatusTraps 408 }
+
+cmdTxPathOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, cmdTxPathOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Command Transmit Path Online changes."
+::= { mncRFEquipmentSelectStatusTraps 409 }
+
+lhcpCommTxPathOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, lhcpCommTxPathOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Communication LHCP Transmit Path Online changes."
+::= { mncRFEquipmentSelectStatusTraps 410 }
+
+rhcpCommTxPathOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rhcpCommTxPathOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Communication RHCP Transmit Path Online changes."
+::= { mncRFEquipmentSelectStatusTraps 411 }
+
+txOscillatorOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, txOscillatorOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Transmit Oscillator Online changes."
+::= { mncRFEquipmentSelectStatusTraps 412 }
+
+pilotGeneratorOnlineUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, pilotGeneratorOnline } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Pilot Generator Online changes."
+::= { mncRFEquipmentSelectStatusTraps 413 }
+
+activeCommTxAntennaUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, activeCommTxAntenna } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Active Communications Transmit Antenna changes."
+::= { mncRFEquipmentSelectStatusTraps 414 }
+
+activeCmdTxAntennaUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, activeCmdTxAntenna } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Active Command Transmit Antenna changes."
+::= { mncRFEquipmentSelectStatusTraps 415 }
+
+activeRxAntennaUpdate NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, activeRxAntenna } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Active Receive Antenna changes."
+::= { mncRFEquipmentSelectStatusTraps 416 }
+
+mncIFRxStatusTraps OBJECT IDENTIFIER ::= { mncTrap 1000 }
+
+rxChannelUnit1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 1 status changes."
+::= { mncIFRxStatusTraps 1000 }
+
+rxChannelUnit2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 2 status changes."
+::= { mncIFRxStatusTraps 1001 }
+
+rxChannelUnit3Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit3Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 3 status changes."
+::= { mncIFRxStatusTraps 1002 }
+
+rxChannelUnit4Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit4Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 4 status changes."
+::= { mncIFRxStatusTraps 1003 }
+
+rxChannelUnit5Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit5Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 5 status changes."
+::= { mncIFRxStatusTraps 1004 }
+
+rxChannelUnit6Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit6Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 6 status changes."
+::= { mncIFRxStatusTraps 1005 }
+
+rxChannelUnit7Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit7Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 7 status changes."
+::= { mncIFRxStatusTraps 1006 }
+
+rxChannelUnit8Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit8Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 8 status changes."
+::= { mncIFRxStatusTraps 1007 }
+
+rxChannelUnit9Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit9Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 9 status changes."
+::= { mncIFRxStatusTraps 1008 }
+
+rxChannelUnit10Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit10Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 10 status changes."
+::= { mncIFRxStatusTraps 1009 }
+
+rxChannelUnit11Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit11Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 11 status changes."
+::= { mncIFRxStatusTraps 1010 }
+
+rxChannelUnit12Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit12Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 12 status changes."
+::= { mncIFRxStatusTraps 1011 }
+
+rxChannelUnit13Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit13Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 13 status changes."
+::= { mncIFRxStatusTraps 1012 }
+
+rxChannelUnit14Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit14Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 14 status changes."
+::= { mncIFRxStatusTraps 1013 }
+
+rxChannelUnit15Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit15Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 15 status changes."
+::= { mncIFRxStatusTraps 1014 }
+
+rxChannelUnit16Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit16Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 16 status changes."
+::= { mncIFRxStatusTraps 1015 }
+
+rxChannelUnit17Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit17Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 17 status changes."
+::= { mncIFRxStatusTraps 1016 }
+
+rxChannelUnit18Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit18Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 18 status changes."
+::= { mncIFRxStatusTraps 1017 }
+
+rxChannelUnit19Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit19Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 19 status changes."
+::= { mncIFRxStatusTraps 1018 }
+
+rxChannelUnit20Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit20Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 20 status changes."
+::= { mncIFRxStatusTraps 1019 }
+
+rxChannelUnit21Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit21Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 21 status changes."
+::= { mncIFRxStatusTraps 1020 }
+
+rxChannelUnit22Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit22Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 22 status changes."
+::= { mncIFRxStatusTraps 1021 }
+
+rxChannelUnit23Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit23Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 23 status changes."
+::= { mncIFRxStatusTraps 1022 }
+
+rxChannelUnit24Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxChannelUnit24Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Rx Channel Unit 24 status changes."
+::= { mncIFRxStatusTraps 1023 }
+
+downlinkLhcpCUChassis1TempSensorFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, downlinkLhcpCUChassis1TempSensorStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Downlink LHCP Channel Unit Chassis 1 Temperature Sensor changes."
+::= { mncIFRxStatusTraps 1024 }
+
+downlinkLhcpCUChassis2TempSensorFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, downlinkLhcpCUChassis2TempSensorStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Downlink LHCP Channel Unit Chassis 2 Temperature Sensor changes."
+::= { mncIFRxStatusTraps 1025 }
+
+downlinkRhcpCUChassis1TempSensorFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, downlinkRhcpCUChassis1TempSensorStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Downlink RHCP Channel Unit Chassis 1 Temperature Sensor changes."
+::= { mncIFRxStatusTraps 1026 }
+
+downlinkRhcpCUChassis2TempSensorFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, downlinkRhcpCUChassis2TempSensorStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Downlink RHCP Channel Unit Chassis 2 Temperature Sensor changes."
+::= { mncIFRxStatusTraps 1027 }
+
+mncIFTxStatusTraps OBJECT IDENTIFIER ::= { mncTrap 1100 }
+
+txChannelUnit1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, txChannelUnit1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Tx Channel Unit 1 status changes."
+::= { mncIFTxStatusTraps 1100 }
+
+txChannelUnit2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, txChannelUnit2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Tx Channel Unit 2 status changes."
+::= { mncIFTxStatusTraps 1101 }
+
+txChannelUnit3Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, txChannelUnit3Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Tx Channel Unit 3 status changes."
+::= { mncIFTxStatusTraps 1102 }
+
+txChannelUnit4Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, txChannelUnit4Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Tx Channel Unit 4 status changes."
+::= { mncIFTxStatusTraps 1103 }
+
+txChannelUnit5Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, txChannelUnit5Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Tx Channel Unit 5 status changes."
+::= { mncIFTxStatusTraps 1104 }
+
+txChannelUnit6Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, txChannelUnit6Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Tx Channel Unit 6 status changes."
+::= { mncIFTxStatusTraps 1105 }
+
+txChannelUnit7Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, txChannelUnit7Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Tx Channel Unit 7 status changes."
+::= { mncIFTxStatusTraps 1106 }
+
+txChannelUnit8Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, txChannelUnit8Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Tx Channel Unit 8 status changes."
+::= { mncIFTxStatusTraps 1107 }
+
+txChannelUnit9Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, txChannelUnit9Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Tx Channel Unit 9 status changes."
+::= { mncIFTxStatusTraps 1108 }
+
+txChannelUnit10Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, txChannelUnit10Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Tx Channel Unit 10 status changes."
+::= { mncIFTxStatusTraps 1109 }
+
+uplinkLhcpCUChassisTempSensorFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, uplinkLhcpCUChassisTempSensorStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Uplink LHCP Channel Unit Chassis Temperature Sensor changes."
+::= { mncIFTxStatusTraps 1110 }
+
+uplinkRhcpCUChassisTempSensorFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, uplinkRhcpCUChassisTempSensorStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Uplink RHCP Channel Unit Chassis Temperature Sensor changes."
+::= { mncIFTxStatusTraps 1111 }
+
+mncIFMiscStatusTraps OBJECT IDENTIFIER ::= { mncTrap 1200 }
+
+mncRFRxStatusTraps OBJECT IDENTIFIER ::= { mncTrap 1300 }
+
+payloadPilotRcvr1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, payloadPilotRcvr1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Payload Pilot Receiver 1 status changes."
+::= { mncRFRxStatusTraps 1300 }
+
+payloadPilotRcvr2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, payloadPilotRcvr2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Payload Pilot Receiver 2 status changes."
+::= { mncRFRxStatusTraps 1301 }
+
+tlmDC1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, tlmDC1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Telemetry Downconverter 1 status changes."
+::= { mncRFRxStatusTraps 1302 }
+
+tlmDC2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, tlmDC2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Telemetry Downconverter 2 status changes."
+::= { mncRFRxStatusTraps 1303 }
+
+tlmDC3Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, tlmDC3Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Telemetry Downconverter 3 status changes."
+::= { mncRFRxStatusTraps 1304 }
+
+rhcpCommBDCPrimaryFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rhcpCommBDCPrimaryStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the RHCP Communication Primary Block Downconverter status changes."
+::= { mncRFRxStatusTraps 1305 }
+
+rhcpCommBDCSpareFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rhcpCommBDCSpareStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the RHCP Communication Spare Block Downconverter status changes."
+::= { mncRFRxStatusTraps 1306 }
+
+lhcpCommBDCPrimaryFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, lhcpCommBDCPrimaryStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the LHCP Communication Primary Block Downconverter status changes."
+::= { mncRFRxStatusTraps 1307 }
+
+lhcpCommBDCSpareFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, lhcpCommBDCSpareStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the LHCP Communication Spare Block Downconverter status changes."
+::= { mncRFRxStatusTraps 1308 }
+
+rxOscillator1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxOscillator1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Receive Oscillator 1 status changes."
+::= { mncRFRxStatusTraps 1309 }
+
+rxOscillator2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rxOscillator2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Receive Oscillator 2 status changes."
+::= { mncRFRxStatusTraps 1310 }
+
+primaryLhcpLna1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, primaryLhcpLna1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Primary LHCP LNA 1 status changes."
+::= { mncRFRxStatusTraps 1311 }
+
+primaryLhcpLna1AFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, primaryLhcpLna1AStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Primary LHCP LNA 1A status changes."
+::= { mncRFRxStatusTraps 1312 }
+
+primaryRhcpLna2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, primaryRhcpLna2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Primary RHCP LNA 2 status changes."
+::= { mncRFRxStatusTraps 1313 }
+
+primaryRhcpLna2AFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, primaryRhcpLna2AStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Primary RHCP LNA 2A status changes."
+::= { mncRFRxStatusTraps 1314 }
+
+primaryLnaControllerFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, primaryLnaControllerStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Primary LNA Controller status changes."
+::= { mncRFRxStatusTraps 1315 }
+
+backupLhcpLna1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, backupLhcpLna1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Backup LHCP LNA 1 status changes."
+::= { mncRFRxStatusTraps 1316 }
+
+backupLhcpLna1AFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, backupLhcpLna1AStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Backup LHCP LNA 1A status changes."
+::= { mncRFRxStatusTraps 1317 }
+
+backupRhcpLna2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, backupRhcpLna2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Backup RHCP LNA 2 status changes."
+::= { mncRFRxStatusTraps 1318 }
+
+backupRhcpLna2AFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, backupRhcpLna2AStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Backup RHCP LNA 2A status changes."
+::= { mncRFRxStatusTraps 1319 }
+
+backupLnaControllerFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, backupLnaControllerStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Backup LNA Controller status changes."
+::= { mncRFRxStatusTraps 1320 }
+
+mncRFTxStatusTraps OBJECT IDENTIFIER ::= { mncTrap 1400 }
+
+cmdUC1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, cmdUC1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Command Upconverter 1 status changes."
+::= { mncRFTxStatusTraps 1400 }
+
+cmdUC2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, cmdUC2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Command Upconverter 2 status changes."
+::= { mncRFTxStatusTraps 1401 }
+
+cmdTwta1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, cmdTwta1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Command HPA 1 status changes."
+::= { mncRFTxStatusTraps 1402 }
+
+cmdTwta2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, cmdTwta2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Command HPA 2 status changes."
+::= { mncRFTxStatusTraps 1403 }
+
+lhcpCommBUCPrimaryFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, lhcpCommBUCPrimaryStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Primary Communications LHCP Block Upconverter status changes."
+::= { mncRFTxStatusTraps 1404 }
+
+lhcpCommBUCSpareFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, lhcpCommBUCSpareStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Spare Communications LHCP Block Upconverter status changes."
+::= { mncRFTxStatusTraps 1405 }
+
+rhcpCommBUCPrimaryFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rhcpCommBUCPrimaryStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Primary Communications RHCP Block Upconverter status changes."
+::= { mncRFTxStatusTraps 1406 }
+
+rhcpCommBUCSpareFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rhcpCommBUCSpareStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Spare Communications RHCP Block Upconverter status changes."
+::= { mncRFTxStatusTraps 1407 }
+
+lhcpCommTwtaPrimaryFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, lhcpCommTwtaPrimaryStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Primary Communications LHCP TWTA status changes."
+::= { mncRFTxStatusTraps 1408 }
+
+lhcpCommTwtaSpareFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, lhcpCommTwtaSpareStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Spare Communications LHCP TWTA status changes."
+::= { mncRFTxStatusTraps 1409 }
+
+rhcpCommTwtaPrimaryFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rhcpCommTwtaPrimaryStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Primary Communications RHCP TWTA status changes."
+::= { mncRFTxStatusTraps 1410 }
+
+rhcpCommTwtaSpareFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, rhcpCommTwtaSpareStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Spare Communications RHCP TWTA status changes."
+::= { mncRFTxStatusTraps 1411 }
+
+txOscillator1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, txOscillator1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Transmit Oscillator 1 status changes."
+::= { mncRFTxStatusTraps 1412 }
+
+txOscillator2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, txOscillator2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Transmit Oscillator 2 status changes."
+::= { mncRFTxStatusTraps 1413 }
+
+pilotGenerator1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, pilotGenerator1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Pilot Generator 1 status changes."
+::= { mncRFTxStatusTraps 1414 }
+
+pilotGenerator2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, pilotGenerator2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Pilot Generator 2 status changes."
+::= { mncRFTxStatusTraps 1415 }
+
+primaryPathAttenuatorControllerFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, primaryPathAttenuatorControllerStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Primary Path Attenuator Controller status changes."
+::= { mncRFTxStatusTraps 1416 }
+
+backupPathAttenuatorControllerFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, backupPathAttenuatorControllerStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Backup Path Attenuator Controller status changes."
+::= { mncRFTxStatusTraps 1417 }
+
+mncRFMiscStatusTraps OBJECT IDENTIFIER ::= { mncTrap 1500 }
+
+acuPrimaryFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, acuPrimaryStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Primary Antenna ACU status changes."
+::= { mncRFMiscStatusTraps 1500 }
+
+acuBackupFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, acuBackupStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Backup Antenna ACU status changes."
+::= { mncRFMiscStatusTraps 1501 }
+
+tltPrimaryFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, tltPrimaryStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Primary Antenna TLT status changes."
+::= { mncRFMiscStatusTraps 1502 }
+
+tltBackupFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, tltBackupStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Backup Antenna TLT status changes."
+::= { mncRFMiscStatusTraps 1503 }
+
+deicerPrimaryFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, deicerPrimaryStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Deicer Primary status changes."
+::= { mncRFMiscStatusTraps 1504 }
+
+deicerBackupFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, deicerBackupStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Deicer Backup status changes."
+::= { mncRFMiscStatusTraps 1505 }
+
+dehydrator1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, dehydrator1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Dehydrator 1 status changes."
+::= { mncRFMiscStatusTraps 1506 }
+
+spectrumAnalyzer1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, spectrumAnalyzer1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Spectrum Analyzer 1 status changes."
+::= { mncRFMiscStatusTraps 1507 }
+
+spectrumAnalyzer2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, spectrumAnalyzer2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Spectrum Analyzer 2 status changes."
+::= { mncRFMiscStatusTraps 1508 }
+
+dehydrator2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, dehydrator2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Dehydrator 2 status changes."
+::= { mncRFMiscStatusTraps 1509 }
+
+hvac1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, hvac1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the HVAC 1 status changes."
+::= { mncRFMiscStatusTraps 1510 }
+
+hvac2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, hvac2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the HVAC 2 status changes."
+::= { mncRFMiscStatusTraps 1511 }
+
+mncMiscStatusTraps OBJECT IDENTIFIER ::= { mncTrap 1600 }
+
+uplinkMCUFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, uplinkMCUStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Uplink MCU status changes."
+::= { mncMiscStatusTraps 1600 }
+
+downlinkMCUFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, downlinkMCUStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Downlink MCU status changes."
+::= { mncMiscStatusTraps 1601 }
+
+systemPowerSupply1Module1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, systemPowerSupply1Module1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the System Power Supply 1 Module 1 status changes."
+::= { mncMiscStatusTraps 1602 }
+
+systemPowerSupply1Module2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, systemPowerSupply1Module2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the System Power Supply 1 Module 2 status changes."
+::= { mncMiscStatusTraps 1603 }
+
+systemPowerSupply1Module3Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, systemPowerSupply1Module3Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the System Power Supply 1 Module 3 status changes."
+::= { mncMiscStatusTraps 1604 }
+
+systemPowerSupply1Module4Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, systemPowerSupply1Module4Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the System Power Supply 1 Module 4 status changes."
+::= { mncMiscStatusTraps 1605 }
+
+systemPowerSupply2Module1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, systemPowerSupply2Module1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the System Power Supply 2 Module 1 status changes."
+::= { mncMiscStatusTraps 1606 }
+
+systemPowerSupply2Module2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, systemPowerSupply2Module2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the System Power Supply 2 Module 2 status changes."
+::= { mncMiscStatusTraps 1607 }
+
+ttcRackFanTrayFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, ttcRackFanTrayStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the TTC Rack Fan Tray status changes."
+::= { mncMiscStatusTraps 1610 }
+
+ulpcRackFanTrayFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, ulpcRackFanTrayStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the ULPC Rack Fan Tray status changes."
+::= { mncMiscStatusTraps 1611 }
+
+hpa1RackFanTrayFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, hpa1RackFanTrayStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the HPA 1 Rack Fan Tray status changes."
+::= { mncMiscStatusTraps 1612 }
+
+hpa2RackFanTrayFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, hpa2RackFanTrayStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the HPA 2 Rack Fan Tray status changes."
+::= { mncMiscStatusTraps 1613 }
+
+uplinkRackFanTrayFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, uplinkRackFanTrayStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Uplink Rack Fan Tray status changes."
+::= { mncMiscStatusTraps 1614 }
+
+downlinkLhcpFanTrayFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, downlinkLhcpFanTrayStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Downlink LHCP Rack Fan Tray status changes."
+::= { mncMiscStatusTraps 1615 }
+
+downlinkRhcpFanTrayFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, downlinkRhcpFanTrayStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Downlink RHCP Rack Fan Tray status changes."
+::= { mncMiscStatusTraps 1616 }
+
+ttcRackTempSensor1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, ttcRackTempSensor1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the TTC Rack Temperature Sensor 1 status changes."
+::= { mncMiscStatusTraps 1617 }
+
+ttcRackTempSensor2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, ttcRackTempSensor2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the TTC Rack Temperature Sensor 2 status changes."
+::= { mncMiscStatusTraps 1618 }
+
+ulpcRackTempSensor1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, ulpcRackTempSensor1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the ULPC Rack Temperature Sensor 1 status changes."
+::= { mncMiscStatusTraps 1619 }
+
+ulpcRackTempSensor2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, ulpcRackTempSensor2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the ULPC Rack Temperature Sensor 2 status changes."
+::= { mncMiscStatusTraps 1620 }
+
+hpa1RackTempSensor1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, hpa1RackTempSensor1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the HPA 1 Rack Temperature Sensor 1 status changes."
+::= { mncMiscStatusTraps 1621 }
+
+hpa1RackTempSensor2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, hpa1RackTempSensor2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the HPA 1 Rack Temperature Sensor 2 status changes."
+::= { mncMiscStatusTraps 1622 }
+
+hpa2RackTempSensor1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, hpa2RackTempSensor1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the HPA 2 Rack Temperature Sensor 1 status changes."
+::= { mncMiscStatusTraps 1623 }
+
+hpa2RackTempSensor2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, hpa2RackTempSensor2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the HPA 2 Rack Temperature Sensor 2 status changes."
+::= { mncMiscStatusTraps 1624 }
+
+uplinkRackTempSensor1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, uplinkRackTempSensor1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Uplink Rack Temperature Sensor 1 status changes."
+::= { mncMiscStatusTraps 1625 }
+
+uplinkRackTempSensor2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, uplinkRackTempSensor2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Uplink Rack Temperature Sensor 2 status changes."
+::= { mncMiscStatusTraps 1626 }
+
+downlinkLhcpRackTempSensor1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, downlinkLhcpRackTempSensor1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Downlink LHCP Rack Temperature Sensor 1 status changes."
+::= { mncMiscStatusTraps 1627 }
+
+downlinkLhcpRackTempSensor2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, downlinkLhcpRackTempSensor2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Downlink LHCP Rack Temperature Sensor 2 status changes."
+::= { mncMiscStatusTraps 1628 }
+
+downlinkRhcpRackTempSensor1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, downlinkRhcpRackTempSensor1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Downlink RHCP Rack Temperature Sensor 1 status changes."
+::= { mncMiscStatusTraps 1629 }
+
+downlinkRhcpRackTempSensor2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, downlinkRhcpRackTempSensor2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the Downlink RHCP Rack Temperature Sensor 2 status changes."
+::= { mncMiscStatusTraps 1630 }
+
+pprDistAmp1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, pprDistAmp1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the PPR Distribution Amp 1 status changes."
+::= { mncMiscStatusTraps 1631 }
+
+pprDistAmp2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, pprDistAmp2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the PPR Distribution Amp 2 status changes."
+::= { mncMiscStatusTraps 1632 }
+
+pprDistAmp3Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, pprDistAmp3Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the PPR Distribution Amp 3 status changes."
+::= { mncMiscStatusTraps 1633 }
+
+tenMhzDistAmp1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, tenMhzDistAmp1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the 10 Mhz Distribution Amp 1 status changes."
+::= { mncMiscStatusTraps 1634 }
+
+tenMhzDistAmp2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, tenMhzDistAmp2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the 10 Mhz Distribution Amp 2 status changes."
+::= { mncMiscStatusTraps 1635 }
+
+tenMhzDistAmp3Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, tenMhzDistAmp3Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the 10 Mhz Distribution Amp 3 status changes."
+::= { mncMiscStatusTraps 1636 }
+
+mncAServerFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, mncAServerStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the MNC A Server status changes."
+::= { mncMiscStatusTraps 1637 }
+
+mncBServerFault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, mncBServerStatus, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the MNC B Server status changes."
+::= { mncMiscStatusTraps 1638 }
+
+systemPowerSupply3Module1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, systemPowerSupply3Module1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the System Power Supply 3 Module 1 status changes."
+::= { mncMiscStatusTraps 1639 }
+
+systemPowerSupply3Module2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, systemPowerSupply3Module2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the System Power Supply 3 Module 2 status changes."
+::= { mncMiscStatusTraps 1640 }
+
+systemPowerSupply3Module3Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, systemPowerSupply3Module3Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the System Power Supply 3 Module 3 status changes."
+::= { mncMiscStatusTraps 1641 }
+
+systemPowerSupply3Module4Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, systemPowerSupply3Module4Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the System Power Supply 3 Module 4 status changes."
+::= { mncMiscStatusTraps 1642 }
+
+systemPowerSupply2Module3Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, systemPowerSupply2Module3Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the System Power Supply 2 Module 3 status changes."
+::= { mncMiscStatusTraps 1643 }
+
+systemPowerSupply2Module4Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, systemPowerSupply2Module4Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the System Power Supply 2 Module 4 status changes."
+::= { mncMiscStatusTraps 1644 }
+
+systemPowerSupply4Module1Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, systemPowerSupply4Module1Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the System Power Supply 4 Module 1 status changes."
+::= { mncMiscStatusTraps 1645 }
+
+systemPowerSupply4Module2Fault NOTIFICATION-TYPE
+OBJECTS   { mncPreviousState, mncTrapSource, systemPowerSupply4Module2Status, mncTrapSeverity } 
+STATUS	current
+DESCRIPTION
+	"An event that is generated when the System Power Supply 4 Module 2 status changes."
+::= { mncMiscStatusTraps 1646 }
+
+END

@@ -1,0 +1,97 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.opennms.integration.ni2.ttapi</groupId>
+      <artifactId>ni2-tt-api-v1</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+   </parent>
+
+   <artifactId>ni2-tt-api-v1-minimal-minion-activemq</artifactId>
+   <packaging>pom</packaging>
+
+
+   <!-- copies built kar file to opennms docker deploy directory -->
+   <build>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <version>3.0.1</version>
+            <executions>
+               <execution>
+                  <id>copy</id>
+                  <phase>package</phase>
+                  <goals>
+                     <goal>copy</goal>
+                  </goals>
+                  <configuration>
+                     <artifactItems>
+                        <artifactItem>
+                           <groupId>${project.groupId}</groupId>
+                           <artifactId>ni2-tt-api-v1-kar</artifactId>
+                           <version>${project.version}</version>
+                           <type>kar</type>
+                           <!-- <classifier> [classifier - optional] </classifier> -->
+                           <overWrite>true</overWrite>
+                           <outputDirectory>${project.basedir}/container-fs/horizon/opt/opennms/deploy/</outputDirectory>
+                           <!-- <destFileName>[ filename ]</destFileName> -->
+                        </artifactItem>
+                     </artifactItems>
+                     <!-- other configurations here -->
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+
+         <plugin>
+            <artifactId>maven-clean-plugin</artifactId>
+            <version>3.1.0</version>
+            <executions>
+               <execution>
+                  <id>default-clean</id>
+                  <phase>clean</phase>
+                  <goals>
+                     <goal>clean</goal>
+                  </goals>
+               </execution>
+               <!-- cleans deployed files from opennms docker deploy directory -->
+               <execution>
+                  <id>dependency-clean</id>
+                  <phase>clean</phase>
+                  <goals>
+                     <goal>clean</goal>
+                  </goals>
+                  <configuration>
+                     <filesets>
+                        <fileset>
+                           <directory>${project.basedir}/container-fs/horizon/opt/opennms/deploy/</directory>
+                           <followSymlinks>false</followSymlinks>
+                           <excludes>
+                              <exclude>**/README.md</exclude>
+                              <exclude>.gitkeep</exclude>
+                           </excludes>
+                        </fileset>
+                     </filesets>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+
+         <plugin>
+            <groupId>com.mycila</groupId>
+            <artifactId>license-maven-plugin</artifactId>
+            <executions>
+               <execution>
+                  <!-- stops any licence checking in this module -->
+                  <id>check-licences</id>
+                  <phase>none</phase>
+               </execution>
+            </executions>
+         </plugin>
+         
+      </plugins>
+   </build>
+
+</project>

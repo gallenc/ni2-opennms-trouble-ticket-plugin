@@ -1,0 +1,531 @@
+<events xmlns="http://xmlns.opennms.org/xsd/eventconf">
+
+   <!-- ************************************************** -->
+   <!-- critical alarm raise                               -->
+   <!-- ************************************************** -->
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.303.3.3.9.45.1.2</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>2</mevalue>
+         </maskelement>
+         <!-- severity critical -->
+         <varbind>
+            <vbnumber>3</vbnumber>
+            <vbvalue>1</vbvalue>
+         </varbind>
+      </mask>
+      <uei>uei.opennms.org/traps/SBAS-EMS-MIB/sbasAlarm-RAISE</uei>
+      <event-label>SBAS-EMS-MIB defined trap event: sbasAlarm-RAISE</event-label>
+      <descr>
+&lt;p>The SBAS alarm/event notification message.&lt;/p>&lt;table>
+    &lt;tr>&lt;td>&lt;b>
+
+    alarmID&lt;/b>&lt;/td>&lt;td>
+    %parm[#1]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    alarmDescription&lt;/b>&lt;/td>&lt;td>
+    %parm[#2]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    alarmSeverity&lt;/b>&lt;/td>&lt;td>
+    %parm[#3]%;&lt;/td>&lt;td>&lt;p>
+        critical(1)
+        major(2)
+        minor(3)
+        warning(4)
+        cleared(5)
+        informational(6)
+    &lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    reportingEntityID&lt;/b>&lt;/td>&lt;td>
+    %parm[#4]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    faultyEntityID&lt;/b>&lt;/td>&lt;td>
+    %parm[#5]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    timeStamp&lt;/b>&lt;/td>&lt;td>
+    %parm[#6]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    supportingData&lt;/b>&lt;/td>&lt;td>
+    %parm[#7]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+    </descr>
+      <logmsg dest="logndisplay">&lt;p>
+    sbasAlarmNotification trap received
+    alarmID=%parm[#1]%
+    alarmDescription=%parm[#2]%
+    alarmSeverity=%parm[#3]%
+    reportingEntityID=%parm[#4]%
+    faultyEntityID=%parm[#5]%
+    timeStamp=%parm[#6]%
+    supportingData=%parm[#7]%&lt;/p>
+    </logmsg>
+      <severity>Critical</severity>
+      <varbindsdecode>
+         <parmid>parm[#3]</parmid>
+         <decode varbindvalue="1" varbinddecodedstring="critical"/>
+         <decode varbindvalue="2" varbinddecodedstring="major"/>
+         <decode varbindvalue="3" varbinddecodedstring="minor"/>
+         <decode varbindvalue="4" varbinddecodedstring="warning"/>
+         <decode varbindvalue="5" varbinddecodedstring="cleared"/>
+         <decode varbindvalue="6" varbinddecodedstring="informational"/>
+      </varbindsdecode>
+      
+      <!-- reduction key uei:dpname:nodeId:alarmId:reportingEntityID:faultyEntityID: -->
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%:%parm[#1]%:%parm[#4]%:%parm[#5]%" alarm-type="1" auto-clean="false" />
+   </event>
+   
+   
+   <!-- ************************************************** -->
+   <!-- major alarm raise                               -->
+   <!-- ************************************************** -->
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.303.3.3.9.45.1.2</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>2</mevalue>
+         </maskelement>
+         <!-- severity major -->
+         <varbind>
+            <vbnumber>3</vbnumber>
+            <vbvalue>2</vbvalue>
+         </varbind>
+      </mask>
+      <uei>uei.opennms.org/traps/SBAS-EMS-MIB/sbasAlarm-RAISE</uei>
+      <event-label>SBAS-EMS-MIB defined trap event: sbasAlarm-RAISE</event-label>
+      <descr>
+&lt;p>The SBAS alarm/event notification message.&lt;/p>&lt;table>
+    &lt;tr>&lt;td>&lt;b>
+
+    alarmID&lt;/b>&lt;/td>&lt;td>
+    %parm[#1]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    alarmDescription&lt;/b>&lt;/td>&lt;td>
+    %parm[#2]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    alarmSeverity&lt;/b>&lt;/td>&lt;td>
+    %parm[#3]%;&lt;/td>&lt;td>&lt;p>
+        critical(1)
+        major(2)
+        minor(3)
+        warning(4)
+        cleared(5)
+        informational(6)
+    &lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    reportingEntityID&lt;/b>&lt;/td>&lt;td>
+    %parm[#4]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    faultyEntityID&lt;/b>&lt;/td>&lt;td>
+    %parm[#5]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    timeStamp&lt;/b>&lt;/td>&lt;td>
+    %parm[#6]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    supportingData&lt;/b>&lt;/td>&lt;td>
+    %parm[#7]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+    </descr>
+      <logmsg dest="logndisplay">&lt;p>
+    sbasAlarmNotification trap received
+    alarmID=%parm[#1]%
+    alarmDescription=%parm[#2]%
+    alarmSeverity=%parm[#3]%
+    reportingEntityID=%parm[#4]%
+    faultyEntityID=%parm[#5]%
+    timeStamp=%parm[#6]%
+    supportingData=%parm[#7]%&lt;/p>
+    </logmsg>
+      <severity>Major</severity>
+      <varbindsdecode>
+         <parmid>parm[#3]</parmid>
+         <decode varbindvalue="1" varbinddecodedstring="critical"/>
+         <decode varbindvalue="2" varbinddecodedstring="major"/>
+         <decode varbindvalue="3" varbinddecodedstring="minor"/>
+         <decode varbindvalue="4" varbinddecodedstring="warning"/>
+         <decode varbindvalue="5" varbinddecodedstring="cleared"/>
+         <decode varbindvalue="6" varbinddecodedstring="informational"/>
+      </varbindsdecode>
+      <!-- reduction key uei:dpname:nodeId:alarmId:reportingEntityID:faultyEntityID: -->
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%:%parm[#1]%:%parm[#4]%:%parm[#5]%" alarm-type="1" auto-clean="false" />
+   </event>
+   
+   
+   <!-- ************************************************** -->
+   <!-- minor alarm raise                               -->
+   <!-- ************************************************** -->
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.303.3.3.9.45.1.2</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>2</mevalue>
+         </maskelement>
+         <!-- severity minor -->
+         <varbind>
+            <vbnumber>3</vbnumber>
+            <vbvalue>3</vbvalue>
+         </varbind>
+      </mask>
+      <uei>uei.opennms.org/traps/SBAS-EMS-MIB/sbasAlarm-RAISE</uei>
+      <event-label>SBAS-EMS-MIB defined trap event: sbasAlarm-RAISE</event-label>
+      <descr>
+&lt;p>The SBAS alarm/event notification message.&lt;/p>&lt;table>
+    &lt;tr>&lt;td>&lt;b>
+
+    alarmID&lt;/b>&lt;/td>&lt;td>
+    %parm[#1]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    alarmDescription&lt;/b>&lt;/td>&lt;td>
+    %parm[#2]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    alarmSeverity&lt;/b>&lt;/td>&lt;td>
+    %parm[#3]%;&lt;/td>&lt;td>&lt;p>
+        critical(1)
+        major(2)
+        minor(3)
+        warning(4)
+        cleared(5)
+        informational(6)
+    &lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    reportingEntityID&lt;/b>&lt;/td>&lt;td>
+    %parm[#4]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    faultyEntityID&lt;/b>&lt;/td>&lt;td>
+    %parm[#5]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    timeStamp&lt;/b>&lt;/td>&lt;td>
+    %parm[#6]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    supportingData&lt;/b>&lt;/td>&lt;td>
+    %parm[#7]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+    </descr>
+      <logmsg dest="logndisplay">&lt;p>
+    sbasAlarmNotification trap received
+    alarmID=%parm[#1]%
+    alarmDescription=%parm[#2]%
+    alarmSeverity=%parm[#3]%
+    reportingEntityID=%parm[#4]%
+    faultyEntityID=%parm[#5]%
+    timeStamp=%parm[#6]%
+    supportingData=%parm[#7]%&lt;/p>
+    </logmsg>
+      <severity>Minor</severity>
+      <varbindsdecode>
+         <parmid>parm[#3]</parmid>
+         <decode varbindvalue="1" varbinddecodedstring="critical"/>
+         <decode varbindvalue="2" varbinddecodedstring="major"/>
+         <decode varbindvalue="3" varbinddecodedstring="minor"/>
+         <decode varbindvalue="4" varbinddecodedstring="warning"/>
+         <decode varbindvalue="5" varbinddecodedstring="cleared"/>
+         <decode varbindvalue="6" varbinddecodedstring="informational"/>
+      </varbindsdecode>
+      <!-- reduction key uei:dpname:nodeId:alarmId:reportingEntityID:faultyEntityID: -->
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%:%parm[#1]%:%parm[#4]%:%parm[#5]%" alarm-type="1" auto-clean="false" />
+   </event>
+   
+   <!-- ************************************************** -->
+   <!-- warning alarm raise                               -->
+   <!-- ************************************************** -->
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.303.3.3.9.45.1.2</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>2</mevalue>
+         </maskelement>
+         <!-- severity warning -->
+         <varbind>
+            <vbnumber>3</vbnumber>
+            <vbvalue>4</vbvalue>
+         </varbind>
+      </mask>
+      <uei>uei.opennms.org/traps/SBAS-EMS-MIB/sbasAlarm-RAISE</uei>
+      <event-label>SBAS-EMS-MIB defined trap event: sbasAlarm-RAISE</event-label>
+      <descr>
+&lt;p>The SBAS alarm/event notification message.&lt;/p>&lt;table>
+    &lt;tr>&lt;td>&lt;b>
+
+    alarmID&lt;/b>&lt;/td>&lt;td>
+    %parm[#1]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    alarmDescription&lt;/b>&lt;/td>&lt;td>
+    %parm[#2]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    alarmSeverity&lt;/b>&lt;/td>&lt;td>
+    %parm[#3]%;&lt;/td>&lt;td>&lt;p>
+        critical(1)
+        major(2)
+        minor(3)
+        warning(4)
+        cleared(5)
+        informational(6)
+    &lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    reportingEntityID&lt;/b>&lt;/td>&lt;td>
+    %parm[#4]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    faultyEntityID&lt;/b>&lt;/td>&lt;td>
+    %parm[#5]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    timeStamp&lt;/b>&lt;/td>&lt;td>
+    %parm[#6]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    supportingData&lt;/b>&lt;/td>&lt;td>
+    %parm[#7]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+    </descr>
+      <logmsg dest="logndisplay">&lt;p>
+    sbasAlarmNotification trap received
+    alarmID=%parm[#1]%
+    alarmDescription=%parm[#2]%
+    alarmSeverity=%parm[#3]%
+    reportingEntityID=%parm[#4]%
+    faultyEntityID=%parm[#5]%
+    timeStamp=%parm[#6]%
+    supportingData=%parm[#7]%&lt;/p>
+    </logmsg>
+      <severity>Warning</severity>
+      <varbindsdecode>
+         <parmid>parm[#3]</parmid>
+         <decode varbindvalue="1" varbinddecodedstring="critical"/>
+         <decode varbindvalue="2" varbinddecodedstring="major"/>
+         <decode varbindvalue="3" varbinddecodedstring="minor"/>
+         <decode varbindvalue="4" varbinddecodedstring="warning"/>
+         <decode varbindvalue="5" varbinddecodedstring="cleared"/>
+         <decode varbindvalue="6" varbinddecodedstring="informational"/>
+      </varbindsdecode>
+      <!-- reduction key uei:dpname:nodeId:alarmId:reportingEntityID:faultyEntityID: -->
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%:%parm[#1]%:%parm[#4]%:%parm[#5]%" alarm-type="1" auto-clean="false" />
+   </event>
+   
+   <!-- ************************************************** -->
+   <!-- Alarm Clear                                        -->
+   <!-- ************************************************** -->
+   
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.303.3.3.9.45.1.2</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>2</mevalue>
+         </maskelement>
+         <!-- severity cleared -->
+         <varbind>
+            <vbnumber>3</vbnumber>
+            <vbvalue>5</vbvalue>
+         </varbind>
+      </mask>
+      <uei>uei.opennms.org/traps/SBAS-EMS-MIB/sbasAlarm-CLEAR</uei>
+      <event-label>SBAS-EMS-MIB defined trap event: sbasAlarm-CLEAR</event-label>
+      <descr>
+&lt;p>The SBAS alarm/event notification message.&lt;/p>&lt;table>
+    &lt;tr>&lt;td>&lt;b>
+
+    alarmID&lt;/b>&lt;/td>&lt;td>
+    %parm[#1]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    alarmDescription&lt;/b>&lt;/td>&lt;td>
+    %parm[#2]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    alarmSeverity&lt;/b>&lt;/td>&lt;td>
+    %parm[#3]%;&lt;/td>&lt;td>&lt;p>
+        critical(1)
+        major(2)
+        minor(3)
+        warning(4)
+        cleared(5)
+        informational(6)
+    &lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    reportingEntityID&lt;/b>&lt;/td>&lt;td>
+    %parm[#4]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    faultyEntityID&lt;/b>&lt;/td>&lt;td>
+    %parm[#5]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    timeStamp&lt;/b>&lt;/td>&lt;td>
+    %parm[#6]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    supportingData&lt;/b>&lt;/td>&lt;td>
+    %parm[#7]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+    </descr>
+      <logmsg dest="logndisplay">&lt;p>
+    sbasAlarmNotification trap received
+    alarmID=%parm[#1]%
+    alarmDescription=%parm[#2]%
+    alarmSeverity=%parm[#3]%
+    reportingEntityID=%parm[#4]%
+    faultyEntityID=%parm[#5]%
+    timeStamp=%parm[#6]%
+    supportingData=%parm[#7]%&lt;/p>
+    </logmsg>
+      <severity>Cleared</severity>
+      <varbindsdecode>
+         <parmid>parm[#3]</parmid>
+         <decode varbindvalue="1" varbinddecodedstring="critical"/>
+         <decode varbindvalue="2" varbinddecodedstring="major"/>
+         <decode varbindvalue="3" varbinddecodedstring="minor"/>
+         <decode varbindvalue="4" varbinddecodedstring="warning"/>
+         <decode varbindvalue="5" varbinddecodedstring="cleared"/>
+         <decode varbindvalue="6" varbinddecodedstring="informational"/>
+      </varbindsdecode>
+      
+      <!-- reduction key uei:dpname:nodeId:alarmId:reportingEntityID:faultyEntityID: -->
+      <alarm-data reduction-key="%uei%:%dpname%:%nodeid%:%parm[#1]%:%parm[#4]%:%parm[#5]%"
+         alarm-type="2"
+         clear-key="uei.opennms.org/traps/SBAS-EMS-MIB/sbasAlarm-RAISE:%dpname%:%nodeid%:%parm[#1]%:%parm[#4]%:%parm[#5]%" 
+         auto-clean="false" />
+   </event>
+   
+   <!-- *************************************************** -->
+   <!-- informational event (normal severity with no clear) -->
+   <!-- *************************************************** -->
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.303.3.3.9.45.1.2</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>2</mevalue>
+         </maskelement>
+         <!-- severity informational -->
+         <varbind>
+            <vbnumber>3</vbnumber>
+            <vbvalue>6</vbvalue>
+         </varbind>
+      </mask>
+      <uei>uei.opennms.org/traps/SBAS-EMS-MIB/sbasAlarm-INFORMATION</uei>
+      <event-label>SBAS-EMS-MIB defined trap event: sbasAlarm-INFORMATION</event-label>
+      <descr>
+&lt;p>The SBAS alarm/event notification message.&lt;/p>&lt;table>
+    &lt;tr>&lt;td>&lt;b>
+
+    alarmID&lt;/b>&lt;/td>&lt;td>
+    %parm[#1]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    alarmDescription&lt;/b>&lt;/td>&lt;td>
+    %parm[#2]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    alarmSeverity&lt;/b>&lt;/td>&lt;td>
+    %parm[#3]%;&lt;/td>&lt;td>&lt;p>
+        critical(1)
+        major(2)
+        minor(3)
+        warning(4)
+        cleared(5)
+        informational(6)
+    &lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    reportingEntityID&lt;/b>&lt;/td>&lt;td>
+    %parm[#4]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    faultyEntityID&lt;/b>&lt;/td>&lt;td>
+    %parm[#5]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    timeStamp&lt;/b>&lt;/td>&lt;td>
+    %parm[#6]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+    &lt;tr>&lt;td>&lt;b>
+
+    supportingData&lt;/b>&lt;/td>&lt;td>
+    %parm[#7]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+    </descr>
+      <logmsg dest="logndisplay">&lt;p>
+    sbasAlarmNotification trap received
+    alarmID=%parm[#1]%
+    alarmDescription=%parm[#2]%
+    alarmSeverity=%parm[#3]%
+    reportingEntityID=%parm[#4]%
+    faultyEntityID=%parm[#5]%
+    timeStamp=%parm[#6]%
+    supportingData=%parm[#7]%&lt;/p>
+    </logmsg>
+      <severity>Normal</severity>
+      <varbindsdecode>
+         <parmid>parm[#3]</parmid>
+         <decode varbindvalue="1" varbinddecodedstring="critical"/>
+         <decode varbindvalue="2" varbinddecodedstring="major"/>
+         <decode varbindvalue="3" varbinddecodedstring="minor"/>
+         <decode varbindvalue="4" varbinddecodedstring="warning"/>
+         <decode varbindvalue="5" varbinddecodedstring="cleared"/>
+         <decode varbindvalue="6" varbinddecodedstring="informational"/>
+      </varbindsdecode>
+   </event>
+
+</events>

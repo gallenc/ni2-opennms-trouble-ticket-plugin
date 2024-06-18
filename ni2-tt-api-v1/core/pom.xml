@@ -1,0 +1,207 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.opennms.integration.ni2.ttapi</groupId>
+      <artifactId>ni2-tt-api-v1</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+   </parent>
+
+   <artifactId>ni2-tt-api-v1-core</artifactId>
+   <packaging>bundle</packaging>
+
+   <properties>
+      <jetty.version>11.0.20</jetty.version>
+   </properties>
+
+   <build>
+      <plugins>
+
+         <plugin>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>maven-bundle-plugin</artifactId>
+            <extensions>true</extensions>
+            <configuration>
+               <obrRepository>NONE</obrRepository>
+               <instructions>
+                  <!-- Don't add Import-Service MANIFEST.MF headers, just rely on normal OSGi service resolution -->
+                  <_removeheaders>Import-Service</_removeheaders>
+
+                  <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                  <Bundle-Version>${project.version}</Bundle-Version>
+                  <Export-package>{local-packages}</Export-package>
+                  <Import-Package>
+                     <!-- org.apache.felix.service.command, -->
+                     <!-- javax.ws.rs;version="[2.0,3)", -->
+                     <!-- javax.ws.rs.core;version="[2.0,3)", -->
+                     *
+                  </Import-Package>
+                  <Karaf-Commands>*</Karaf-Commands>
+               </instructions>
+            </configuration>
+         </plugin>
+
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+               <testFailureIgnore>true</testFailureIgnore>
+               <excludes>
+                  <!-- prevent tests running in this package. These are manual one off development tests -->
+                  <exclude>**/manual/*.java</exclude>
+               </excludes>
+            </configuration>
+         </plugin>
+
+
+         <!-- <plugin> -->
+         <!-- <artifactId>maven-failsafe-plugin</artifactId> -->
+         <!-- <executions> -->
+         <!-- <execution> -->
+         <!-- <goals> -->
+         <!-- <goal>integration-test</goal> -->
+         <!-- <goal>verify</goal> -->
+         <!-- </goals> -->
+         <!-- </execution> -->
+         <!-- </executions> -->
+         <!-- </plugin> -->
+
+
+         <!-- gets spring implementation test war -->
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>get-simulator-war</id>
+                  <phase>process-sources</phase>
+                  <goals>
+                     <goal>copy</goal>
+                  </goals>
+                  <configuration>
+                     <artifactItems>
+                        <artifactItem>
+                           <groupId>${project.groupId}</groupId>
+                           <artifactId>ni2-tt-api-v1-mock-impl</artifactId>
+                           <version>${project.version}</version>
+                           <type>war</type>
+                           <destFileName>root.war</destFileName>
+                           <overWrite>true</overWrite>
+                        </artifactItem>
+                     </artifactItems>
+                     <outputDirectory>${project.build.directory}/simulator</outputDirectory>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+
+         <plugin>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-maven-plugin</artifactId>
+            <version>${jetty.version}</version>
+
+            <configuration>
+               <contextHandlers>
+                 <!-- <contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext"> -->
+                  <contextHandler implementation="org.eclipse.jetty.maven.plugin.MavenWebAppContext">
+                  
+                     <war>${project.build.directory}/simulator/root.war</war>
+                     <contextPath>/</contextPath>
+                  </contextHandler>
+               </contextHandlers>
+               <webApp>
+                  <contextPath>/</contextPath>
+               </webApp>
+               <war>${project.build.directory}/simulator/root.war</war>
+               <supportedPackagings>
+                  <supportedPackaging>bundle</supportedPackaging>
+               </supportedPackagings>
+               <stopPort>8079</stopPort>
+               <stopKey>stopit</stopKey>
+               <httpConnector>
+                  <port>8080</port>
+                  <idleTimeout>60000</idleTimeout>
+               </httpConnector>
+            </configuration>
+            <executions>
+               <execution>
+                  <id>start-jetty</id>
+                  <!-- <phase>pre-integration-test</phase> -->
+                  <phase>process-test-classes</phase>
+                  <goals>
+                     <goal>start</goal>
+                  </goals>
+                  <configuration>
+                     <scanIntervalSeconds>0</scanIntervalSeconds>
+                     <daemon>true</daemon>
+                  </configuration>
+               </execution>
+               <execution>
+                  <id>stop-jetty</id>
+                  <phase>post-integration-test</phase>
+                  <!-- <phase>prepare-package</phase> -->
+                  <goals>
+                     <goal>stop</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+
+      </plugins>
+   </build>
+
+
+   <dependencies>
+   
+      <dependency>
+         <groupId>org.opennms.integration.ni2.ttapi</groupId>
+         <artifactId>ni2-tt-api-v1-model</artifactId>
+         <version>${project.version}</version>
+         <scope>compile</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>org.apache.cxf</groupId>
+         <artifactId>cxf-rt-rs-client</artifactId>
+         <version>${cxf.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>com.fasterxml.jackson.jaxrs</groupId>
+         <artifactId>jackson-jaxrs-json-provider</artifactId>
+         <version>${jackson.version}</version>
+      </dependency>
+
+      <dependency>
+         <groupId>org.apache.karaf.shell</groupId>
+         <artifactId>org.apache.karaf.shell.core</artifactId>
+      </dependency>
+
+      <dependency>
+         <groupId>org.opennms.integration.api</groupId>
+         <artifactId>api</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.opennms.integration.api</groupId>
+         <artifactId>common</artifactId>
+      </dependency>
+
+      <dependency>
+         <groupId>org.apache.logging.log4j</groupId>
+         <artifactId>log4j-slf4j-impl</artifactId>
+         <scope>test</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>junit</groupId>
+         <artifactId>junit</artifactId>
+         <scope>test</scope>
+      </dependency>
+
+   </dependencies>
+
+
+
+</project>
+
+

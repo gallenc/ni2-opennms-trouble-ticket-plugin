@@ -1,0 +1,328 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+   <modelVersion>4.0.0</modelVersion>
+
+   <groupId>org.opennms.integration.ni2.ttapi</groupId>
+   <artifactId>ni2-tt-api-v1</artifactId>
+   <version>0.0.1-SNAPSHOT</version>
+   <packaging>pom</packaging>
+
+   <!-- <url>TBD</url> -->
+   <description>An OpenNMS ticketing API plugin for Ni2</description>
+
+   <licenses>
+      <license>
+         <name>GNU Affero General Public License, Version 3.0</name>
+         <url>https://www.gnu.org/licenses/agpl-3.0.en.html</url>
+      </license>
+   </licenses>
+
+   <!-- <scm> -->
+   <!-- <url>https://github.com/OpenNMS/opennms-opa-plugin-ticketing-remedy</url> -->
+   <!-- <connection>scm:git:git@github.com:OpenNMS/opennms-opa-plugin-ticketing-remedy.git</connection> -->
+   <!-- <tag>HEAD</tag> -->
+   <!-- </scm> -->
+
+   <developers>
+      <developer>
+         <id>gallenc</id>
+         <name>Craig Gallen</name>
+         <email>craig.gallen@entimoss.com</email>
+      </developer>
+   </developers>
+
+   <properties>
+      <!-- general build properties -->
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <java.version>11</java.version>
+
+      <cxf.version>3.5.5</cxf.version>
+      <jackson.version>2.14.1</jackson.version>
+      <karaf.version>4.3.10</karaf.version>
+      <junit-version>4.13.2</junit-version>
+      <slf4jVersion>1.7.36</slf4jVersion>
+      <log4j2Version>2.21.1</log4j2Version>
+      <jetty.version>11.0.20</jetty.version>
+
+      <!-- minimum OPA version this plugin supports (inclusive) -->
+      <!-- <opennms.api.version.min>0.2.1</opennms.api.version.min> -->
+      <opennms.api.version.min>1.6.0</opennms.api.version.min>
+      <!-- maximum OPA version this plugin supports (exclusive) -->
+      <opennms.api.version.max>2.0.0</opennms.api.version.max>
+
+      <!-- maven plugins and plugin dependencies -->
+      <felix.maven-bundle-plugin.version>5.1.9</felix.maven-bundle-plugin.version>
+
+   </properties>
+
+   <modules>
+      <module>model</module>
+      <module>jersey-mock-impl</module>
+      <module>core</module>
+      <module>karaf-features</module>
+      <module>assembly</module>
+      <module>minimal-minion-activemq</module>
+   </modules>
+
+   <build>
+      <pluginManagement>
+         <plugins>
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-compiler-plugin</artifactId>
+               <version>3.10.1</version>
+            </plugin>
+
+            <plugin>
+               <groupId>org.apache.felix</groupId>
+               <artifactId>maven-bundle-plugin</artifactId>
+               <version>${felix.maven-bundle-plugin.version}</version>
+               <inherited>true</inherited>
+               <extensions>true</extensions>
+               <configuration>
+                  <obrRepository>NONE</obrRepository>
+                  <instructions>
+                     <nsh_interface>org.apache.aries.blueprint.NamespaceHandler</nsh_interface>
+                     <nsh_namespace>osgi.service.blueprint.namespace</nsh_namespace>
+                     <_removeheaders>Private-Package,Include-Resource,Embed-Dependency,Created-By,Bnd-LastModified,Built-By,Tool</_removeheaders>
+                     <_versionpolicy>${bnd.version.policy}</_versionpolicy>
+                     <Bundle-DocURL>http://karaf.apache.org/</Bundle-DocURL>
+                  </instructions>
+               </configuration>
+               <executions>
+                  <execution>
+                     <id>cleanVersions</id>
+                     <phase>generate-sources</phase>
+                     <goals>
+                        <goal>cleanVersions</goal>
+                     </goals>
+                     <configuration>
+                        <versions>
+                           <karaf.osgi.version>${project.version}</karaf.osgi.version>
+                        </versions>
+                     </configuration>
+                  </execution>
+               </executions>
+            </plugin>
+
+            <plugin>
+               <groupId>org.apache.karaf.tooling</groupId>
+               <artifactId>karaf-maven-plugin</artifactId>
+               <version>${karaf.version}</version>
+            </plugin>
+            <plugin>
+               <groupId>org.codehaus.mojo</groupId>
+               <artifactId>build-helper-maven-plugin</artifactId>
+               <version>1.9.1</version>
+            </plugin>
+
+            <plugin>
+               <groupId>com.mycila</groupId>
+               <artifactId>license-maven-plugin</artifactId>
+               <version>4.3</version>
+               <executions>
+                  <execution>
+                     <id>check-licences</id>
+                     <phase>process-sources</phase>
+                     <goals>
+                        <goal>check</goal>
+                     </goals>
+                  </execution>
+               </executions>
+               <configuration>
+                  <properties>
+                     <owner>The OpenNMS Group, Inc.</owner>
+                     <email>license@opennms.com</email>
+                  </properties>
+                  <licenseSets>
+                     <licenseSet>
+                        <header>src/main/resources/license-header.txt</header>
+                        <!-- some of these excludes are aspirational, for when we expand this beyond the basics 😅 -->
+                        <excludes>
+                           <!-- short term, let's exclude everything but c/c++/groovy/java/js/ts -->
+                           <exclude>**/*.css</exclude>
+                           <exclude>**/*.ftl</exclude>
+                           <exclude>**/*.groovy</exclude>
+                           <exclude>**/*.html</exclude>
+                           <exclude>**/*.pl</exclude>
+                           <exclude>**/*.properties</exclude>
+                           <exclude>**/*.proto</exclude>
+                           <exclude>**/*.py</exclude>
+                           <exclude>**/*.sh</exclude>
+                           <exclude>**/*.txt</exclude>
+                           <exclude>**/*.TXT</exclude>
+                           <exclude>**/*.vm</exclude>
+                           <exclude>**/*.xml</exclude>
+                           <exclude>**/*.xsd</exclude>
+                           <exclude>**/*.xsl</exclude>
+                           <exclude>**/*.yaml</exclude>
+                           <exclude>**/*.yml</exclude>
+
+                           <!-- other top-level or specific excludes -->
+                           <exclude>**/*.adoc</exclude>
+                           <exclude>**/*.d.ts</exclude>
+                           <exclude>**/*.md</exclude>
+                           <exclude>**/pom.xml</exclude>
+
+
+                           <!-- top-level src/ contents -->
+                           <exclude>src/main/resources/license-header.txt</exclude>
+                           <exclude>src/main/resources/nms_checks.xml</exclude>
+                           <exclude>src/site/site.xml</exclude>
+                           <exclude>src/test/resources/test-data.sql</exclude>
+                        </excludes>
+                     </licenseSet>
+                  </licenseSets>
+               </configuration>
+            </plugin>
+
+
+            <!-- this plugin just allows the project to load in eclipse without execution errors -->
+            <plugin>
+               <groupId>org.eclipse.m2e</groupId>
+               <artifactId>lifecycle-mapping</artifactId>
+               <version>1.0.0</version>
+               <configuration>
+                  <lifecycleMappingMetadata>
+                     <pluginExecutions>
+                        <pluginExecution>
+                           <pluginExecutionFilter>
+                              <groupId>org.apache.maven.plugins</groupId>
+                              <artifactId>maven-dependency-plugin</artifactId>
+                              <versionRange>[0,)</versionRange>
+                              <goals>
+                                 <goal>unpack</goal>
+                                 <goal>copy</goal>
+                              </goals>
+                           </pluginExecutionFilter>
+                           <action>
+                              <!-- <execute /> -->
+                              <ignore />
+                           </action>
+                        </pluginExecution>
+                        <pluginExecution>
+                           <pluginExecutionFilter>
+                              <groupId>org.eclipse.jetty</groupId>
+                              <artifactId>jetty-maven-plugin</artifactId>
+                              <versionRange>[0,)</versionRange>
+                              <goals>
+                                 <goal>start</goal>
+                                 <goal>stop</goal>
+                              </goals>
+                           </pluginExecutionFilter>
+                           <action>
+                              <!-- <execute /> -->
+                              <ignore />
+                           </action>
+                        </pluginExecution>
+
+                     </pluginExecutions>
+                  </lifecycleMappingMetadata>
+               </configuration>
+            </plugin>
+         </plugins>
+
+      </pluginManagement>
+
+   </build>
+
+   <profiles>
+      <profile>
+         <id>test-licence</id>
+         <build>
+            <plugins>
+               <plugin>
+                  <groupId>com.mycila</groupId>
+                  <artifactId>license-maven-plugin</artifactId>
+                  <executions>
+                     <execution>
+                        <id>check-licences</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                           <goal>check</goal>
+                        </goals>
+                     </execution>
+                  </executions>
+               </plugin>
+            </plugins>
+         </build>
+      </profile>
+   </profiles>
+
+   <!-- <profiles> -->
+   <!-- <profile> -->
+   <!-- <id>enable.license</id> -->
+   <!-- <activation> -->
+   <!-- <property> -->
+   <!-- <name>enable.license</name> -->
+   <!-- <value>true</value> -->
+   <!-- </property> -->
+   <!-- </activation> -->
+   <!-- <build> -->
+   <!-- <plugins> -->
+   <!-- <plugin> -->
+   <!-- <groupId>com.mycila</groupId> -->
+   <!-- <artifactId>license-maven-plugin</artifactId> -->
+   <!-- <executions> -->
+   <!-- <execution> -->
+   <!-- <id>check-licences</id> -->
+   <!-- <phase>process-sources</phase> -->
+   <!-- <goals> -->
+   <!-- <goal>check</goal> -->
+   <!-- </goals> -->
+   <!-- </execution> -->
+   <!-- </executions> -->
+   <!-- </plugin> -->
+
+   <!-- </plugins> -->
+   <!-- </build> -->
+   <!-- </profile> -->
+   <!-- </profiles> -->
+
+
+   <dependencyManagement>
+      <dependencies>
+         <dependency>
+            <groupId>org.apache.karaf</groupId>
+            <artifactId>karaf-bom</artifactId>
+            <version>${karaf.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+         </dependency>
+
+         <dependency>
+            <groupId>org.opennms.integration.api</groupId>
+            <artifactId>api</artifactId>
+            <version>${opennms.api.version.min}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.opennms.integration.api</groupId>
+            <artifactId>common</artifactId>
+            <version>${opennms.api.version.min}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4jVersion}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j2Version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit-version}</version>
+         </dependency>
+
+      </dependencies>
+   </dependencyManagement>
+
+
+
+</project>

@@ -1,0 +1,4126 @@
+FES-STATUS-MIB DEFINITIONS ::= BEGIN
+
+-- Copyright: (c) 2006 SED Systems, a division of Calian Ltd.
+
+-- Version: 1.0
+-- Source:  C:\sedsystems/wdir/project/xml/Snmp/\FES-STATUS-MIB-NorthLasVegas.xml
+-- Created: 31 May 2007 19:09:53
+
+-- MODIFIED cgallen - replaced SYNTAX      DateAndTime with  SYNTAX      OCTET STRING (SIZE (8 | 11))
+-- as snmpsim cannot generate values - this constraint comes from SNMPv2-TC
+
+IMPORTS
+	Gauge32, Integer32, IpAddress, MODULE-IDENTITY, OBJECT-TYPE, enterprises
+		FROM SNMPv2-SMI
+	AutonomousType, DateAndTime, DisplayString, RowStatus
+		FROM SNMPv2-TC;
+
+mnc MODULE-IDENTITY
+	LAST-UPDATED "200705311909Z"
+	ORGANIZATION "SED Systems, a division of Calian Ltd."
+	CONTACT-INFO "http://www.sedsystems.ca/"
+	DESCRIPTION  "The HNS Terrestar MIB document"
+	::= { enterprises 9633 7 }
+
+-- sed begins
+
+sed OBJECT IDENTIFIER ::= { enterprises 9633 }
+
+-- sed ends
+
+-- mncStatus begins
+
+mncStatus OBJECT IDENTIFIER ::= { mnc 2 }
+
+-- mncStatus ends
+
+-- mncSummaryStatus begins
+
+mncSummaryStatus OBJECT IDENTIFIER ::= { mncStatus 100 }
+
+-- mncSummaryStatus ends
+
+-- mncSummaryStatus begins
+
+mncSystemStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		functional(1),
+		nonfunctional(2),
+		unknown(3),
+		degraded(4)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "MNC System Status."
+	::= { mncSummaryStatus 100 }
+
+mncMIBVersion OBJECT-TYPE
+	SYNTAX      DisplayString (SIZE (0..255))
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Indicates the MNC MIB Version Number."
+	::= { mncSummaryStatus 101 }
+
+mncServerOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		serverA(1),
+		serverB(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The online MNC server."
+	::= { mncSummaryStatus 102 }
+
+mncServerSoftwareVersion OBJECT-TYPE
+	SYNTAX      DisplayString (SIZE (0..255))
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Indicates the MNC Server Software Version Number."
+	::= { mncSummaryStatus 103 }
+
+-- mncSummaryStatus ends
+
+-- mncOverallStatus begins
+
+mncOverallStatus OBJECT IDENTIFIER ::= { mncStatus 200 }
+
+-- mncOverallStatus ends
+
+-- mncOverallStatus begins
+
+rxStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		functional(1),
+		nonfunctional(2),
+		unknown(3),
+		degraded(4)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Receive Summary Status."
+	::= { mncOverallStatus 200 }
+
+txStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		functional(1),
+		nonfunctional(2),
+		unknown(3),
+		degraded(4)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Transmit Summary Status."
+	::= { mncOverallStatus 201 }
+
+primaryTrackingStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		functional(1),
+		nonfunctional(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary Antenna Tracking Summary Status."
+	::= { mncOverallStatus 202 }
+
+backupTrackingStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		functional(1),
+		nonfunctional(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Backup Antenna Tracking Summary Status."
+	::= { mncOverallStatus 203 }
+
+-- mncOverallStatus ends
+
+-- mncIFEquipmentSelectStatus begins
+
+mncIFEquipmentSelectStatus OBJECT IDENTIFIER ::= { mncStatus 300 }
+
+-- mncIFEquipmentSelectStatus ends
+
+-- mncIFEquipmentSelectStatus begins
+
+rxChannelUnitGroup1SpareOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		none(1),
+		cu1(2),
+		cu2(3),
+		cu3(4),
+		cu4(5),
+		cu5(6),
+		unknown(7)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Which channel unit in receive channel unit group 1 that the spare is currently switched in for."
+	::= { mncIFEquipmentSelectStatus 300 }
+
+rxChannelUnitGroup2SpareOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		none(1),
+		cu1(2),
+		cu2(3),
+		cu3(4),
+		cu4(5),
+		cu5(6),
+		unknown(7)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Which channel unit in receive channel unit group 2 that the spare is currently switched in for."
+	::= { mncIFEquipmentSelectStatus 301 }
+
+rxChannelUnitGroup3SpareOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		none(1),
+		cu1(2),
+		cu2(3),
+		cu3(4),
+		cu4(5),
+		cu5(6),
+		unknown(7)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Which channel unit in receive channel unit group 3 that the spare is currently switched in for."
+	::= { mncIFEquipmentSelectStatus 302 }
+
+rxChannelUnitGroup4SpareOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		none(1),
+		cu1(2),
+		cu2(3),
+		cu3(4),
+		cu4(5),
+		cu5(6),
+		unknown(7)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Which channel unit in receive channel unit group 4 that the spare is currently switched in for."
+	::= { mncIFEquipmentSelectStatus 303 }
+
+rxChannelUnitGroup1SpareOutputCU OBJECT-TYPE
+	SYNTAX      INTEGER {
+		spare(1),
+		cu1(2),
+		cu2(3),
+		cu3(4),
+		cu4(5),
+		cu5(6),
+		unknown(7)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Which channel unit in receive channel unit group 1 that the spare output is currently switched to."
+	::= { mncIFEquipmentSelectStatus 304 }
+
+rxChannelUnitGroup2SpareOutputCU OBJECT-TYPE
+	SYNTAX      INTEGER {
+		spare(1),
+		cu1(2),
+		cu2(3),
+		cu3(4),
+		cu4(5),
+		cu5(6),
+		unknown(7)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Which channel unit in receive channel unit group 2 that the spare output is currently switched to."
+	::= { mncIFEquipmentSelectStatus 305 }
+
+rxChannelUnitGroup3SpareOutputCU OBJECT-TYPE
+	SYNTAX      INTEGER {
+		spare(1),
+		cu1(2),
+		cu2(3),
+		cu3(4),
+		cu4(5),
+		cu5(6),
+		unknown(7)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Which channel unit in receive channel unit group 3 that the spare output is currently switched to."
+	::= { mncIFEquipmentSelectStatus 306 }
+
+rxChannelUnitGroup4SpareOutputCU OBJECT-TYPE
+	SYNTAX      INTEGER {
+		spare(1),
+		cu1(2),
+		cu2(3),
+		cu3(4),
+		cu4(5),
+		cu5(6),
+		unknown(7)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Which channel unit in receive channel unit group 3 that the spare output is currently switched to."
+	::= { mncIFEquipmentSelectStatus 307 }
+
+txChannelUnitGroup1SpareOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		none(1),
+		cu1(2),
+		cu2(3),
+		cu3(4),
+		cu4(5),
+		unknown(6)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Which channel unit in transmit channel unit group 1 that the spare is currently switched in for."
+	::= { mncIFEquipmentSelectStatus 308 }
+
+txChannelUnitGroup2SpareOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		none(1),
+		cu1(2),
+		cu2(3),
+		cu3(4),
+		cu4(5),
+		unknown(6)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Which channel unit in transmit channel unit group 2 that the spare is currently switched in for."
+	::= { mncIFEquipmentSelectStatus 309 }
+
+txChannelUnitGroup1SpareInputCU OBJECT-TYPE
+	SYNTAX      INTEGER {
+		spare(1),
+		cu1(2),
+		cu2(3),
+		cu3(4),
+		cu4(5),
+		unknown(6)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Which channel unit in transmit channel unit group 1 that the spare input is currently switched to."
+	::= { mncIFEquipmentSelectStatus 310 }
+
+txChannelUnitGroup2SpareInputCU OBJECT-TYPE
+	SYNTAX      INTEGER {
+		spare(1),
+		cu1(2),
+		cu2(3),
+		cu3(4),
+		cu4(5),
+		unknown(6)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Which channel unit in transmit channel unit group 2 that the spare input is currently switched to."
+	::= { mncIFEquipmentSelectStatus 311 }
+
+-- mncIFEquipmentSelectStatus ends
+
+-- mncRFEquipmentSelectStatus begins
+
+mncRFEquipmentSelectStatus OBJECT IDENTIFIER ::= { mncStatus 400 }
+
+-- mncRFEquipmentSelectStatus ends
+
+-- mncRFEquipmentSelectStatus begins
+
+payloadPilotRcvrOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		pilotReceiver1(1),
+		pilotReceiver2(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Payload Pilot Receiver Online."
+	::= { mncRFEquipmentSelectStatus 400 }
+
+rhcpCommBDCOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		primary(1),
+		spare(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "RHCP Communication BDC Online."
+	::= { mncRFEquipmentSelectStatus 401 }
+
+lhcpCommBDCOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		primary(1),
+		spare(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "LHCP Communication BDC Online."
+	::= { mncRFEquipmentSelectStatus 402 }
+
+rxOscillatorOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		oscillator1(1),
+		oscillator2(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Receive Oscillator Online."
+	::= { mncRFEquipmentSelectStatus 403 }
+
+primaryLhcpLnaOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		lna1(1),
+		lna1A(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary LHCP LNA Online."
+	::= { mncRFEquipmentSelectStatus 404 }
+
+primaryRhcpLnaOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		lna2(1),
+		lna2A(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary RHCP LNA Online."
+	::= { mncRFEquipmentSelectStatus 405 }
+
+backupLhcpLnaOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		lna1(1),
+		lna1A(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Backup LHCP LNA Online."
+	::= { mncRFEquipmentSelectStatus 406 }
+
+backupRhcpLnaOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		lna2(1),
+		lna2A(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Backup RHCP LNA Online."
+	::= { mncRFEquipmentSelectStatus 407 }
+
+spectrumAnalyzerOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		spectrumAnalyzer1(1),
+		spectrumAnalyzer2(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Spectrum Analyzer Online."
+	::= { mncRFEquipmentSelectStatus 408 }
+
+cmdTxPathOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		path1(1),
+		path2(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Command Transmit Path Online."
+	::= { mncRFEquipmentSelectStatus 409 }
+
+lhcpCommTxPathOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		primaryPath(1),
+		sparePath(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "LHCP Communications Transmit Path Online."
+	::= { mncRFEquipmentSelectStatus 410 }
+
+rhcpCommTxPathOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		primaryPath(1),
+		sparePath(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "RHCP Communications Transmit Path Online."
+	::= { mncRFEquipmentSelectStatus 411 }
+
+txOscillatorOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		oscillator1(1),
+		oscillator2(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Transmit Oscillator Online."
+	::= { mncRFEquipmentSelectStatus 412 }
+
+pilotGeneratorOnline OBJECT-TYPE
+	SYNTAX      INTEGER {
+		primary(1),
+		spare(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Pilot Generator Online."
+	::= { mncRFEquipmentSelectStatus 413 }
+
+activeCommTxAntenna OBJECT-TYPE
+	SYNTAX      INTEGER {
+		primary(1),
+		backup(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Active Communications Transmit Antenna."
+	::= { mncRFEquipmentSelectStatus 414 }
+
+activeCmdTxAntenna OBJECT-TYPE
+	SYNTAX      INTEGER {
+		primary(1),
+		backup(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Active Command Transmit Antenna."
+	::= { mncRFEquipmentSelectStatus 415 }
+
+activeRxAntenna OBJECT-TYPE
+	SYNTAX      INTEGER {
+		primary(1),
+		backup(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Active Receive Antenna."
+	::= { mncRFEquipmentSelectStatus 416 }
+
+-- mncRFEquipmentSelectStatus ends
+
+-- mncIFRxStatus begins
+
+mncIFRxStatus OBJECT IDENTIFIER ::= { mncStatus 1000 }
+
+-- mncIFRxStatus ends
+
+-- mncIFRxStatus begins
+
+rxChannelUnit1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 1 status."
+	::= { mncIFRxStatus 1000 }
+
+rxChannelUnit2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 2 status."
+	::= { mncIFRxStatus 1001 }
+
+rxChannelUnit3Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 3 status."
+	::= { mncIFRxStatus 1002 }
+
+rxChannelUnit4Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 4 status."
+	::= { mncIFRxStatus 1003 }
+
+rxChannelUnit5Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 5 status."
+	::= { mncIFRxStatus 1004 }
+
+rxChannelUnit6Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 6 status."
+	::= { mncIFRxStatus 1005 }
+
+rxChannelUnit7Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 7 status."
+	::= { mncIFRxStatus 1006 }
+
+rxChannelUnit8Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 8 status."
+	::= { mncIFRxStatus 1007 }
+
+rxChannelUnit9Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 9 status."
+	::= { mncIFRxStatus 1008 }
+
+rxChannelUnit10Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 10 status."
+	::= { mncIFRxStatus 1009 }
+
+rxChannelUnit11Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 11 status."
+	::= { mncIFRxStatus 1010 }
+
+rxChannelUnit12Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 12 status."
+	::= { mncIFRxStatus 1011 }
+
+rxChannelUnit13Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 13 status."
+	::= { mncIFRxStatus 1012 }
+
+rxChannelUnit14Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 14 status."
+	::= { mncIFRxStatus 1013 }
+
+rxChannelUnit15Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 15 status."
+	::= { mncIFRxStatus 1014 }
+
+rxChannelUnit16Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 16 status."
+	::= { mncIFRxStatus 1015 }
+
+rxChannelUnit17Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 17 status."
+	::= { mncIFRxStatus 1016 }
+
+rxChannelUnit18Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 18 status."
+	::= { mncIFRxStatus 1017 }
+
+rxChannelUnit19Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 19 status."
+	::= { mncIFRxStatus 1018 }
+
+rxChannelUnit20Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 20 status."
+	::= { mncIFRxStatus 1019 }
+
+rxChannelUnit21Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 21 status."
+	::= { mncIFRxStatus 1020 }
+
+rxChannelUnit22Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 22 status."
+	::= { mncIFRxStatus 1021 }
+
+rxChannelUnit23Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 23 status."
+	::= { mncIFRxStatus 1022 }
+
+rxChannelUnit24Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx Channel Unit 24 status."
+	::= { mncIFRxStatus 1023 }
+
+downlinkLhcpCUChassis1TempSensorStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink LHCP Channel Unit Chassis 1 Temperature Sensor."
+	::= { mncIFRxStatus 1024 }
+
+downlinkLhcpCUChassis2TempSensorStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink LHCP Channel Unit Chassis 2 Temperature Sensor."
+	::= { mncIFRxStatus 1025 }
+
+downlinkRhcpCUChassis1TempSensorStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RHCP Channel Unit Chassis 1 Temperature Sensor."
+	::= { mncIFRxStatus 1026 }
+
+downlinkRhcpCUChassis2TempSensorStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RHCP Channel Unit Chassis 2 Temperature Sensor."
+	::= { mncIFRxStatus 1027 }
+
+-- mncIFRxStatus ends
+
+-- mncIFTxStatus begins
+
+mncIFTxStatus OBJECT IDENTIFIER ::= { mncStatus 1100 }
+
+-- mncIFTxStatus ends
+
+-- mncIFTxStatus begins
+
+txChannelUnit1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Tx Channel Unit 1 status."
+	::= { mncIFTxStatus 1100 }
+
+txChannelUnit2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Tx Channel Unit 2 status."
+	::= { mncIFTxStatus 1101 }
+
+txChannelUnit3Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Tx Channel Unit 3 status."
+	::= { mncIFTxStatus 1102 }
+
+txChannelUnit4Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Tx Channel Unit 4 status."
+	::= { mncIFTxStatus 1103 }
+
+txChannelUnit5Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Tx Channel Unit 5 status."
+	::= { mncIFTxStatus 1104 }
+
+txChannelUnit6Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Tx Channel Unit 6 status."
+	::= { mncIFTxStatus 1105 }
+
+txChannelUnit7Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Tx Channel Unit 7 status."
+	::= { mncIFTxStatus 1106 }
+
+txChannelUnit8Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Tx Channel Unit 8 status."
+	::= { mncIFTxStatus 1107 }
+
+txChannelUnit9Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Tx Channel Unit 9 status."
+	::= { mncIFTxStatus 1108 }
+
+txChannelUnit10Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Tx Channel Unit 10 status."
+	::= { mncIFTxStatus 1109 }
+
+uplinkLhcpCUChassisTempSensorStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink LHCP Channel Unit Chassis Temperature Sensor."
+	::= { mncIFTxStatus 1110 }
+
+uplinkRhcpCUChassisTempSensorStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink RHCP Channel Unit Chassis Temperature Sensor."
+	::= { mncIFTxStatus 1111 }
+
+-- mncIFTxStatus ends
+
+-- mncIFMiscStatus begins
+
+mncIFMiscStatus OBJECT IDENTIFIER ::= { mncStatus 1200 }
+
+-- mncIFMiscStatus ends
+
+-- mncIFMiscStatus begins
+
+-- mncIFMiscStatus ends
+
+-- mncRFRxStatus begins
+
+mncRFRxStatus OBJECT IDENTIFIER ::= { mncStatus 1300 }
+
+-- mncRFRxStatus ends
+
+-- mncRFRxStatus begins
+
+payloadPilotRcvr1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Payload Pilot Receiver 1 status."
+	::= { mncRFRxStatus 1300 }
+
+payloadPilotRcvr2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Payload Pilot Receiver 2 status."
+	::= { mncRFRxStatus 1301 }
+
+tlmDC1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Telemetry Downconverter 1 status."
+	::= { mncRFRxStatus 1302 }
+
+tlmDC2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Telemetry Downconverter 2 status."
+	::= { mncRFRxStatus 1303 }
+
+tlmDC3Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Telemetry Downconverter 3 status."
+	::= { mncRFRxStatus 1304 }
+
+rhcpCommBDCPrimaryStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "RHCP Communication Primary Block Downconverter status."
+	::= { mncRFRxStatus 1305 }
+
+rhcpCommBDCSpareStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "RHCP Communication Spare Block Downconverter status."
+	::= { mncRFRxStatus 1306 }
+
+lhcpCommBDCPrimaryStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "LHCP Communication Primary Block Downconverter status."
+	::= { mncRFRxStatus 1307 }
+
+lhcpCommBDCSpareStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "LHCP Communication Spare Block Downconverter status."
+	::= { mncRFRxStatus 1308 }
+
+rxOscillator1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Receive Oscillator 1 status."
+	::= { mncRFRxStatus 1309 }
+
+rxOscillator2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Receive Oscillator 2 status."
+	::= { mncRFRxStatus 1310 }
+
+primaryLhcpLna1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary LHCP LNA 1 status."
+	::= { mncRFRxStatus 1311 }
+
+primaryLhcpLna1AStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary LHCP LNA 1A status."
+	::= { mncRFRxStatus 1312 }
+
+primaryRhcpLna2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary RHCP LNA 2 status."
+	::= { mncRFRxStatus 1313 }
+
+primaryRhcpLna2AStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary RHCP LNA 2A status."
+	::= { mncRFRxStatus 1314 }
+
+primaryLnaControllerStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary LNA Controller status."
+	::= { mncRFRxStatus 1315 }
+
+backupLhcpLna1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Backup LHCP LNA 1 status."
+	::= { mncRFRxStatus 1316 }
+
+backupLhcpLna1AStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Backup LHCP LNA 1A status."
+	::= { mncRFRxStatus 1317 }
+
+backupRhcpLna2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Backup RHCP LNA 2 status."
+	::= { mncRFRxStatus 1318 }
+
+backupRhcpLna2AStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Backup RHCP LNA 2A status."
+	::= { mncRFRxStatus 1319 }
+
+backupLnaControllerStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Backup LNA Controller status."
+	::= { mncRFRxStatus 1320 }
+
+-- mncRFRxStatus ends
+
+-- mncRFTxStatus begins
+
+mncRFTxStatus OBJECT IDENTIFIER ::= { mncStatus 1400 }
+
+-- mncRFTxStatus ends
+
+-- mncRFTxStatus begins
+
+cmdUC1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Command Upconverter 1 status."
+	::= { mncRFTxStatus 1400 }
+
+cmdUC2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Command Upconverter 2 status."
+	::= { mncRFTxStatus 1401 }
+
+cmdTwta1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Command TWTA 1 status."
+	::= { mncRFTxStatus 1402 }
+
+cmdTwta2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Command TWTA 2 status."
+	::= { mncRFTxStatus 1403 }
+
+lhcpCommBUCPrimaryStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary Communications LHCP Block Upconverter status."
+	::= { mncRFTxStatus 1404 }
+
+lhcpCommBUCSpareStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Spare Communications LHCP Block Upconverter status."
+	::= { mncRFTxStatus 1405 }
+
+rhcpCommBUCPrimaryStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary Communications RHCP Block Upconverter status."
+	::= { mncRFTxStatus 1406 }
+
+rhcpCommBUCSpareStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Spare Communications RHCP Block Upconverter status."
+	::= { mncRFTxStatus 1407 }
+
+lhcpCommTwtaPrimaryStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary Communications LHCP TWTA status."
+	::= { mncRFTxStatus 1408 }
+
+lhcpCommTwtaSpareStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Spare Communications LHCP TWTA status."
+	::= { mncRFTxStatus 1409 }
+
+rhcpCommTwtaPrimaryStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary Communications RHCP TWTA status."
+	::= { mncRFTxStatus 1410 }
+
+rhcpCommTwtaSpareStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Spare Communications RHCP TWTA status."
+	::= { mncRFTxStatus 1411 }
+
+txOscillator1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Transmit Oscillator 1 status."
+	::= { mncRFTxStatus 1412 }
+
+txOscillator2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Transmit Oscillator 2 status."
+	::= { mncRFTxStatus 1413 }
+
+pilotGenerator1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Pilot Generator 1 status."
+	::= { mncRFTxStatus 1414 }
+
+pilotGenerator2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Pilot Generator 2 status."
+	::= { mncRFTxStatus 1415 }
+
+primaryPathAttenuatorControllerStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary Path Attenuator Controller status."
+	::= { mncRFTxStatus 1416 }
+
+backupPathAttenuatorControllerStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Backup Path Attenuator Controller status."
+	::= { mncRFTxStatus 1417 }
+
+-- mncRFTxStatus ends
+
+-- mncRFMiscStatus begins
+
+mncRFMiscStatus OBJECT IDENTIFIER ::= { mncStatus 1500 }
+
+-- mncRFMiscStatus ends
+
+-- mncRFMiscStatus begins
+
+acuPrimaryStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary Antenna ACU status."
+	::= { mncRFMiscStatus 1500 }
+
+acuBackupStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Backup Antenna ACU status."
+	::= { mncRFMiscStatus 1501 }
+
+tltPrimaryStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary Antenna TLT status."
+	::= { mncRFMiscStatus 1502 }
+
+tltBackupStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Backup Antenna TLT status."
+	::= { mncRFMiscStatus 1503 }
+
+deicerPrimaryStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary Antenna Deicer status."
+	::= { mncRFMiscStatus 1504 }
+
+deicerBackupStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Backup Antenna Deicer status."
+	::= { mncRFMiscStatus 1505 }
+
+dehydrator1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Dehydrator 1 status."
+	::= { mncRFMiscStatus 1506 }
+
+spectrumAnalyzer1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Spectrum Analyzer 1 status."
+	::= { mncRFMiscStatus 1507 }
+
+spectrumAnalyzer2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Spectrum Analyzer 2 status."
+	::= { mncRFMiscStatus 1508 }
+
+dehydrator2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Dehydrator 2 status."
+	::= { mncRFMiscStatus 1509 }
+
+hvac1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "HVAC 1 status."
+	::= { mncRFMiscStatus 1510 }
+
+hvac2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "HVAC 2 status."
+	::= { mncRFMiscStatus 1511 }
+
+-- mncRFMiscStatus ends
+
+-- mncMiscStatus begins
+
+mncMiscStatus OBJECT IDENTIFIER ::= { mncStatus 1600 }
+
+-- mncMiscStatus ends
+
+-- mncMiscStatus begins
+
+uplinkMCUStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink MCU status."
+	::= { mncMiscStatus 1600 }
+
+downlinkMCUStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink MCU status."
+	::= { mncMiscStatus 1601 }
+
+systemPowerSupply1Module1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "System Power Supply 1 Module 1 status."
+	::= { mncMiscStatus 1602 }
+
+systemPowerSupply1Module2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "System Power Supply 1 Module 2 status."
+	::= { mncMiscStatus 1603 }
+
+systemPowerSupply1Module3Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "System Power Supply 1 Module 3 status."
+	::= { mncMiscStatus 1604 }
+
+systemPowerSupply1Module4Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "System Power Supply 1 Module 4 status."
+	::= { mncMiscStatus 1605 }
+
+systemPowerSupply2Module1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "System Power Supply 2 Module 1 status."
+	::= { mncMiscStatus 1606 }
+
+systemPowerSupply2Module2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "System Power Supply 2 Module 2 status."
+	::= { mncMiscStatus 1607 }
+
+ttcRackFanTrayStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "TTC Rack Fan Tray status."
+	::= { mncMiscStatus 1610 }
+
+ulpcRackFanTrayStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "ULPC Rack Fan Tray status."
+	::= { mncMiscStatus 1611 }
+
+hpa1RackFanTrayStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "HPA 1 Rack Fan Tray status."
+	::= { mncMiscStatus 1612 }
+
+hpa2RackFanTrayStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "HPA 2 Rack Fan Tray status."
+	::= { mncMiscStatus 1613 }
+
+uplinkRackFanTrayStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink Rack Fan Tray status."
+	::= { mncMiscStatus 1614 }
+
+downlinkLhcpFanTrayStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink LHCP Rack Fan Tray status."
+	::= { mncMiscStatus 1615 }
+
+downlinkRhcpFanTrayStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RHCP Rack Fan Tray status."
+	::= { mncMiscStatus 1616 }
+
+ttcRackTempSensor1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "TTC Rack Temperature Sensor 1 status."
+	::= { mncMiscStatus 1617 }
+
+ttcRackTempSensor2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "TTC Rack Temperature Sensor 2 status."
+	::= { mncMiscStatus 1618 }
+
+ulpcRackTempSensor1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "ULPC Rack Temperature Sensor 1 status."
+	::= { mncMiscStatus 1619 }
+
+ulpcRackTempSensor2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "ULPC Rack Temperature Sensor 2 status."
+	::= { mncMiscStatus 1620 }
+
+hpa1RackTempSensor1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "HPA 1 Rack Temperature Sensor 1 status."
+	::= { mncMiscStatus 1621 }
+
+hpa1RackTempSensor2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "HPA 1 Rack Temperature Sensor 2 status."
+	::= { mncMiscStatus 1622 }
+
+hpa2RackTempSensor1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "HPA 2 Rack Temperature Sensor 1 status."
+	::= { mncMiscStatus 1623 }
+
+hpa2RackTempSensor2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "HPA 2 Rack Temperature Sensor 2 status."
+	::= { mncMiscStatus 1624 }
+
+uplinkRackTempSensor1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink Rack Temperature Sensor 1 status."
+	::= { mncMiscStatus 1625 }
+
+uplinkRackTempSensor2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink Rack Temperature Sensor 2 status."
+	::= { mncMiscStatus 1626 }
+
+downlinkLhcpRackTempSensor1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink LHCP Rack Temperature Sensor 1 status."
+	::= { mncMiscStatus 1627 }
+
+downlinkLhcpRackTempSensor2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink LHCP Rack Temperature Sensor 2 status."
+	::= { mncMiscStatus 1628 }
+
+downlinkRhcpRackTempSensor1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RHCP Rack Temperature Sensor 1 status."
+	::= { mncMiscStatus 1629 }
+
+downlinkRhcpRackTempSensor2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RHCP Rack Temperature Sensor 2 status."
+	::= { mncMiscStatus 1630 }
+
+pprDistAmp1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "PPR Distribution Amp 1 status."
+	::= { mncMiscStatus 1631 }
+
+pprDistAmp2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "PPR Distribution Amp 2 status."
+	::= { mncMiscStatus 1632 }
+
+pprDistAmp3Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "PPR Distribution Amp 3 status."
+	::= { mncMiscStatus 1633 }
+
+tenMhzDistAmp1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "10 Mhz Distribution Amp 1 status."
+	::= { mncMiscStatus 1634 }
+
+tenMhzDistAmp2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "10 Mhz Distribution Amp 2 status."
+	::= { mncMiscStatus 1635 }
+
+tenMhzDistAmp3Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "10 Mhz Distribution Amp 3 status."
+	::= { mncMiscStatus 1636 }
+
+mncAServerStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "MNC A Server status."
+	::= { mncMiscStatus 1637 }
+
+mncBServerStatus OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "MNC B Server status."
+	::= { mncMiscStatus 1638 }
+
+systemPowerSupply3Module1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "System Power Supply 3 Module 1 status."
+	::= { mncMiscStatus 1639 }
+
+systemPowerSupply3Module2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "System Power Supply 3 Module 2 status."
+	::= { mncMiscStatus 1640 }
+
+systemPowerSupply3Module3Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "System Power Supply 3 Module 3 status."
+	::= { mncMiscStatus 1641 }
+
+systemPowerSupply3Module4Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "System Power Supply 3 Module 4 status."
+	::= { mncMiscStatus 1642 }
+
+systemPowerSupply2Module3Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "System Power Supply 2 Module 3 status."
+	::= { mncMiscStatus 1643 }
+
+systemPowerSupply2Module4Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "System Power Supply 2 Module 4 status."
+	::= { mncMiscStatus 1644 }
+
+systemPowerSupply4Module1Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "System Power Supply 4 Module 1 status."
+	::= { mncMiscStatus 1645 }
+
+systemPowerSupply4Module2Status OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "System Power Supply 4 Module 2 status."
+	::= { mncMiscStatus 1646 }
+
+-- mncMiscStatus ends
+
+-- mncIFSwitchConfiguration begins
+
+mncIFSwitchConfiguration OBJECT IDENTIFIER ::= { mncStatus 1700 }
+
+-- mncIFSwitchConfiguration ends
+
+-- mncIFSwitchConfiguration begins
+
+sw110Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink IF EG 1 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1700 }
+
+sw111Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink IF EG 2 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1701 }
+
+sw112Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink IF EG 3 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1702 }
+
+sw113Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink IF EG 4 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1703 }
+
+sw120Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink RF EG 1 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1704 }
+
+sw121Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink RF EG 2 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1705 }
+
+sw122Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink RF EG 3 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1706 }
+
+sw123Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink RF EG 4 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1707 }
+
+sw130Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink IF EG 6 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1708 }
+
+sw131Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink IF EG 7 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1709 }
+
+sw132Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink IF EG 8 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1710 }
+
+sw133Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink IF EG 9 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1711 }
+
+sw140Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink RF EG 6 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1712 }
+
+sw141Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink RF EG 7 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1713 }
+
+sw142Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink RF EG 8 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1714 }
+
+sw143Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Uplink RF EG 9 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1715 }
+
+sw210Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink IF EG 1 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1716 }
+
+sw211Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink IF EG 2 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1717 }
+
+sw212Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink IF EG 3 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1718 }
+
+sw213Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink IF EG 4 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1719 }
+
+sw214Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink IF EG 5 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1720 }
+
+sw220Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RF EG 1 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1721 }
+
+sw221Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RF EG 2 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1722 }
+
+sw222Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RF EG 3 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1723 }
+
+sw223Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RF EG 4 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1724 }
+
+sw224Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RF EG 5 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1725 }
+
+sw230Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink IF EG 13 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1726 }
+
+sw231Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink IF EG 14 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1727 }
+
+sw232Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink IF EG 15 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1728 }
+
+sw233Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink IF EG 16 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1729 }
+
+sw234Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink IF EG 17 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1730 }
+
+sw240Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RF EG 13 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1731 }
+
+sw241Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RF EG 14 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1732 }
+
+sw242Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RF EG 15 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1733 }
+
+sw243Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RF EG 16 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1734 }
+
+sw244Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RF EG 17 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1735 }
+
+sw310Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink IF EG 7 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1736 }
+
+sw311Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink IF EG 8 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1737 }
+
+sw312Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink IF EG 9 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1738 }
+
+sw313Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink IF EG 10 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1739 }
+
+sw314Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink IF EG 11 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1740 }
+
+sw320Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RF EG 7 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1741 }
+
+sw321Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RF EG 8 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1742 }
+
+sw322Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RF EG 9 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1743 }
+
+sw323Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RF EG 10 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1744 }
+
+sw324Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RF EG 11 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1745 }
+
+sw330Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink IF EG 19 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1746 }
+
+sw331Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink IF EG 20 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1747 }
+
+sw332Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink IF EG 21 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1748 }
+
+sw333Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink IF EG 22 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1749 }
+
+sw334Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink IF EG 23 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1750 }
+
+sw340Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RF EG 19 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1751 }
+
+sw341Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RF EG 20 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1752 }
+
+sw342Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RF EG 21 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1753 }
+
+sw343Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RF EG 22 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1754 }
+
+sw344Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Downlink RF EG 23 Redundancy Switch Position"
+	::= { mncIFSwitchConfiguration 1755 }
+
+-- mncIFSwitchConfiguration ends
+
+-- mncRFSwitchConfiguration begins
+
+mncRFSwitchConfiguration OBJECT IDENTIFIER ::= { mncStatus 1800 }
+
+-- mncRFSwitchConfiguration ends
+
+-- mncRFSwitchConfiguration begins
+
+sw124Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Pilot Switch Position"
+	::= { mncRFSwitchConfiguration 1800 }
+
+sw144Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Tx PLO Switch Position"
+	::= { mncRFSwitchConfiguration 1801 }
+
+sw225Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary/Backup LHCP Rx Select Switch Position"
+	::= { mncRFSwitchConfiguration 1802 }
+
+sw245Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Rx PLO Switch Position"
+	::= { mncRFSwitchConfiguration 1803 }
+
+sw246Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "LHCP D/C Switch Position"
+	::= { mncRFSwitchConfiguration 1804 }
+
+sw247Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "PPR Switch Position"
+	::= { mncRFSwitchConfiguration 1805 }
+
+sw325Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary/Backup RHCP Rx Select Switch Position"
+	::= { mncRFSwitchConfiguration 1806 }
+
+sw345Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "RHCP D/C Switch Position"
+	::= { mncRFSwitchConfiguration 1807 }
+
+sw501Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Telemetry D/C 1 Switch Position"
+	::= { mncRFSwitchConfiguration 1808 }
+
+sw502Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Telemetry D/C 2 Switch Position"
+	::= { mncRFSwitchConfiguration 1809 }
+
+sw503Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Telemetry D/C 3 Switch Position"
+	::= { mncRFSwitchConfiguration 1810 }
+
+sw601Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "LHCP TWTA Terminate Switch Position"
+	::= { mncRFSwitchConfiguration 1811 }
+
+sw602Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "LHCP TWTA Select Switch Position"
+	::= { mncRFSwitchConfiguration 1812 }
+
+sw603Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Communications LHCP Tx Antenna Select Switch Position"
+	::= { mncRFSwitchConfiguration 1813 }
+
+sw604Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "RHCP TWTA Terminate Switch Position"
+	::= { mncRFSwitchConfiguration 1814 }
+
+sw605Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "RHCP TWTA Select Switch Position"
+	::= { mncRFSwitchConfiguration 1815 }
+
+sw606Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Communications RHCP Tx Antenna Select Switch Position"
+	::= { mncRFSwitchConfiguration 1816 }
+
+sw607Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Command TWTA Terminate Switch Position"
+	::= { mncRFSwitchConfiguration 1817 }
+
+sw608Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Command TWTA Select Switch Position"
+	::= { mncRFSwitchConfiguration 1818 }
+
+sw609Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Command TWTA Antenna Select Switch Position"
+	::= { mncRFSwitchConfiguration 1819 }
+
+sw701Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary Tx Sample Polarizaiton Select Switch Position"
+	::= { mncRFSwitchConfiguration 1820 }
+
+sw702Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary TLT Output Select Switch Position"
+	::= { mncRFSwitchConfiguration 1821 }
+
+sw703Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary Rx Inject Polarization Select Switch Position"
+	::= { mncRFSwitchConfiguration 1822 }
+
+sw704Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "WG Primary LHCP LNA Select Switch Position"
+	::= { mncRFSwitchConfiguration 1823 }
+
+sw705Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary LHCP LNA Select Switch Position"
+	::= { mncRFSwitchConfiguration 1824 }
+
+sw706Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "WG Primary RHCP LNA Select Switch Position"
+	::= { mncRFSwitchConfiguration 1825 }
+
+sw707Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Primary RHCP LNA Select Switch Position"
+	::= { mncRFSwitchConfiguration 1826 }
+
+sw801Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Backup Tx Sample Polarization Select Switch Position"
+	::= { mncRFSwitchConfiguration 1827 }
+
+sw802Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Backup TLT Output Select Switch Position"
+	::= { mncRFSwitchConfiguration 1828 }
+
+sw803Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Backup Rx Inject Polarization Select Switch Position"
+	::= { mncRFSwitchConfiguration 1829 }
+
+sw804Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "WG Backup LHCP LNA Select Position"
+	::= { mncRFSwitchConfiguration 1830 }
+
+sw805Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Backup LHCP LNA Select Switch Position"
+	::= { mncRFSwitchConfiguration 1831 }
+
+sw806Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "WG Backup RHCP LNA Select Switch Position"
+	::= { mncRFSwitchConfiguration 1832 }
+
+sw807Position OBJECT-TYPE
+	SYNTAX      INTEGER {
+		unknown(1),
+		failed(2),
+		none(3),
+		position1(4),
+		position2(5)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Backup RHCP LNA Select Switch Position"
+	::= { mncRFSwitchConfiguration 1833 }
+
+-- mncRFSwitchConfiguration ends
+
+-- mncRFRxEquipmentConfiguration begins
+
+mncRFRxEquipmentConfiguration OBJECT IDENTIFIER ::= { mncStatus 1900 }
+
+-- mncRFRxEquipmentConfiguration ends
+
+-- mncRFRxEquipmentConfiguration begins
+
+tlmDc1Freq OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The current frequency setting in MHz (3 digits of precision)"
+	::= { mncRFRxEquipmentConfiguration 1900 }
+
+tlmDc1Mute OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether or not mute is on"
+	::= { mncRFRxEquipmentConfiguration 1901 }
+
+tlmDc2Freq OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The current frequency setting in MHz (3 digits of precision)"
+	::= { mncRFRxEquipmentConfiguration 1902 }
+
+tlmDc2Mute OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether or not mute is on"
+	::= { mncRFRxEquipmentConfiguration 1903 }
+
+tlmDc3Freq OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The current frequency setting in MHz (3 digits of precision)"
+	::= { mncRFRxEquipmentConfiguration 1904 }
+
+tlmDc3Mute OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether or not mute is on"
+	::= { mncRFRxEquipmentConfiguration 1905 }
+
+rhcpCommBdc1Mute OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether or not mute is on"
+	::= { mncRFRxEquipmentConfiguration 1906 }
+
+rhcpCommBdc2Mute OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether or not mute is on"
+	::= { mncRFRxEquipmentConfiguration 1907 }
+
+lhcpCommBdc1Mute OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether or not mute is on"
+	::= { mncRFRxEquipmentConfiguration 1908 }
+
+lhcpCommBdc2Mute OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether or not mute is on"
+	::= { mncRFRxEquipmentConfiguration 1909 }
+
+payloadPilotReceiver1SignalLevel OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The current PPR signal level in dBm (1 digit of precision)"
+	::= { mncRFRxEquipmentConfiguration 1910 }
+
+payloadPilotReceiver2SignalLevel OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The current PPR signal level in dBm (1 digit of precision)"
+	::= { mncRFRxEquipmentConfiguration 1911 }
+
+-- mncRFRxEquipmentConfiguration ends
+
+-- mncRFTxEquipmentConfiguration begins
+
+mncRFTxEquipmentConfiguration OBJECT IDENTIFIER ::= { mncStatus 2000 }
+
+-- mncRFTxEquipmentConfiguration ends
+
+-- mncRFTxEquipmentConfiguration begins
+
+cmdUc1Freq OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The current frequency setting in MHz (3 digits of precision)"
+	::= { mncRFTxEquipmentConfiguration 2000 }
+
+cmdUc1Mute OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether or not mute is on."
+	::= { mncRFTxEquipmentConfiguration 2001 }
+
+cmdUc2Freq OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The current frequency setting in MHz (3 digits of precision)"
+	::= { mncRFTxEquipmentConfiguration 2002 }
+
+cmdUc2Mute OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether or not mute is on."
+	::= { mncRFTxEquipmentConfiguration 2003 }
+
+cmdTwta1TxReady OBJECT-TYPE
+	SYNTAX      INTEGER {
+		no(1),
+		yes(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether the MNC believes the HPA is ready to transmit, based on other attributes like RF inhibit, and transmit selected."
+	::= { mncRFTxEquipmentConfiguration 2004 }
+
+cmdTwta1OutputPower OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The output power in dBW (1 digit of precision)"
+	::= { mncRFTxEquipmentConfiguration 2005 }
+
+cmdTwta1Attenuation OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Attenuation setting in dB (1 digit of precision)"
+	::= { mncRFTxEquipmentConfiguration 2006 }
+
+cmdTwta1AlcMode OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether or not the HPA has auto level control turned on"
+	::= { mncRFTxEquipmentConfiguration 2007 }
+
+cmdTwta2TxReady OBJECT-TYPE
+	SYNTAX      INTEGER {
+		no(1),
+		yes(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether the MNC believes the HPA is ready to transmit, based on other attributes like RF inhibit, and transmit selected."
+	::= { mncRFTxEquipmentConfiguration 2008 }
+
+cmdTwta2OutputPower OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The output power in dBW (1 digit of precision)"
+	::= { mncRFTxEquipmentConfiguration 2009 }
+
+cmdTwta2Attenuation OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Attenuation setting in dB (1 digit of precision)"
+	::= { mncRFTxEquipmentConfiguration 2010 }
+
+cmdTwta2AlcMode OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether or not the HPA has auto level control turned on"
+	::= { mncRFTxEquipmentConfiguration 2011 }
+
+lhcpCommBucPrimaryMute OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether or not mute is on."
+	::= { mncRFTxEquipmentConfiguration 2012 }
+
+lhcpCommBucSpareMute OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether or not mute is on."
+	::= { mncRFTxEquipmentConfiguration 2013 }
+
+rhcpCommBucPrimaryMute OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether or not mute is on."
+	::= { mncRFTxEquipmentConfiguration 2014 }
+
+rhcpCommBucSpareMute OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether or not mute is on."
+	::= { mncRFTxEquipmentConfiguration 2015 }
+
+lhcpCommTwtaPrimaryTxReady OBJECT-TYPE
+	SYNTAX      INTEGER {
+		no(1),
+		yes(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether the MNC believes the HPA is ready to transmit, based on other attributes like RF inhibit, and transmit selected."
+	::= { mncRFTxEquipmentConfiguration 2016 }
+
+lhcpCommTwtaPrimaryOutputPower OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The output power in dBW (1 digit of precision)"
+	::= { mncRFTxEquipmentConfiguration 2017 }
+
+lhcpCommTwtaPrimaryAttenuation OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Attenuation setting in dB (1 digit of precision)"
+	::= { mncRFTxEquipmentConfiguration 2018 }
+
+lhcpCommTwtaPrimaryAlcMode OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether or not the HPA has auto level control turned on"
+	::= { mncRFTxEquipmentConfiguration 2019 }
+
+lhcpCommTwtaSpareTxReady OBJECT-TYPE
+	SYNTAX      INTEGER {
+		no(1),
+		yes(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether the MNC believes the HPA is ready to transmit, based on other attributes like RF inhibit, and transmit selected."
+	::= { mncRFTxEquipmentConfiguration 2020 }
+
+lhcpCommTwtaSpareOutputPower OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The output power in dBW (1 digit of precision)"
+	::= { mncRFTxEquipmentConfiguration 2021 }
+
+lhcpCommTwtaSpareAttenuation OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Attenuation setting in dB (1 digit of precision)"
+	::= { mncRFTxEquipmentConfiguration 2022 }
+
+lhcpCommTwtaSpareAlcMode OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether or not the HPA has auto level control turned on"
+	::= { mncRFTxEquipmentConfiguration 2023 }
+
+rhcpCommTwtaPrimaryTxReady OBJECT-TYPE
+	SYNTAX      INTEGER {
+		no(1),
+		yes(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether the MNC believes the HPA is ready to transmit, based on other attributes like RF inhibit, and transmit selected."
+	::= { mncRFTxEquipmentConfiguration 2024 }
+
+rhcpCommTwtaPrimaryOutputPower OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The output power in dBW (1 digit of precision)"
+	::= { mncRFTxEquipmentConfiguration 2025 }
+
+rhcpCommTwtaPrimaryAttenuation OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Attenuation setting in dB (1 digit of precision)"
+	::= { mncRFTxEquipmentConfiguration 2026 }
+
+rhcpCommTwtaPrimaryAlcMode OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether or not the HPA has auto level control turned on"
+	::= { mncRFTxEquipmentConfiguration 2027 }
+
+rhcpCommTwtaSpareTxReady OBJECT-TYPE
+	SYNTAX      INTEGER {
+		no(1),
+		yes(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether the MNC believes the HPA is ready to transmit, based on other attributes like RF inhibit, and transmit selected."
+	::= { mncRFTxEquipmentConfiguration 2028 }
+
+rhcpCommTwtaSpareOutputPower OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The output power in dBW (1 digit of precision)"
+	::= { mncRFTxEquipmentConfiguration 2029 }
+
+rhcpCommTwtaSpareAttenuation OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Attenuation setting in dB (1 digit of precision)"
+	::= { mncRFTxEquipmentConfiguration 2030 }
+
+rhcpCommTwtaSpareAlcMode OBJECT-TYPE
+	SYNTAX      INTEGER {
+		off(1),
+		on(2)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Whether or not the HPA has auto level control turned on"
+	::= { mncRFTxEquipmentConfiguration 2031 }
+
+-- mncRFTxEquipmentConfiguration ends
+
+-- mncRFMiscEquipmentConfiguration begins
+
+mncRFMiscEquipmentConfiguration OBJECT IDENTIFIER ::= { mncStatus 2100 }
+
+-- mncRFMiscEquipmentConfiguration ends
+
+-- mncRFMiscEquipmentConfiguration begins
+
+acuPrimaryCurrentAz OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The primary antenna ACU current azimuth in degrees (3 digits of precision)."
+	::= { mncRFMiscEquipmentConfiguration 2100 }
+
+acuPrimaryCurrentEl OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The primary antenna ACU current elevation in degrees (3 digits of precision)."
+	::= { mncRFMiscEquipmentConfiguration 2101 }
+
+acuPrimaryTimeTaggedAz OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The primary antenna ACU time tagged azimuth in degrees (3 digits of precision)."
+	::= { mncRFMiscEquipmentConfiguration 2102 }
+
+acuPrimaryTimeTaggedEl OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The primary antenna ACU time tagged elevation in degrees (3 digits of precision)."
+	::= { mncRFMiscEquipmentConfiguration 2103 }
+
+acuPrimaryTimeTag OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (8 | 11))
+--	SYNTAX      DateAndTime
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The primary antenna ACU time tag."
+	::= { mncRFMiscEquipmentConfiguration 2104 }
+
+acuPrimaryTrackingSignalLevel OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The primary antenna ACU tracking signal level in dB (2 digits of precision)"
+	::= { mncRFMiscEquipmentConfiguration 2105 }
+
+acuPrimaryTrackingMode OBJECT-TYPE
+	SYNTAX      INTEGER {
+		standby(1),
+		moveToPointingAngles(2),
+		moveToLatLong(3),
+		intelsatElementTracking(4),
+		steptrack(5),
+		orbitPredictionTracking(6),
+		nORADElementTracking(7),
+		startTracking(8),
+		monopulseOPT(9),
+		stow(10),
+		unstow(11),
+		moonTracking(12),
+		manualAntennaControl(13),
+		awaitingNextScheduledTarget(14),
+		restoringLastTarget(15),
+		restoringTargetScheduler(16),
+		monopulseTransferOrbitTracking(17),
+		memoryTrack(18),
+		orbitalElementTracking(19),
+		sunTracking(20)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The primary antenna ACU tracking mode."
+	::= { mncRFMiscEquipmentConfiguration 2106 }
+
+acuPrimaryTrackingSubmode OBJECT-TYPE
+	SYNTAX      INTEGER {
+		none(1),
+		manuallyBiasingTarget(2),
+		acquiringTarget(3),
+		holdingTargetPosition(4),
+		holdingPresetPosition(5),
+		trackingTargetUsingModel(6),
+		steptrackingPeakingAzimuth(7),
+		steptrackingPeakingElevation(8),
+		steptrackingPeakingBothAxes(9),
+		awaitingNextSteptrackCycle(10),
+		performingStowOperations(11),
+		orbitScan(12),
+		monopulseCalibration(13),
+		monopulseActive(14),
+		holdingPosition(15),
+		trackingRemoteData(16),
+		monopulseActiveWithoutOPT(17),
+		manualRateSearch(18),
+		acquiringStartPosition(19),
+		holdingStartPosition(20),
+		usingInterpolatedData(21),
+		tableExpired(22),
+		waitingFor3PhasePowerLossToClear(23),
+		trackingTargetUsingSGP4(24),
+		trackingTargetUsingSDP4(25),
+		trackingHoldInitiatedByMNC(26)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The primary antenna ACU tracking sub mode."
+	::= { mncRFMiscEquipmentConfiguration 2107 }
+
+acuBackupCurrentAz OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The backup antenna ACU current azimuth in degrees (3 digits of precision)."
+	::= { mncRFMiscEquipmentConfiguration 2108 }
+
+acuBackupCurrentEl OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The backup antenna ACU current elevation in degrees (3 digits of precision)."
+	::= { mncRFMiscEquipmentConfiguration 2109 }
+
+acuBackupTimeTaggedAz OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The backup antenna ACU time tagged azimuth in degrees (3 digits of precision)."
+	::= { mncRFMiscEquipmentConfiguration 2110 }
+
+acuBackupTimeTaggedEl OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The backup antenna ACU time tagged elevation in degrees (3 digits of precision)."
+	::= { mncRFMiscEquipmentConfiguration 2111 }
+
+acuBackupTimeTag OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE (8 | 11))
+--	SYNTAX      DateAndTime
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The backup antenna ACU time tag."
+	::= { mncRFMiscEquipmentConfiguration 2112 }
+
+acuBackupTrackingSignalLevel OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The backup antenna ACU tracking signal level in dB (2 digits of precision)"
+	::= { mncRFMiscEquipmentConfiguration 2113 }
+
+acuBackupTrackingMode OBJECT-TYPE
+	SYNTAX      INTEGER {
+		standby(1),
+		moveToPointingAngles(2),
+		moveToLatLong(3),
+		intelsatElementTracking(4),
+		steptrack(5),
+		orbitPredictionTracking(6),
+		nORADElementTracking(7),
+		startTracking(8),
+		monopulseOPT(9),
+		stow(10),
+		unstow(11),
+		moonTracking(12),
+		manualAntennaControl(13),
+		awaitingNextScheduledTarget(14),
+		restoringLastTarget(15),
+		restoringTargetScheduler(16),
+		monopulseTransferOrbitTracking(17),
+		memoryTrack(18),
+		orbitalElementTracking(19),
+		sunTracking(20)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The backup antenna ACU tracking mode."
+	::= { mncRFMiscEquipmentConfiguration 2114 }
+
+acuBackupTrackingSubmode OBJECT-TYPE
+	SYNTAX      INTEGER {
+		none(1),
+		manuallyBiasingTarget(2),
+		acquiringTarget(3),
+		holdingTargetPosition(4),
+		holdingPresetPositionCannotTrack(5),
+		trackingTargetUsingModel(6),
+		steptrackingPeakingAzimuth(7),
+		steptrackingPeakingElevation(8),
+		steptrackingPeakingBothAxes(9),
+		awaitingNextSteptrackCycle(10),
+		performingStowOperations(11),
+		orbitScan(12),
+		monopulseCalibration(13),
+		monopulseActive(14),
+		holdingPositionAwaitingTarget(15),
+		trackingRemoteData(16),
+		monopulseActiveWithoutOPT(17),
+		manualRateSearch(18),
+		acquiringStartPosition(19),
+		holdingStartPositionAwaitingStartTime(20),
+		usingInterpolatedData(21),
+		tableExpiredAwaitingNewData(22),
+		waitingFor3PhasePowerLossToClear(23),
+		trackingTargetUsingSGP4(24),
+		trackingTargetUsingSDP4(25),
+		trackingHoldInitiatedByMNC(26)
+	}
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The backup antenna ACU tracking sub mode."
+	::= { mncRFMiscEquipmentConfiguration 2115 }
+
+-- mncRFMiscEquipmentConfiguration ends
+
+-- mncTrap begins
+
+mncTrap OBJECT IDENTIFIER ::= { mnc 1 }
+
+-- mncTrap ends
+
+-- trapDestinationTableTable begins
+
+trapDestinationTableTable OBJECT-TYPE
+	SYNTAX      SEQUENCE OF TrapDestinationTableEntry
+	MAX-ACCESS  not-accessible
+	STATUS      current
+	DESCRIPTION "Read only table of currently configured trap destinations."
+	::= { mncTrap 3000 }
+
+trapDestinationTableEntry OBJECT-TYPE
+	SYNTAX      TrapDestinationTableEntry
+	MAX-ACCESS  not-accessible
+	STATUS      current
+	DESCRIPTION "A row in the trapDestinationTableTable."
+	INDEX { destinationIndex }
+	::= { trapDestinationTableTable 1 }
+
+TrapDestinationTableEntry ::= SEQUENCE {
+	destinationIndex Integer32,
+	destinationIp IpAddress,
+	destinationStatus RowStatus
+	}
+
+destinationIndex OBJECT-TYPE
+	SYNTAX      Integer32(0..255)
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The index for the trapDestinationTable."
+	::= { trapDestinationTableEntry 1 }
+
+destinationIp OBJECT-TYPE
+	SYNTAX      IpAddress
+	MAX-ACCESS  read-write
+	STATUS      current
+	DESCRIPTION "IP address to which traps are sent."
+	::= { trapDestinationTableEntry 2 }
+
+destinationStatus OBJECT-TYPE
+	SYNTAX      RowStatus
+	MAX-ACCESS  read-create
+	STATUS      current
+	DESCRIPTION "The status of this program entry."
+	::= { trapDestinationTableEntry 3 }
+
+-- trapDestinationTableTable ends
+
+-- mncTrap begins
+
+mncTrapSeverity OBJECT-TYPE
+	SYNTAX      INTEGER {
+		critical(1),
+		major(2),
+		minor(3),
+		warning(4),
+		cleared(5)
+	}
+	MAX-ACCESS  accessible-for-notify
+	STATUS      current
+	DESCRIPTION "Trap severity."
+	::= { mncTrap 3001 }
+
+mncTrapSource OBJECT-TYPE
+	SYNTAX      DisplayString (SIZE (0..255))
+	MAX-ACCESS  accessible-for-notify
+	STATUS      current
+	DESCRIPTION "Trap source."
+	::= { mncTrap 3002 }
+
+mncPreviousState OBJECT-TYPE
+	SYNTAX      INTEGER {
+		ok(1),
+		alarm(2),
+		unknown(3)
+	}
+	MAX-ACCESS  accessible-for-notify
+	STATUS      current
+	DESCRIPTION "Previous state."
+	::= { mncTrap 3003 }
+
+-- mncTrap ends
+
+-- trapControls begins
+
+trapControls OBJECT IDENTIFIER ::= { mncTrap 3100 }
+
+-- trapControls ends
+
+-- SnmpHost begins
+
+trapsAddControl OBJECT-TYPE
+	SYNTAX      IpAddress
+	MAX-ACCESS  read-write
+	STATUS      current
+	DESCRIPTION "Write an IP address to this location to add the IP address to the list of trap destinations."
+	::= { trapControls 3100 }
+
+trapsDeleteControl OBJECT-TYPE
+	SYNTAX      IpAddress
+	MAX-ACCESS  read-write
+	STATUS      current
+	DESCRIPTION "Write an IP address to this destination to remove it from the list of trap destinations."
+	::= { trapControls 3101 }
+
+trapsEquipmentLevelControl OBJECT-TYPE
+	SYNTAX      INTEGER {
+		send(1),
+		stop(2)
+	}
+	MAX-ACCESS  read-write
+	STATUS      current
+	DESCRIPTION "Enable or disable the sending of equipment related traps"
+	::= { trapControls 3102 }
+
+trapsSystemLevelControl OBJECT-TYPE
+	SYNTAX      INTEGER {
+		send(1),
+		stop(2)
+	}
+	MAX-ACCESS  read-write
+	STATUS      current
+	DESCRIPTION "Enable or disable the sending of system related traps"
+	::= { trapControls 3103 }
+
+-- SnmpHost ends
+
+-- systemResources begins
+
+systemResources OBJECT IDENTIFIER ::= { mncStatus 10 }
+
+-- systemResources ends
+
+-- systemResources begins
+
+mncCpuLoad OBJECT-TYPE
+	SYNTAX      Gauge32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "The current percent CPU usage."
+	::= { systemResources 100 }
+
+-- systemResources ends
+
+-- mncStorageTable begins
+
+mncStorageTable OBJECT-TYPE
+	SYNTAX      SEQUENCE OF MncStorageEntry
+	MAX-ACCESS  not-accessible
+	STATUS      current
+	DESCRIPTION "Storage status."
+	::= { systemResources 200 }
+
+mncStorageEntry OBJECT-TYPE
+	SYNTAX      MncStorageEntry
+	MAX-ACCESS  not-accessible
+	STATUS      current
+	DESCRIPTION "A row in the mncStorageTable."
+	INDEX { mncStorageIndex }
+	::= { mncStorageTable 1 }
+
+MncStorageEntry ::= SEQUENCE {
+	mncStorageIndex Integer32,
+	mncStorageType AutonomousType,
+	mncStorageDescr DisplayString,
+	mncStorageAllocationUnits Integer32,
+	mncStorageSize Integer32,
+	mncStorageUsed Integer32
+	}
+
+mncStorageIndex OBJECT-TYPE
+	SYNTAX      Integer32(0..255)
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Index of storage device."
+	::= { mncStorageEntry 1 }
+
+mncStorageType OBJECT-TYPE
+	SYNTAX      AutonomousType
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Storage type."
+	::= { mncStorageEntry 2 }
+
+mncStorageDescr OBJECT-TYPE
+	SYNTAX      DisplayString (SIZE (0..255))
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Description of storage device (eg: name of fixed disk, physical memory, swap space)."
+	::= { mncStorageEntry 3 }
+
+mncStorageAllocationUnits OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Unit used to represent storage size and storage used (in bytes)."
+	::= { mncStorageEntry 4 }
+
+mncStorageSize OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Storage capacity in hrStorageAllocationUnits."
+	::= { mncStorageEntry 5 }
+
+mncStorageUsed OBJECT-TYPE
+	SYNTAX      Integer32
+	MAX-ACCESS  read-only
+	STATUS      current
+	DESCRIPTION "Storage capacity used in hrStorageAllocationUnits."
+	::= { mncStorageEntry 6 }
+
+-- mncStorageTable ends
+
+END

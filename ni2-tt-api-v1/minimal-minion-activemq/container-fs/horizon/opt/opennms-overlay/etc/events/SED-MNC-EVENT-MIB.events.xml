@@ -1,0 +1,115 @@
+<events xmlns="http://xmlns.opennms.org/xsd/eventconf">
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.9633.2.2.1.1.2</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>1</mevalue>
+         </maskelement>
+      </mask>
+      <uei>uei.opennms.org/traps/SED-MNC-EVENT-AND-ALARM-MIB/mncSnmpStartupTrap</uei>
+      <event-label>SED-MNC-EVENT-AND-ALARM-MIB defined trap event: mncSnmpStartupTrap</event-label>
+      <descr>
+&lt;p>This trap is sent when a MNC event and alarm SNMP software starts/restarts.&lt;/p>&lt;table>&lt;/table>
+	</descr>
+      <logmsg dest="logndisplay">&lt;p>
+	mncSnmpStartupTrap trap received&lt;/p>
+	</logmsg>
+      <severity>Indeterminate</severity>
+   </event>
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.9633.2.2.1.2.2</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>2</mevalue>
+         </maskelement>
+      </mask>
+      <uei>uei.opennms.org/traps/SED-MNC-EVENT-AND-ALARM-MIB/sedMncEventTrap</uei>
+      <event-label>SED-MNC-EVENT-AND-ALARM-MIB defined trap event: sedMncEventTrap</event-label>
+      <descr>
+&lt;p>This trap is sent when a MNC event has been update by the MNC.&lt;/p>&lt;table>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamEventKeyServerGroup&lt;/b>&lt;/td>&lt;td>
+	%parm[#1]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamEventKeySystemId&lt;/b>&lt;/td>&lt;td>
+	%parm[#2]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamEventKeySourceId&lt;/b>&lt;/td>&lt;td>
+	%parm[#3]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamEventKeyEventId&lt;/b>&lt;/td>&lt;td>
+	%parm[#4]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamEventSerialNumber&lt;/b>&lt;/td>&lt;td>
+	%parm[#5]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamEventDescription&lt;/b>&lt;/td>&lt;td>
+	%parm[#6]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamEventCategory&lt;/b>&lt;/td>&lt;td>
+	%parm[#7]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamEventSeverity&lt;/b>&lt;/td>&lt;td>
+	%parm[#8]%;&lt;/td>&lt;td>&lt;p>
+		good(0)
+		none(1)
+		noneWarning(2)
+		warning(3)
+		minor(4)
+		major(5)
+		critical(6)
+	&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamEventTime&lt;/b>&lt;/td>&lt;td>
+	%parm[#9]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+	</descr>
+      <logmsg dest="logndisplay">&lt;p>
+	sedMncEventTrap trap received
+	eamEventKeyServerGroup=%parm[#1]%
+	eamEventKeySystemId=%parm[#2]%
+	eamEventKeySourceId=%parm[#3]%
+	eamEventKeyEventId=%parm[#4]%
+	eamEventSerialNumber=%parm[#5]%
+	eamEventDescription=%parm[#6]%
+	eamEventCategory=%parm[#7]%
+	eamEventSeverity=%parm[#8]%
+	eamEventTime=%parm[#9]%&lt;/p>
+	</logmsg>
+      <severity>Indeterminate</severity>
+      <varbindsdecode>
+         <parmid>parm[#8]</parmid>
+         <decode varbindvalue="0" varbinddecodedstring="good"/>
+         <decode varbindvalue="1" varbinddecodedstring="none"/>
+         <decode varbindvalue="2" varbinddecodedstring="noneWarning"/>
+         <decode varbindvalue="3" varbinddecodedstring="warning"/>
+         <decode varbindvalue="4" varbinddecodedstring="minor"/>
+         <decode varbindvalue="5" varbinddecodedstring="major"/>
+         <decode varbindvalue="6" varbinddecodedstring="critical"/>
+      </varbindsdecode>
+   </event>
+</events>

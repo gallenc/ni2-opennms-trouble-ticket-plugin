@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="ni2-ticketing-features" xmlns="http://karaf.apache.org/xmlns/features/v1.4.0">
+   <repository>mvn:org.opennms.integration.api/karaf-features/${opennms.api.version.min}/xml</repository>
+
+   <feature name="ni2-ticketing" description="OpenNMS :: OPA :: Ticketing :: Ni2" version="${project.version}">
+      <feature>aries-blueprint</feature>
+      <requirement>osgi.service;effective:=active;filter:=(objectClass=org.osgi.service.http.HttpService)</requirement>
+
+      <feature version="${cxf.version}" dependency="true">cxf-jaxrs</feature>
+      <bundle dependency="true">mvn:com.fasterxml.jackson.core/jackson-core/${jackson.version}</bundle>
+      <bundle dependency="true">mvn:com.fasterxml.jackson.core/jackson-annotations/${jackson.version}</bundle>
+      <bundle dependency="true">mvn:com.fasterxml.jackson.core/jackson-databind/${jackson.version}</bundle>
+      <bundle dependency="true">mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/${jackson.version}</bundle>
+      <bundle dependency="true">mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/${jackson.version}</bundle>
+      <bundle dependency="true">mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-yaml/${jackson.version}</bundle>
+
+      <!-- ADDED SO THAT cxf-jaxr feature loads in opennms -->
+      <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-rs-json-basic/${cxf.version}</bundle>
+      <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-rs-extension-providers/${cxf.version}</bundle>
+      <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-rs-client/${cxf.version}</bundle>
+      <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-rs-extension-search/${cxf.version}</bundle>
+
+      <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-rs-service-description/${cxf.version}</bundle>
+      <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-frontend-jaxrs/${cxf.version}</bundle>
+      <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-security/${cxf.version}</bundle>
+
+      <bundle dependency="true">mvn:org.apache.cxf.karaf/cxf-karaf-commands/${cxf.version}</bundle>
+      <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-security/${cxf.version}</bundle>
+
+      <bundle dependency="true">mvn:org.codehaus.jettison/jettison/1.5.3</bundle>
+
+
+      <!-- <feature version="${cxf-version}">cxf-bindings-soap</feature> -->
+      <!-- <feature version="${cxf-version}">cxf-databinding-jaxb</feature> -->
+      <!-- <feature version="${cxf-version}">cxf-http-client</feature> -->
+      <!-- <feature version="${cxf-version}">cxf-jaxb</feature> -->
+      <!-- <feature version="${cxf-version}">cxf-wsdl</feature> -->
+
+      <!-- the above features should already (mostly) be available in OpenNMS core, but the `cxf-jxc-runtime` feature isn't
+         there, so we're including a few things as an explicit bundle dependency so they show up in the .kar -->
+      <!-- <bundle start-level="35" dependency="true">mvn:org.apache.commons/commons-lang3/${commons-lang3.version}</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:org.apache.cxf.karaf/cxf-karaf-commands/${cxf-version}</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:jakarta.servlet/jakarta.servlet-api/4.0.4</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:org.apache.cxf/cxf-rt-frontend-simple/${cxf-version}</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:org.apache.cxf/cxf-rt-frontend-jaxws/${cxf-version}</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:org.apache.cxf.xjc-utils/cxf-xjc-runtime/${cxf-xjc.version}</bundle> -->
+
+      <!-- ADDED to allow install- not if all why needed -->
+      <!-- <bundle start-level="40" dependency="true">mvn:org.apache.cxf/cxf-rt-rs-client/${cxf-version}</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:org.apache.cxf/cxf-rt-frontend-jaxrs/${cxf-version}</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:org.apache.cxf.karaf/cxf-karaf-commands/3.5.5</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:io.swagger/swagger-annotations/1.5.22</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:org.slf4j/slf4j-api/${slf4jVersion}</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:jakarta.annotation/jakarta.annotation-api/${jakarta-annotation-version}</bundle> -->
+
+      <!-- end ADDED -->
+
+      <!-- cxf libraries and dependencies -->
+      <!-- taken from maven build of client -->
+      <!-- <bundle start-level="40" dependency="true">mvn:org.apache.cxf/cxf-rt-rs-client/3.5.5</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:org.apache.cxf/cxf-rt-transports-http/3.5.5</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:org.apache.cxf/cxf-core/3.5.5</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:org.glassfish.jaxb/jaxb-runtime/2.3.5</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:org.glassfish.jaxb/txw2/2.3.5</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:com.sun.istack/istack-commons-runtime/3.0.12</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:com.fasterxml.woodstox/woodstox-core/6.4.0</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:org.codehaus.woodstox/stax2-api/4.2.1</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:org.apache.ws.xmlschema/xmlschema-core/2.3.0</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:jakarta.xml.bind/jakarta.xml.bind-api/2.3.3</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:org.apache.cxf/cxf-rt-frontend-jaxrs/3.5.5</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:jakarta.ws.rs/jakarta.ws.rs-api/2.1.6</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:org.apache.cxf/cxf-rt-security/3.5.5</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:jakarta.xml.ws/jakarta.xml.ws-api/2.3.3</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:jakarta.jws/jakarta.jws-api/2.1.0</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:jakarta.xml.soap/jakarta.xml.soap-api/1.4.2</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:jakarta.activation/jakarta.activation-api/1.2.2</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:com.sun.activation/jakarta.activation/1.2.2</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:com.sun.xml.messaging.saaj/saaj-impl/1.5.3</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:org.jvnet.staxex/stax-ex/1.8.3</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:org.apache.geronimo.specs/geronimo-jta_1.1_spec/1.1.1</bundle> -->
+
+      <!-- <bundle start-level="40" dependency="true">mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/2.9.8</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/2.9.8</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/2.9.8</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:com.fasterxml.jackson.datatype/jackson-datatype-jsr310/2.9.8</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:com.fasterxml.jackson.core/jackson-annotations/2.9.0</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:com.fasterxml.jackson.core/jackson-core/2.9.8</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:com.fasterxml.jackson.core/jackson-databind/2.9.8</bundle> -->
+      <!-- <bundle start-level="40" dependency="true">mvn:jakarta.annotation/jakarta.annotation-api/1.3.5</bundle> -->
+
+
+      <!-- <bundle start-level="40" dependency="true">mvn:io.swagger/swagger-annotations/1.5.22</bundle> -->
+
+
+
+      <!-- opennms api dependencies -->
+      <feature dependency="true" version="[${opennms.api.version.min},${opennms.api.version.max})">opennms-integration-api</feature>
+
+      <!-- ni2 plugin dependencies -->
+      <!-- <bundle>mvn:org.opennms.integration.ni2.ttapi/ni2-api-cxf-client/${project.version}</bundle> -->
+      <bundle>mvn:org.opennms.integration.ni2.ttapi/ni2-tt-api-v1-model/${project.version}</bundle>
+      <bundle>mvn:org.opennms.integration.ni2.ttapi/ni2-tt-api-v1-core/${project.version}</bundle>
+
+      <config name="org.opennms.plugins.opa.ticketing.ni2">
+         ### Authentication
+
+         # the username to access Remedy
+         username=opennms
+
+         # the password to access Remedy
+         password=AReallyCoolPassword
+
+         # optional authentication type
+         #authentication=ARSystem
+
+         # optional locale and timezone to use in requests
+         #locale=en_US
+         #timezone=EST
+
+         ### Accessing the Remedy Web Services
+
+         # the endpoint URL and port name for the HPD web service
+         endpoint=http://172.20.0.76:8180/arsys/services/ARService?server=itts3h&amp;webService=HPD_IncidentInterface_WS
+         portname=HPD_IncidentInterface_WSPortTypeSoap
+
+         # the endpoint URL and port name for the Create-HPD web service
+         createendpoint=http://172.20.0.76:8180/arsys/services/ARService?server=itts3h&amp;webService=HPD_IncidentInterface_Create_WS
+         createportname=HPD_IncidentInterface_Create_WSPortTypeSoap
+
+         ### Ticket Creation and Service Information
+         #
+         # a colon-separated list of target groups for creating tickets
+         targetgroups=GroupA:GroupB
+
+         # for each target group, create an assignedroup, assignedsupportcompany, and assignedsupportorganization
+         assignedgroup.GroupA=Group A
+         assignedgroup.GroupB=Group B
+         assignedsupportcompany.GroupA=My Company
+         assignedsupportcompany.GroupB=My Company
+         assignedsupportorganization.GroupA=Monitoring Department
+         assignedsupportorganization.GroupB=Monitoring Department
+
+         # default assigned group
+         assignedgroup=GroupA
+         # default assigned support company
+         assignedsupportcompany=My Company
+         # default assigned support organization
+         assignedsupportorganization=Monitoring Department
+
+         # first and last name must match a user in Remedy
+         firstname=OpenNMS
+         lastname=User
+
+         # the serviceCI (required)
+         serviceCI=SomeServiceCI
+         # the serviceCIReconID (mandatory)
+         serviceCIReconID=RE00505688005e3s-nTg4KEI5gFSov
+
+         # categorization tiers (required)
+         categorizationtier1=Incident
+         categorizationtier2=Generic
+         categorizationtier3=Non bloccante
+
+         # service type (required, choose 1)
+         #serviceType=User Service Restoration
+         #serviceType=User Service Request
+         #serviceType=Infrastructure Restoration
+         serviceType=Infrastructure Event
+
+         # reported source (required, choose 1)
+         reportedSource=Direct Input
+         #reportedSource=Email
+         #reportedSource=External Escalation
+         #reportedSource=Fax
+         #reportedSource=Systems Management
+         #reportedSource=Phone
+         #reportedSource=Voice Mail
+         #reportedSource=Walk In
+         #reportedSource=Web
+         #reportedSource=Other
+
+         # impact (required, choose 1)
+         #impact=1-Extensive/Widespread
+         #impact=2-Significant/Large
+         #impact=3-Moderate/Limited
+         impact=4-Minor/Localized
+
+         # urgency (required, choose 1)
+         #urgency=1-Critical
+         #urgency=2-High
+         #urgency=3-Medium
+         urgency=4-Low
+
+         # the reason code used when reopening a ticket
+         reason.reopen=Pending Original Incident
+
+         # the reason code used when a ticket is closed by OpenNMS
+         reason.resolved=Automated Resolution Reported
+
+         # the reason code used when a ticket is cancelled in the OpenNMS GUI
+         reason.cancelled=No longer Valid
+
+         # the resolution used when a ticket is closed or cancelled
+         resolution=Closed from OpenNMS
+      </config>
+   </feature>
+
+</features>

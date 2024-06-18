@@ -1,0 +1,1 @@
+web: java -cp target/classes:target/dependency/* org.opennms.integration.ni2.ttapi.xxx.heroku.Main

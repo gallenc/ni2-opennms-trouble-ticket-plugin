@@ -1,0 +1,32 @@
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0" xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+   xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="
+               http://www.osgi.org/xmlns/blueprint/v1.0.0                  https://osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+               http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 https://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd
+               
+           ">
+
+   <!-- to load properties from opennms properties file see
+      https://stackoverflow.com/questions/15330471/aries-blueprint-in-karaf-can-a-blueprint-reference-an-external-properties-file -->
+   <!-- Allow the use of system properties -->
+   <ext:property-placeholder placeholder-prefix="$[" placeholder-suffix="]" />
+
+
+   <!-- Configuration properties -->
+   <!-- <cm:property-placeholder id="remedyProperties" persistent-id="org.opennms.plugins.opa.ticketing.remedy" update-strategy="reload"> -->
+   <!-- </cm:property-placeholder> -->
+
+   <reference id="configAdmin" interface="org.osgi.service.cm.ConfigurationAdmin" />
+
+   <bean id="ticketerPlugin" class="org.ni2.v01.api.tt.opennms.plugin.Ni2TicketerPlugin" init-method="init">
+      <!-- <argument ref="configAdmin" /> -->
+      <property name="ttServerUrl" value="$[ni2.tt.server.url]" />
+      <property name="ttUsername" value="$[ni2.tt.server.username]" />
+      <property name="ttPassword" value="$[ni2.tt.server.password]" />
+      <property name="ttTrustAllCertificates" value="$[ni2.tt.server.trustallcertificates]" />
+      <property name="onmsInstanceId" value="$[ni2.tt.opennms.instance]" />
+      <property name="fallbackResourceId" value="$[ni2.tt.opennms.fallbackresource]" />
+   </bean>
+
+   <service ref="ticketerPlugin" interface="org.opennms.integration.api.v1.ticketing.TicketingPlugin" />
+</blueprint>

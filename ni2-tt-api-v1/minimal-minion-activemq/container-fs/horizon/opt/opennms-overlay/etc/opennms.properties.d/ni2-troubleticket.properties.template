@@ -1,0 +1,36 @@
+# RENAME this file to test-properties.properties and change values
+# DO NOT check passwords into git
+
+# url of the Ni2 trouble ticket server
+ni2.tt.server.url=http://localhost:8080
+
+# username to access api
+ni2.tt.server.username=username
+
+# password to access api
+ni2.tt.server.password=password
+
+# if true the client will trust all TLS/HTTPS certificates from server
+ni2.tt.server.trustallcertificates=true
+
+# identify of the OpenNMS system sending tickets to the server
+ni2.tt.opennms.instance=OpenNMS1
+
+# resource id to be used if not passed in ticket attributes from drools
+ni2.tt.opennms.fallbackresource="set_fallback_resource";
+
+# see OpenNMS documentation https://docs.opennms.com/horizon/33/operation/deep-dive/ticketing/introduction.html
+
+opennms.ticketer.plugin=org.opennms.netmgt.ticketd.OSGiBasedTicketerPlugin
+
+opennms.alarmTroubleTicketEnabled=true
+
+# note this should be set up to get the url linking to the ticket
+opennms.alarmTroubleTicketLinkTemplate=http://localhost:8080/api/v1/entity/event/get/event/extended/${id}
+
+# this sets up rules for mapping values in alarms and nodes to tickets
+opennms.ticketer.servicelayer=org.opennms.netmgt.ticketd.DroolsTicketerServiceLayer
+
+## note you must also set the rules file in  /etc/drools-ticketer.properties 
+## drools-ticketer.rules-file=/opt/opennms/etc/ni2-drools-ticketer-rules.drl
+

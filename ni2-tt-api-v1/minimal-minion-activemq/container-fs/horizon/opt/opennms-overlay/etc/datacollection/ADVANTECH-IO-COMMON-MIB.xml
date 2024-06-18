@@ -1,0 +1,151 @@
+<datacollection-group xmlns="http://xmlns.opennms.org/xsd/config/datacollection" name="ADVANTECH-IO-COMMON-MIB">
+   <resourceType name="ioModuleEntry" label="ioModuleEntry" resourceLabel="${index}">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="firmwareEntry" label="firmwareEntry" resourceLabel="${index}">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="aiEntry" label="aiEntry" resourceLabel="${aiEnabled} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="aoEntry" label="aoEntry" resourceLabel="${aoCommWdt} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="diEntry" label="diEntry" resourceLabel="${diInverted} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="doEntry" label="doEntry" resourceLabel="${doCommWdt} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="counterEntry" label="counterEntry" resourceLabel="${counterValueRetained} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <group name="ioModuleTable" ifType="all">
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.1.1.1.1" instance="ioModuleEntry" alias="ioModuleIndex" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.1.1.1.2" instance="ioModuleEntry" alias="ioModuleSlotIndex" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.1.1.1.3" instance="ioModuleEntry" alias="ioModuleIdentify" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.1.1.1.4" instance="ioModuleEntry" alias="ioModuleDescr" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.1.1.1.5" instance="ioModuleEntry" alias="ioModulHostIdleTime" type="integer32"/>
+   </group>
+   <group name="firmwareTable" ifType="all">
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.2.1.1.1" instance="firmwareEntry" alias="firmwareIndex" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.2.1.1.2" instance="firmwareEntry" alias="firmwareIdentify" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.2.1.1.3" instance="firmwareEntry" alias="firmwareVersion" type="octetstring"/>
+   </group>
+   <group name="aiTable" ifType="all">
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.3.1.1.1" instance="aiEntry" alias="aiIndex" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.3.1.1.2" instance="aiEntry" alias="aiChannelIndex" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.3.1.1.3" instance="aiEntry" alias="aiModbusAddress" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.3.1.1.4" instance="aiEntry" alias="aiSampleRate" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.3.1.1.5" instance="aiEntry" alias="aiBurnDetectMode" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.3.1.1.6" instance="aiEntry" alias="aiIntergrationTime" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.3.1.1.7" instance="aiEntry" alias="aiEnabled" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.3.1.1.8" instance="aiEntry" alias="aiAveraged" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.3.1.1.9" instance="aiEntry" alias="aiBurnoutEnabled" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.3.1.1.10" instance="aiEntry" alias="aiRangeName" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.3.1.1.11" instance="aiEntry" alias="aiRangeCode" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.3.1.1.12" instance="aiEntry" alias="aiRangeHigh" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.3.1.1.13" instance="aiEntry" alias="aiRangeLow" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.3.1.1.14" instance="aiEntry" alias="aiRangeUnit" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.3.1.1.15" instance="aiEntry" alias="aiRawValue" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.3.1.1.16" instance="aiEntry" alias="aiEngValue" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.3.1.1.17" instance="aiEntry" alias="aiStatus" type="octetstring"/>
+   </group>
+   <group name="aoTable" ifType="all">
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.4.1.1.1" instance="aoEntry" alias="aoIndex" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.4.1.1.2" instance="aoEntry" alias="aoChannelIndex" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.4.1.1.3" instance="aoEntry" alias="aoModbusAddress" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.4.1.1.4" instance="aoEntry" alias="aoCommWdt" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.4.1.1.5" instance="aoEntry" alias="aoStartupValue" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.4.1.1.6" instance="aoEntry" alias="aoSafetyValue" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.4.1.1.7" instance="aoEntry" alias="aoSlewrateName" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.4.1.1.8" instance="aoEntry" alias="aoSlewrateCode" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.4.1.1.9" instance="aoEntry" alias="aoRangeName" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.4.1.1.10" instance="aoEntry" alias="aoRangeCode" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.4.1.1.11" instance="aoEntry" alias="aoRangeHigh" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.4.1.1.12" instance="aoEntry" alias="aoRangeLow" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.4.1.1.13" instance="aoEntry" alias="aoRangeUnit" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.4.1.1.14" instance="aoEntry" alias="aoRawValue" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.4.1.1.15" instance="aoEntry" alias="aoEngValue" type="octetstring"/>
+   </group>
+   <group name="diTable" ifType="all">
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.5.1.1.1" instance="diEntry" alias="diIndex" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.5.1.1.2" instance="diEntry" alias="diChannelIndex" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.5.1.1.3" instance="diEntry" alias="diModbusAddress" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.5.1.1.4" instance="diEntry" alias="diInverted" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.5.1.1.5" instance="diEntry" alias="diLatched" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.5.1.1.6" instance="diEntry" alias="diFilterEnabled" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.5.1.1.7" instance="diEntry" alias="diFilterHighWidth" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.5.1.1.8" instance="diEntry" alias="diFilterLowWidth" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.5.1.1.9" instance="diEntry" alias="diModeName" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.5.1.1.10" instance="diEntry" alias="diModeCode" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.5.1.1.11" instance="diEntry" alias="diValue" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.5.1.1.12" instance="diEntry" alias="diStartCount" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.5.1.1.13" instance="diEntry" alias="diClearEx" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.5.1.1.14" instance="diEntry" alias="diOverflow" type="string"/>
+   </group>
+   <group name="doTable" ifType="all">
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.6.1.1.1" instance="doEntry" alias="doIndex" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.6.1.1.2" instance="doEntry" alias="doChannelIndex" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.6.1.1.3" instance="doEntry" alias="doModbusAddress" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.6.1.1.4" instance="doEntry" alias="doCommWdt" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.6.1.1.5" instance="doEntry" alias="doModeName" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.6.1.1.6" instance="doEntry" alias="doModeCode" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.6.1.1.7" instance="doEntry" alias="doSafetyValue" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.6.1.1.8" instance="doEntry" alias="doDelayTime" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.6.1.1.9" instance="doEntry" alias="doSignalHighWidth" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.6.1.1.10" instance="doEntry" alias="doSignalLowWidth" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.6.1.1.11" instance="doEntry" alias="doValue" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.6.1.1.12" instance="doEntry" alias="doStartPulse" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.6.1.1.13" instance="doEntry" alias="doPulseTotal" type="octetstring"/>
+   </group>
+   <group name="counterTable" ifType="all">
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.7.1.1.1" instance="counterEntry" alias="counterIndex" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.7.1.1.2" instance="counterEntry" alias="counterChannelIndex" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.7.1.1.3" instance="counterEntry" alias="counteModbusAddress" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.7.1.1.4" instance="counterEntry" alias="counterValueRetaine" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.7.1.1.5" instance="counterEntry" alias="counteFilterEnabled" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.7.1.1.6" instance="counterEntry" alias="countFilteHighWidth" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.7.1.1.7" instance="counterEntry" alias="countFilterLowWidth" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.7.1.1.8" instance="counterEntry" alias="counterModeName" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.7.1.1.9" instance="counterEntry" alias="counterModeCode" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.7.1.1.10" instance="counterEntry" alias="counterValue" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.7.1.1.11" instance="counterEntry" alias="counterStartCount" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.7.1.1.12" instance="counterEntry" alias="counterClearCount" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.1.7.1.1.13" instance="counterEntry" alias="counterOverflow" type="string"/>
+   </group>
+   <group name="ioDeviceObj" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.10297.101.2.1.1" instance="0" alias="ioDeviceIoType" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.2.1.2" instance="0" alias="trapHwdEvent" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.2.1.3" instance="0" alias="trapModuleIndex" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.2.1.4" instance="0" alias="trapIoIndex" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.10297.101.2.1.5" instance="0" alias="trapIoValue" type="octetstring"/>
+   </group>
+   
+   <systemDef name="ADVANTECH-IO">
+      <sysoid>.1.3.6.1.4.1.10297.101</sysoid>
+      <collect>
+<!--          <includeGroup>mib2-interfaces</includeGroup> -->
+<!--          <includeGroup>mib2-tcp</includeGroup> -->
+         <includeGroup>ioModuleTable</includeGroup>
+         <includeGroup>firmwareTable</includeGroup>
+         <includeGroup>aiTable</includeGroup>
+         <includeGroup>aoTable</includeGroup>
+         <includeGroup>diTable</includeGroup>
+         <includeGroup>doTable</includeGroup>
+         <includeGroup>counterTable</includeGroup>
+         <includeGroup>ioDeviceObj</includeGroup>
+      </collect>
+   </systemDef>
+</datacollection-group>
+
+
+
+

@@ -1,0 +1,43 @@
+package org.opennms.netmgt.ticketd;
+import org.opennms.netmgt.model.OnmsAlarm;
+import org.opennms.netmgt.model.OnmsNode;
+import org.opennms.netmgt.model.OnmsCategory;
+import org.opennms.api.integration.ticketing.Ticket;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document.OutputSettings;
+import org.jsoup.safety.Whitelist;
+
+dialect "mvel"
+
+global Ticket ticket;
+
+/*
+ * Set tickets defaults
+*/
+
+rule "TicketDefaults"
+salience 100
+ when
+  $alarm : OnmsAlarm()
+  $node  : OnmsNode()
+  
+ then
+  // note bug - must set ticket.alarmId as not set by service
+  ticket.alarmId = $alarm.id
+
+  ticket.summary = $alarm.logMsg
+  
+  // keeps html in alarm description
+  // ticket.details = $alarm.description
+  
+  // removes html tags but preserves line feeds
+  ticket.details = Jsoup.clean($alarm.description, "", Whitelist.none(), new OutputSettings().prettyPrint(false));
+
+  ticket.addAttribute("ni2.tt.resourceids", $node.label);
+  
+  // use for more exact resource id using foreign source and foreign id.
+  // ticket.addAttribute("ni2.tt.resourceids", $node.foreignSource:$node.foreignId);
+
+end
+

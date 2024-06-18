@@ -1,0 +1,192 @@
+<events xmlns="http://xmlns.opennms.org/xsd/eventconf">
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.9633.2.2.1.3.2</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>2</mevalue>
+         </maskelement>
+      </mask>
+      <uei>uei.opennms.org/traps/SED-MNC-EVENT-AND-ALARM-MIB/sedMncAlarmTrap</uei>
+      <event-label>SED-MNC-EVENT-AND-ALARM-MIB defined trap event: sedMncAlarmTrap</event-label>
+      <descr>
+&lt;p>This trap is sent when a MNC alarm has been update by the MNC.&lt;/p>&lt;table>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmKeyServerGroup&lt;/b>&lt;/td>&lt;td>
+	%parm[#1]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmKeySystemId&lt;/b>&lt;/td>&lt;td>
+	%parm[#2]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmKeySourceId&lt;/b>&lt;/td>&lt;td>
+	%parm[#3]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmKeyEventId&lt;/b>&lt;/td>&lt;td>
+	%parm[#4]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmSerialNumber&lt;/b>&lt;/td>&lt;td>
+	%parm[#5]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmProbableCause&lt;/b>&lt;/td>&lt;td>
+	%parm[#6]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmDescription&lt;/b>&lt;/td>&lt;td>
+	%parm[#7]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmSeverity&lt;/b>&lt;/td>&lt;td>
+	%parm[#8]%;&lt;/td>&lt;td>&lt;p>
+		good(0)
+		none(1)
+		noneWarning(2)
+		warning(3)
+		minor(4)
+		major(5)
+		critical(6)
+	&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmMaxSeverity&lt;/b>&lt;/td>&lt;td>
+	%parm[#9]%;&lt;/td>&lt;td>&lt;p>
+		good(0)
+		none(1)
+		noneWarning(2)
+		warning(3)
+		minor(4)
+		major(5)
+		critical(6)
+	&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmAcknowledged&lt;/b>&lt;/td>&lt;td>
+	%parm[#10]%;&lt;/td>&lt;td>&lt;p>
+		notAcknowledged(0)
+		acknowledged(1)
+	&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmAcknowledgedBy&lt;/b>&lt;/td>&lt;td>
+	%parm[#11]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmAcknowledgedTime&lt;/b>&lt;/td>&lt;td>
+	%parm[#12]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmOld&lt;/b>&lt;/td>&lt;td>
+	%parm[#13]%;&lt;/td>&lt;td>&lt;p>
+		notOld(0)
+		old(1)
+	&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmOldBy&lt;/b>&lt;/td>&lt;td>
+	%parm[#14]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmOldTime&lt;/b>&lt;/td>&lt;td>
+	%parm[#15]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmCleared&lt;/b>&lt;/td>&lt;td>
+	%parm[#16]%;&lt;/td>&lt;td>&lt;p>
+		notCleared(0)
+		cleared(1)
+	&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmTriggeringEventNumber&lt;/b>&lt;/td>&lt;td>
+	%parm[#17]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmTriggeringEventTime&lt;/b>&lt;/td>&lt;td>
+	%parm[#18]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmLastUpdateEventNumber&lt;/b>&lt;/td>&lt;td>
+	%parm[#19]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmLastUpdateEventTime&lt;/b>&lt;/td>&lt;td>
+	%parm[#20]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	eamAlarmNotes&lt;/b>&lt;/td>&lt;td>
+	%parm[#21]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+	</descr>
+      <logmsg dest="logndisplay">&lt;p>
+	sedMncAlarmTrap trap received
+	eamAlarmKeyServerGroup=%parm[#1]%
+	eamAlarmKeySystemId=%parm[#2]%
+	eamAlarmKeySourceId=%parm[#3]%
+	eamAlarmKeyEventId=%parm[#4]%
+	eamAlarmSerialNumber=%parm[#5]%
+	eamAlarmProbableCause=%parm[#6]%
+	eamAlarmDescription=%parm[#7]%
+	eamAlarmSeverity=%parm[#8]%
+	eamAlarmMaxSeverity=%parm[#9]%
+	eamAlarmAcknowledged=%parm[#10]%
+	eamAlarmAcknowledgedBy=%parm[#11]%
+	eamAlarmAcknowledgedTime=%parm[#12]%
+	eamAlarmOld=%parm[#13]%
+	eamAlarmOldBy=%parm[#14]%
+	eamAlarmOldTime=%parm[#15]%
+	eamAlarmCleared=%parm[#16]%
+	eamAlarmTriggeringEventNumber=%parm[#17]%
+	eamAlarmTriggeringEventTime=%parm[#18]%
+	eamAlarmLastUpdateEventNumber=%parm[#19]%
+	eamAlarmLastUpdateEventTime=%parm[#20]%
+	eamAlarmNotes=%parm[#21]%&lt;/p>
+	</logmsg>
+      <severity>Indeterminate</severity>
+      <varbindsdecode>
+         <parmid>parm[#8]</parmid>
+         <decode varbindvalue="0" varbinddecodedstring="good"/>
+         <decode varbindvalue="1" varbinddecodedstring="none"/>
+         <decode varbindvalue="2" varbinddecodedstring="noneWarning"/>
+         <decode varbindvalue="3" varbinddecodedstring="warning"/>
+         <decode varbindvalue="4" varbinddecodedstring="minor"/>
+         <decode varbindvalue="5" varbinddecodedstring="major"/>
+         <decode varbindvalue="6" varbinddecodedstring="critical"/>
+      </varbindsdecode>
+      <varbindsdecode>
+         <parmid>parm[#9]</parmid>
+         <decode varbindvalue="0" varbinddecodedstring="good"/>
+         <decode varbindvalue="1" varbinddecodedstring="none"/>
+         <decode varbindvalue="2" varbinddecodedstring="noneWarning"/>
+         <decode varbindvalue="3" varbinddecodedstring="warning"/>
+         <decode varbindvalue="4" varbinddecodedstring="minor"/>
+         <decode varbindvalue="5" varbinddecodedstring="major"/>
+         <decode varbindvalue="6" varbinddecodedstring="critical"/>
+      </varbindsdecode>
+      <varbindsdecode>
+         <parmid>parm[#10]</parmid>
+         <decode varbindvalue="0" varbinddecodedstring="notAcknowledged"/>
+         <decode varbindvalue="1" varbinddecodedstring="acknowledged"/>
+      </varbindsdecode>
+      <varbindsdecode>
+         <parmid>parm[#13]</parmid>
+         <decode varbindvalue="0" varbinddecodedstring="notOld"/>
+         <decode varbindvalue="1" varbinddecodedstring="old"/>
+      </varbindsdecode>
+      <varbindsdecode>
+         <parmid>parm[#16]</parmid>
+         <decode varbindvalue="0" varbinddecodedstring="notCleared"/>
+         <decode varbindvalue="1" varbinddecodedstring="cleared"/>
+      </varbindsdecode>
+   </event>
+</events>

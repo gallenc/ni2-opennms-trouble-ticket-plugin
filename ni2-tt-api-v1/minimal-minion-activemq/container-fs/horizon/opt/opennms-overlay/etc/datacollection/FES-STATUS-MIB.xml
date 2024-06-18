@@ -1,0 +1,422 @@
+<datacollection-group xmlns="http://xmlns.opennms.org/xsd/config/datacollection" name="FES-STATUS-MIB">
+   <resourceType name="trapDestinationTableEntry" label="trapDestinationTableEntry" resourceLabel="${destinationIp} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <resourceType name="mncStorageEntry" label="mncStorageEntry" resourceLabel="${mncStorageType} (${index})">
+      <persistenceSelectorStrategy class="org.opennms.netmgt.collection.support.PersistAllSelectorStrategy"/>
+      <storageStrategy class="org.opennms.netmgt.collection.support.IndexStorageStrategy"/>
+   </resourceType>
+   <group name="mncSummaryStatus" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.100.100" instance="0" alias="mncSystemStatus" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.100.101" instance="0" alias="mncMIBVersion" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.100.102" instance="0" alias="mncServerOnline" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.100.103" instance="0" alias="mncServeSoftwVersio" type="octetstring"/>
+   </group>
+   <group name="mncOverallStatus" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.200.200" instance="0" alias="rxStatus" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.200.201" instance="0" alias="txStatus" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.200.202" instance="0" alias="primarTrackinStatus" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.200.203" instance="0" alias="backupTrackinStatus" type="string"/>
+   </group>
+   <group name="mncIFEquipmentSelectStatus" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.300.300" instance="0" alias="rxChaUniGro1SpaOnli" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.300.301" instance="0" alias="rxChaUniGro2SpaOnli" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.300.302" instance="0" alias="rxChaUniGro3SpaOnli" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.300.303" instance="0" alias="rxChaUniGro4SpaOnli" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.300.304" instance="0" alias="rxChUniGro1SpaOutCU" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.300.305" instance="0" alias="rxChUniGro2SpaOutCU" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.300.306" instance="0" alias="rxChUniGro3SpaOutCU" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.300.307" instance="0" alias="rxChUniGro4SpaOutCU" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.300.308" instance="0" alias="txChaUniGro1SpaOnli" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.300.309" instance="0" alias="txChaUniGro2SpaOnli" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.300.310" instance="0" alias="txChUniGro1SpaInpCU" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.300.311" instance="0" alias="txChUniGro2SpaInpCU" type="string"/>
+   </group>
+   <group name="mncRFEquipmentSelectStatus" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.400.400" instance="0" alias="payloPilotRcvrOnlin" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.400.401" instance="0" alias="rhcpCommBDCOnline" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.400.402" instance="0" alias="lhcpCommBDCOnline" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.400.403" instance="0" alias="rxOscillatorOnline" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.400.404" instance="0" alias="primarLhcpLnaOnline" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.400.405" instance="0" alias="primarRhcpLnaOnline" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.400.406" instance="0" alias="backupLhcpLnaOnline" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.400.407" instance="0" alias="backupRhcpLnaOnline" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.400.408" instance="0" alias="spectrAnalyzeOnline" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.400.409" instance="0" alias="cmdTxPathOnline" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.400.410" instance="0" alias="lhcpCommTxPathOnlin" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.400.411" instance="0" alias="rhcpCommTxPathOnlin" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.400.412" instance="0" alias="txOscillatorOnline" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.400.413" instance="0" alias="pilotGeneratoOnline" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.400.414" instance="0" alias="activeCommTxAntenna" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.400.415" instance="0" alias="activeCmdTxAntenna" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.400.416" instance="0" alias="activeRxAntenna" type="string"/>
+   </group>
+   <group name="mncIFRxStatus" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1000" instance="0" alias="rxChanneUnit1Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1001" instance="0" alias="rxChanneUnit2Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1002" instance="0" alias="rxChanneUnit3Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1003" instance="0" alias="rxChanneUnit4Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1004" instance="0" alias="rxChanneUnit5Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1005" instance="0" alias="rxChanneUnit6Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1006" instance="0" alias="rxChanneUnit7Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1007" instance="0" alias="rxChanneUnit8Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1008" instance="0" alias="rxChanneUnit9Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1009" instance="0" alias="rxChannUnit10Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1010" instance="0" alias="rxChannUnit11Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1011" instance="0" alias="rxChannUnit12Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1012" instance="0" alias="rxChannUnit13Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1013" instance="0" alias="rxChannUnit14Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1014" instance="0" alias="rxChannUnit15Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1015" instance="0" alias="rxChannUnit16Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1016" instance="0" alias="rxChannUnit17Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1017" instance="0" alias="rxChannUnit18Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1018" instance="0" alias="rxChannUnit19Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1019" instance="0" alias="rxChannUnit20Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1020" instance="0" alias="rxChannUnit21Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1021" instance="0" alias="rxChannUnit22Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1022" instance="0" alias="rxChannUnit23Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1023" instance="0" alias="rxChannUnit24Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1024" instance="0" alias="doLhCUCha1TemSenSta" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1025" instance="0" alias="doLhCUCha2TemSenSta" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1026" instance="0" alias="doRhCUCha1TemSenSta" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1000.1027" instance="0" alias="doRhCUCha2TemSenSta" type="string"/>
+   </group>
+   <group name="mncIFTxStatus" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1100.1100" instance="0" alias="txChanneUnit1Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1100.1101" instance="0" alias="txChanneUnit2Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1100.1102" instance="0" alias="txChanneUnit3Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1100.1103" instance="0" alias="txChanneUnit4Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1100.1104" instance="0" alias="txChanneUnit5Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1100.1105" instance="0" alias="txChanneUnit6Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1100.1106" instance="0" alias="txChanneUnit7Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1100.1107" instance="0" alias="txChanneUnit8Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1100.1108" instance="0" alias="txChanneUnit9Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1100.1109" instance="0" alias="txChannUnit10Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1100.1110" instance="0" alias="upLhcCUChaTemSenSta" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1100.1111" instance="0" alias="upRhcCUChaTemSenSta" type="string"/>
+   </group>
+   <group name="mncRFRxStatus" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1300" instance="0" alias="paylPilotRcvr1Statu" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1301" instance="0" alias="paylPilotRcvr2Statu" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1302" instance="0" alias="tlmDC1Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1303" instance="0" alias="tlmDC2Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1304" instance="0" alias="tlmDC3Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1305" instance="0" alias="rhcpCommBDCPrimStat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1306" instance="0" alias="rhcpCommBDCSparStat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1307" instance="0" alias="lhcpCommBDCPrimStat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1308" instance="0" alias="lhcpCommBDCSparStat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1309" instance="0" alias="rxOscillator1Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1310" instance="0" alias="rxOscillator2Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1311" instance="0" alias="primaLhcpLna1Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1312" instance="0" alias="primaLhcpLna1AStatu" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1313" instance="0" alias="primaRhcpLna2Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1314" instance="0" alias="primaRhcpLna2AStatu" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1315" instance="0" alias="primaLnaContrStatus" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1316" instance="0" alias="backuLhcpLna1Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1317" instance="0" alias="backuLhcpLna1AStatu" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1318" instance="0" alias="backuRhcpLna2Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1319" instance="0" alias="backuRhcpLna2AStatu" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1300.1320" instance="0" alias="backuLnaContrStatus" type="string"/>
+   </group>
+   <group name="mncRFTxStatus" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1400.1400" instance="0" alias="cmdUC1Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1400.1401" instance="0" alias="cmdUC2Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1400.1402" instance="0" alias="cmdTwta1Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1400.1403" instance="0" alias="cmdTwta2Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1400.1404" instance="0" alias="lhcpCommBUCPrimStat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1400.1405" instance="0" alias="lhcpCommBUCSparStat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1400.1406" instance="0" alias="rhcpCommBUCPrimStat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1400.1407" instance="0" alias="rhcpCommBUCSparStat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1400.1408" instance="0" alias="lhcCommTwtaPrimStat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1400.1409" instance="0" alias="lhcCommTwtaSparStat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1400.1410" instance="0" alias="rhcCommTwtaPrimStat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1400.1411" instance="0" alias="rhcCommTwtaSparStat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1400.1412" instance="0" alias="txOscillator1Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1400.1413" instance="0" alias="txOscillator2Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1400.1414" instance="0" alias="pilotGenerat1Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1400.1415" instance="0" alias="pilotGenerat2Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1400.1416" instance="0" alias="priPathAtteContStat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1400.1417" instance="0" alias="bacPathAtteContStat" type="string"/>
+   </group>
+   <group name="mncRFMiscStatus" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1500.1500" instance="0" alias="acuPrimaryStatus" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1500.1501" instance="0" alias="acuBackupStatus" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1500.1502" instance="0" alias="tltPrimaryStatus" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1500.1503" instance="0" alias="tltBackupStatus" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1500.1504" instance="0" alias="deicerPrimaryStatus" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1500.1505" instance="0" alias="deicerBackupStatus" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1500.1506" instance="0" alias="dehydrator1Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1500.1507" instance="0" alias="spectrAnalyz1Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1500.1508" instance="0" alias="spectrAnalyz2Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1500.1509" instance="0" alias="dehydrator2Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1500.1510" instance="0" alias="hvac1Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1500.1511" instance="0" alias="hvac2Status" type="string"/>
+   </group>
+   <group name="mncMiscStatus" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1600" instance="0" alias="uplinkMCUStatus" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1601" instance="0" alias="downlinkMCUStatus" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1602" instance="0" alias="sysPowSup1Modu1Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1603" instance="0" alias="sysPowSup1Modu2Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1604" instance="0" alias="sysPowSup1Modu3Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1605" instance="0" alias="sysPowSup1Modu4Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1606" instance="0" alias="sysPowSup2Modu1Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1607" instance="0" alias="sysPowSup2Modu2Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1610" instance="0" alias="ttcRackFanTrayStatu" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1611" instance="0" alias="ulpcRackFanTrayStat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1612" instance="0" alias="hpa1RackFanTrayStat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1613" instance="0" alias="hpa2RackFanTrayStat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1614" instance="0" alias="upliRackFanTrayStat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1615" instance="0" alias="downLhcpFanTrayStat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1616" instance="0" alias="downRhcpFanTrayStat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1617" instance="0" alias="ttcRacTempSens1Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1618" instance="0" alias="ttcRacTempSens2Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1619" instance="0" alias="ulpRacTempSens1Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1620" instance="0" alias="ulpRacTempSens2Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1621" instance="0" alias="hpa1RacTemSens1Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1622" instance="0" alias="hpa1RacTemSens2Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1623" instance="0" alias="hpa2RacTemSens1Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1624" instance="0" alias="hpa2RacTemSens2Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1625" instance="0" alias="uplRacTempSens1Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1626" instance="0" alias="uplRacTempSens2Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1627" instance="0" alias="dowLhcRacTemSen1Sta" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1628" instance="0" alias="dowLhcRacTemSen2Sta" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1629" instance="0" alias="dowRhcRacTemSen1Sta" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1630" instance="0" alias="dowRhcRacTemSen2Sta" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1631" instance="0" alias="pprDistAmp1Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1632" instance="0" alias="pprDistAmp2Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1633" instance="0" alias="pprDistAmp3Status" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1634" instance="0" alias="tenMhzDistAmp1Statu" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1635" instance="0" alias="tenMhzDistAmp2Statu" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1636" instance="0" alias="tenMhzDistAmp3Statu" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1637" instance="0" alias="mncAServerStatus" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1638" instance="0" alias="mncBServerStatus" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1639" instance="0" alias="sysPowSup3Modu1Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1640" instance="0" alias="sysPowSup3Modu2Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1641" instance="0" alias="sysPowSup3Modu3Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1642" instance="0" alias="sysPowSup3Modu4Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1643" instance="0" alias="sysPowSup2Modu3Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1644" instance="0" alias="sysPowSup2Modu4Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1645" instance="0" alias="sysPowSup4Modu1Stat" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1600.1646" instance="0" alias="sysPowSup4Modu2Stat" type="string"/>
+   </group>
+   <group name="mncIFSwitchConfiguration" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1700" instance="0" alias="sw110Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1701" instance="0" alias="sw111Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1702" instance="0" alias="sw112Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1703" instance="0" alias="sw113Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1704" instance="0" alias="sw120Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1705" instance="0" alias="sw121Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1706" instance="0" alias="sw122Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1707" instance="0" alias="sw123Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1708" instance="0" alias="sw130Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1709" instance="0" alias="sw131Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1710" instance="0" alias="sw132Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1711" instance="0" alias="sw133Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1712" instance="0" alias="sw140Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1713" instance="0" alias="sw141Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1714" instance="0" alias="sw142Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1715" instance="0" alias="sw143Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1716" instance="0" alias="sw210Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1717" instance="0" alias="sw211Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1718" instance="0" alias="sw212Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1719" instance="0" alias="sw213Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1720" instance="0" alias="sw214Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1721" instance="0" alias="sw220Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1722" instance="0" alias="sw221Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1723" instance="0" alias="sw222Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1724" instance="0" alias="sw223Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1725" instance="0" alias="sw224Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1726" instance="0" alias="sw230Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1727" instance="0" alias="sw231Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1728" instance="0" alias="sw232Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1729" instance="0" alias="sw233Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1730" instance="0" alias="sw234Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1731" instance="0" alias="sw240Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1732" instance="0" alias="sw241Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1733" instance="0" alias="sw242Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1734" instance="0" alias="sw243Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1735" instance="0" alias="sw244Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1736" instance="0" alias="sw310Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1737" instance="0" alias="sw311Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1738" instance="0" alias="sw312Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1739" instance="0" alias="sw313Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1740" instance="0" alias="sw314Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1741" instance="0" alias="sw320Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1742" instance="0" alias="sw321Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1743" instance="0" alias="sw322Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1744" instance="0" alias="sw323Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1745" instance="0" alias="sw324Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1746" instance="0" alias="sw330Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1747" instance="0" alias="sw331Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1748" instance="0" alias="sw332Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1749" instance="0" alias="sw333Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1750" instance="0" alias="sw334Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1751" instance="0" alias="sw340Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1752" instance="0" alias="sw341Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1753" instance="0" alias="sw342Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1754" instance="0" alias="sw343Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1700.1755" instance="0" alias="sw344Position" type="string"/>
+   </group>
+   <group name="mncRFSwitchConfiguration" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1800" instance="0" alias="sw124Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1801" instance="0" alias="sw144Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1802" instance="0" alias="sw225Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1803" instance="0" alias="sw245Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1804" instance="0" alias="sw246Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1805" instance="0" alias="sw247Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1806" instance="0" alias="sw325Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1807" instance="0" alias="sw345Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1808" instance="0" alias="sw501Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1809" instance="0" alias="sw502Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1810" instance="0" alias="sw503Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1811" instance="0" alias="sw601Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1812" instance="0" alias="sw602Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1813" instance="0" alias="sw603Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1814" instance="0" alias="sw604Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1815" instance="0" alias="sw605Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1816" instance="0" alias="sw606Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1817" instance="0" alias="sw607Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1818" instance="0" alias="sw608Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1819" instance="0" alias="sw609Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1820" instance="0" alias="sw701Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1821" instance="0" alias="sw702Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1822" instance="0" alias="sw703Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1823" instance="0" alias="sw704Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1824" instance="0" alias="sw705Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1825" instance="0" alias="sw706Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1826" instance="0" alias="sw707Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1827" instance="0" alias="sw801Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1828" instance="0" alias="sw802Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1829" instance="0" alias="sw803Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1830" instance="0" alias="sw804Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1831" instance="0" alias="sw805Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1832" instance="0" alias="sw806Position" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1800.1833" instance="0" alias="sw807Position" type="string"/>
+   </group>
+   <group name="mncRFRxEquipmentConfiguration" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1900.1900" instance="0" alias="tlmDc1Freq" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1900.1901" instance="0" alias="tlmDc1Mute" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1900.1902" instance="0" alias="tlmDc2Freq" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1900.1903" instance="0" alias="tlmDc2Mute" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1900.1904" instance="0" alias="tlmDc3Freq" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1900.1905" instance="0" alias="tlmDc3Mute" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1900.1906" instance="0" alias="rhcpCommBdc1Mute" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1900.1907" instance="0" alias="rhcpCommBdc2Mute" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1900.1908" instance="0" alias="lhcpCommBdc1Mute" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1900.1909" instance="0" alias="lhcpCommBdc2Mute" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1900.1910" instance="0" alias="payPilRece1SignLeve" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.1900.1911" instance="0" alias="payPilRece2SignLeve" type="integer32"/>
+   </group>
+   <group name="mncRFTxEquipmentConfiguration" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2000" instance="0" alias="cmdUc1Freq" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2001" instance="0" alias="cmdUc1Mute" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2002" instance="0" alias="cmdUc2Freq" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2003" instance="0" alias="cmdUc2Mute" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2004" instance="0" alias="cmdTwta1TxReady" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2005" instance="0" alias="cmdTwta1OutputPower" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2006" instance="0" alias="cmdTwta1Attenuation" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2007" instance="0" alias="cmdTwta1AlcMode" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2008" instance="0" alias="cmdTwta2TxReady" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2009" instance="0" alias="cmdTwta2OutputPower" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2010" instance="0" alias="cmdTwta2Attenuation" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2011" instance="0" alias="cmdTwta2AlcMode" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2012" instance="0" alias="lhcpCommBucPrimMute" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2013" instance="0" alias="lhcpCommBucSparMute" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2014" instance="0" alias="rhcpCommBucPrimMute" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2015" instance="0" alias="rhcpCommBucSparMute" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2016" instance="0" alias="lhcComTwtPrimTxRead" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2017" instance="0" alias="lhcComTwtPriOutPowe" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2018" instance="0" alias="lhcCommTwtaPrimAtte" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2019" instance="0" alias="lhcComTwtPriAlcMode" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2020" instance="0" alias="lhcComTwtSparTxRead" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2021" instance="0" alias="lhcComTwtSpaOutPowe" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2022" instance="0" alias="lhcCommTwtaSparAtte" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2023" instance="0" alias="lhcComTwtSpaAlcMode" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2024" instance="0" alias="rhcComTwtPrimTxRead" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2025" instance="0" alias="rhcComTwtPriOutPowe" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2026" instance="0" alias="rhcCommTwtaPrimAtte" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2027" instance="0" alias="rhcComTwtPriAlcMode" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2028" instance="0" alias="rhcComTwtSparTxRead" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2029" instance="0" alias="rhcComTwtSpaOutPowe" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2030" instance="0" alias="rhcCommTwtaSparAtte" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2000.2031" instance="0" alias="rhcComTwtSpaAlcMode" type="string"/>
+   </group>
+   <group name="mncRFMiscEquipmentConfiguration" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2100.2100" instance="0" alias="acuPrimaryCurrentAz" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2100.2101" instance="0" alias="acuPrimaryCurrentEl" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2100.2102" instance="0" alias="acuPrimaTimeTaggeAz" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2100.2103" instance="0" alias="acuPrimaTimeTaggeEl" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2100.2104" instance="0" alias="acuPrimaryTimeTag" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2100.2105" instance="0" alias="acuPrimTracSignLeve" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2100.2106" instance="0" alias="acuPrimarTrackiMode" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2100.2107" instance="0" alias="acuPrimaTrackSubmod" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2100.2108" instance="0" alias="acuBackupCurrentAz" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2100.2109" instance="0" alias="acuBackupCurrentEl" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2100.2110" instance="0" alias="acuBackuTimeTaggeAz" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2100.2111" instance="0" alias="acuBackuTimeTaggeEl" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2100.2112" instance="0" alias="acuBackupTimeTag" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2100.2113" instance="0" alias="acuBackTracSignLeve" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2100.2114" instance="0" alias="acuBackupTrackiMode" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.2100.2115" instance="0" alias="acuBackuTrackSubmod" type="string"/>
+   </group>
+   <group name="trapDestinationTableTable" ifType="all">
+      <mibObj oid=".1.3.6.1.4.1.9633.7.1.3000.1.1" instance="trapDestinationTableEntry" alias="destinationIndex" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.1.3000.1.2" instance="trapDestinationTableEntry" alias="destinationIp" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.1.3000.1.3" instance="trapDestinationTableEntry" alias="destinationStatus" type="string"/>
+   </group>
+   <group name="mncTrap" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.9633.7.1.3001" instance="0" alias="mncTrapSeverity" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.1.3002" instance="0" alias="mncTrapSource" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.1.3003" instance="0" alias="mncPreviousState" type="string"/>
+   </group>
+   <group name="trapControls" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.9633.7.1.3100.3100" instance="0" alias="trapsAddControl" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.1.3100.3101" instance="0" alias="trapsDeleteControl" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.1.3100.3102" instance="0" alias="trapEquipLevelContr" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.1.3100.3103" instance="0" alias="trapSysteLevelContr" type="string"/>
+   </group>
+   <group name="systemResources" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.10.100" instance="0" alias="mncCpuLoad" type="gauge32"/>
+   </group>
+   <group name="mncStorageTable" ifType="all">
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.10.200.1.1" instance="mncStorageEntry" alias="mncStorageIndex" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.10.200.1.2" instance="mncStorageEntry" alias="mncStorageType" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.10.200.1.3" instance="mncStorageEntry" alias="mncStorageDescr" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.10.200.1.4" instance="mncStorageEntry" alias="mncStoraAllocaUnits" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.10.200.1.5" instance="mncStorageEntry" alias="mncStorageSize" type="integer32"/>
+      <mibObj oid=".1.3.6.1.4.1.9633.7.2.10.200.1.6" instance="mncStorageEntry" alias="mncStorageUsed" type="integer32"/>
+   </group>
+   
+   <systemDef name="Monaco FES">
+      <sysoidMask>.1.3.6.1.4.1.9633.7</sysoidMask>
+      <collect>
+<!--          <includeGroup>mib2-interfaces</includeGroup> -->
+<!--          <includeGroup>mib2-tcp</includeGroup> -->
+         <includeGroup>mncSummaryStatus</includeGroup>
+         <includeGroup>mncOverallStatus</includeGroup>
+         <includeGroup>mncIFEquipmentSelectStatus</includeGroup>
+         <includeGroup>mncRFEquipmentSelectStatus</includeGroup>
+         <includeGroup>mncIFRxStatus</includeGroup>
+         <includeGroup>mncIFTxStatus</includeGroup>
+         <includeGroup>mncRFRxStatus</includeGroup>
+         <includeGroup>mncRFTxStatus</includeGroup>
+         <includeGroup>mncRFMiscStatus</includeGroup>
+         <includeGroup>mncMiscStatus</includeGroup>
+         <includeGroup>mncIFSwitchConfiguration</includeGroup>
+         <includeGroup>mncRFSwitchConfiguration</includeGroup>
+         <includeGroup>mncRFRxEquipmentConfiguration</includeGroup>
+         <includeGroup>mncRFTxEquipmentConfiguration</includeGroup>
+         <includeGroup>mncRFMiscEquipmentConfiguration</includeGroup>
+         <includeGroup>trapDestinationTableTable</includeGroup>
+         <includeGroup>mncTrap</includeGroup>
+         <includeGroup>trapControls</includeGroup>
+         <includeGroup>systemResources</includeGroup>
+         <includeGroup>mncStorageTable</includeGroup>
+      </collect>
+   </systemDef>
+</datacollection-group>
+
+
+
+

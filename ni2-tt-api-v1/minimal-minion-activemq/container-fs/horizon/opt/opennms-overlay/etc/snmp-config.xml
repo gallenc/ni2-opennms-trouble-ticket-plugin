@@ -1,0 +1,35 @@
+<snmp-config xmlns="http://xmlns.opennms.org/xsd/config/snmp" version="v2c" read-community="public" timeout="1800" retry="1">
+
+   <!-- netsnmp - using default public strings -->
+
+   <!-- monacofes simulations -->
+   <definition write-community="private" read-community="monacofes">
+      <specific>172.20.0.101</specific>
+   </definition>
+      <definition write-community="private" read-community="monacofes">
+      <specific>172.20.0.104</specific>
+   </definition>
+      <definition write-community="private" read-community="monacofes">
+      <specific>172.20.0.106</specific>
+   </definition>
+   
+   <!-- adam simulations -->
+   <definition write-community="private" read-community="adam">
+      <specific>172.20.0.108</specific>
+   </definition>
+   <definition write-community="private" read-community="adam">
+      <specific>172.20.0.110</specific>
+   </definition>
+   
+   <!-- sbss simulations -->
+   <definition write-community="private" read-community="adam">
+      <specific>172.20.0.112</specific>
+   </definition>
+   
+   <!-- sbas simulations -->
+   <definition write-community="private" read-community="adam">
+      <specific>172.20.0.114</specific>
+   </definition>
+   
+
+</snmp-config>  

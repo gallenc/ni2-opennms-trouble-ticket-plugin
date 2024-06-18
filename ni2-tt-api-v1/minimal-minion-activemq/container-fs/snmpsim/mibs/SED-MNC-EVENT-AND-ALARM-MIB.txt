@@ -1,0 +1,490 @@
+--    CONTRACTOR:   SED SYSTEMS, a division of Calian Ltd., Saskatoon, Canada
+--                  (C) 2004 SED Systems.
+--
+--    SED MNC Event and Alarm (eam) Information Base
+--
+--  This MIB defines the traps the SED M&C software
+--  generates when events and alarms
+--  are raised within the SED software.
+--
+--  The generation of the event and alarm
+--  can be enable/disabled in the MNCs configuration file.
+--
+--  The definitions contained within are subject to change.
+
+
+--
+-- This interface outputs a MNC SNMP Startup Trap when the MNC
+-- software is started.  If the MNC software is configured to send
+-- both events and alarms to the same SNMP Manager, the manager will
+-- only be send one startup trap.
+--
+-- This interface outputs event traps to specified SNMP Managers
+-- when NMC events are raised.
+--
+-- This interface outputs alarm traps to specified SNMP managers
+-- when they are created or updated.  Alarms are not updated after
+-- they have been marked as acknowledged, cleared and old (become
+-- historical alarms).
+--
+-- The SNMP event and alarm gateway software is configured by
+-- placing ForwardAlarmsToSNMPManager or ForwardEventsToSNMPManager
+-- tags with the host and port number in the MNC software's
+-- config.xml file for that site.  The port number is optional and
+-- defaults to the standard 162 if not specified.
+--
+--      <ForwardAlarmsToSNMPManager>
+--          <Host>hostOrIp</Host>
+--      </ForwardAlarmsToSNMPManager>
+--
+--      <ForwardEventsToSNMPManager>
+--          <Host>hostOrIp</Host>
+--          <Port>10162</Port>
+--      </ForwardEventsToSNMPManager>
+--
+--
+-- 
+-- 
+--                 M&C Event and Alarm Overview
+--
+-- The SED M&C generates events to notify the user that of
+-- significant occurrences in the system.  Some events are purely
+-- informational; other events are associated with alarms.
+--  
+-- Events with a severity of warning or higher create or update an
+-- alarm with a matching key.
+-- 
+-- An alarm is cleared by generating an event with a matching key
+-- and the severity set to cleared.
+--
+-- Clearing alarms in normally done automatically by the MNC
+-- software.  Alarms my also be manually cleared from the M&C GUI.
+--
+--
+-- Events are typically displayed on the SED M&C GUI a configurable
+-- recent period.  Non-recent events are stored in the historical
+-- event log.
+--
+-- The alarm persists until it has been acknowledged, cleared and
+-- marked as old.  Such alarms are stored in the historical alarm
+-- log.
+
+
+SED-MNC-EVENT-AND-ALARM-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, NOTIFICATION-TYPE, 
+    Integer32, enterprises
+    	FROM SNMPv2-SMI
+    DisplayString
+        FROM SNMPv2-TC;
+
+sedMncEventAndAlarms MODULE-IDENTITY
+    LAST-UPDATED "200411150000Z" -- Nov. 15, 2004
+    ORGANIZATION "2004 SED Systems, a division of Calian Ltd"
+    CONTACT-INFO "MNC Software
+
+          Postal: SED Systems.
+                  18 Innovation Blvd.
+                  Saskatoon, Saskatchewan
+                  Canada
+                  S7K 3P7
+
+          Phone:  +1 306 931-3425
+          Email:  service@sedsystems.ca
+          Web:    www.sedsystems.ca"
+    DESCRIPTION
+        "The MIB module that describes traps for the SED M&C System."
+    ::= { sedMCS 1 }
+
+sedSystemsCommon    OBJECT IDENTIFIER ::= { enterprises           9633 }
+sedNetworkManagement
+                    OBJECT IDENTIFIER ::= { sedSystemsCommon      2 }
+sedMCS              OBJECT IDENTIFIER ::= { sedNetworkManagement  2 }
+
+sedMncGeneric       OBJECT IDENTIFIER ::= { sedMncEventAndAlarms  1 }
+sedMncGenericData   OBJECT IDENTIFIER ::= { sedMncGeneric         1 }
+sedMncGenericTraps  OBJECT IDENTIFIER ::= { sedMncGeneric         2 }
+
+sedMncEvent         OBJECT IDENTIFIER ::= { sedMncEventAndAlarms  2 }
+sedMncEventData     OBJECT IDENTIFIER ::= { sedMncEvent           1 }
+sedMncEventTraps    OBJECT IDENTIFIER ::= { sedMncEvent           2 }
+
+sedMncAlarm         OBJECT IDENTIFIER ::= { sedMncEventAndAlarms  3 }
+sedMncAlarmData     OBJECT IDENTIFIER ::= { sedMncAlarm           1 }
+sedMncAlarmTraps    OBJECT IDENTIFIER ::= { sedMncAlarm           2 }
+
+
+-- Note the MNC currently only generates traps.  The following data 
+-- definitions are for use in the traps only.
+
+
+mncSnmpStartupTrap NOTIFICATION-TYPE
+    STATUS  current
+    DESCRIPTION
+        "This trap is sent when a MNC event and alarm SNMP software starts/restarts."
+    ::= { sedMncGenericTraps 1 }
+
+
+eamEventKey       OBJECT IDENTIFIER ::= { sedMncEventData       1 }
+    -- the key consists of three components, system ID, source ID and event ID.
+
+eamEventKeyServerGroup OBJECT-TYPE
+    SYNTAX  DisplayString 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION 
+        "A text string identifying the server group to which the MNC 
+         server computer belongs.  This is extracted from the site
+         system specification."
+    ::= { eamEventKey  1 }
+
+eamEventKeySystemId OBJECT-TYPE
+    SYNTAX  DisplayString 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION 
+        "A text string identifying the MNC server computer that 
+         originated the event/event.  This is the MNC site/shelter
+         ID not the computer hostname."
+    ::= { eamEventKey  2 }
+
+eamEventKeySourceId OBJECT-TYPE
+    SYNTAX  DisplayString 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION 
+        "A text string identifying the originating device or software subsystem."
+    ::= { eamEventKey  3 }
+
+eamEventKeyEventId OBJECT-TYPE
+    SYNTAX  DisplayString 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION 
+        "A text string identifying the originating object.  Device name  
+         for a device. Command name for a failed command."
+    ::= { eamEventKey  4 }
+
+
+eamEventSerialNumber OBJECT-TYPE
+    SYNTAX  Counter32 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION 
+        "The serial number of the event.  The host IP/hostname/eamEventKeySystemId + 
+         the serial number uniquely identifies an event."
+    ::= { sedMncEventData  2 }
+
+eamEventDescription OBJECT-TYPE 
+    SYNTAX  DisplayString 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION 
+        "A String describing the event.  This is the description from the 
+         last event associated with the event."
+    ::= { sedMncEventData  3 }
+
+eamEventCategory OBJECT-TYPE 
+    SYNTAX  DisplayString 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION 
+        "Category of the event.  Examples, CMD(command), SEC(security), STAT(status)"
+    ::= { sedMncEventData  4 }
+
+eamEventSeverity OBJECT-TYPE
+    SYNTAX     INTEGER {
+            good(0),      -- used to clear an event
+            none(1),      -- information only - not mapped to alarms
+            noneWarning(2), --important information - not mapped to alarms
+            warning(3),   -- warning severity level
+            minor(4),     -- minor severity level
+            major(5),     -- major severity level
+            critical(6)  -- critical severity level
+		}
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The current severity of the event good(0) when cleared." 
+    ::= { sedMncEventData  5 }
+
+
+eamEventTime OBJECT-TYPE
+    SYNTAX  DisplayString 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION
+	    "The time (UTC) the event was last acknowledged in a 
+         sortable time string. yyyy/mm/dd hh:mm:ss.mmm format" 
+    ::= { sedMncEventData  6 }
+
+
+
+
+sedMncEventTrap NOTIFICATION-TYPE
+    OBJECTS  {  eamEventKeyServerGroup,  -- Event key is composed of systemId, sourceId, eventId.
+                eamEventKeySystemId,     
+                eamEventKeySourceId,
+                eamEventKeyEventId,
+
+                eamEventSerialNumber,
+                eamEventDescription,
+                eamEventCategory,
+                eamEventSeverity,
+                eamEventTime }
+    STATUS  current
+    DESCRIPTION
+        "This trap is sent when a MNC event has been update by the MNC."
+    ::= { sedMncEventTraps 2 }
+
+
+
+
+
+eamAlarmKey       OBJECT IDENTIFIER ::= { sedMncAlarmData       1 }
+    -- the key consists of three components, system ID, source ID and event ID.
+
+eamAlarmKeyServerGroup OBJECT-TYPE
+    SYNTAX  DisplayString 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION 
+        "A text string identifying the server group to which the MNC 
+         server computer belongs.  This is extracted from the site
+         system specification."
+    ::= { eamAlarmKey  1 }
+
+eamAlarmKeySystemId OBJECT-TYPE
+    SYNTAX  DisplayString 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION 
+        "A text string identifying the MNC server computer that 
+         originated the event/alarm.  This is the MNC site/shelter
+         ID not the computer hostname."
+    ::= { eamAlarmKey  2 }
+
+eamAlarmKeySourceId OBJECT-TYPE
+    SYNTAX  DisplayString 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION 
+        "A text string identifying the originating device or software subsystem."
+    ::= { eamAlarmKey  3 }
+
+eamAlarmKeyEventId OBJECT-TYPE
+    SYNTAX  DisplayString 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION 
+        "A text string identifying the originating object.  Device name  
+         for a device. Command name for a failed command."
+    ::= { eamAlarmKey  4 }
+
+
+eamAlarmSerialNumber OBJECT-TYPE
+    SYNTAX  Counter32 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION 
+        "The serial number of the alarm.  The host IP/hostname/eamAlarmKeySystemId + 
+         the serial number uniquely identifies an alarm."
+    ::= { sedMncAlarmData  2 }
+
+eamAlarmProbableCause OBJECT-TYPE 
+    SYNTAX  DisplayString 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION 
+        "Description of the probable cause of the alarm.  Not
+         used by the MNC."
+    ::= { sedMncAlarmData  3 }
+
+eamAlarmDescription OBJECT-TYPE 
+    SYNTAX  DisplayString 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION 
+        "A String describing the alarm.  This is the description from the 
+         last event associated with the alarm."
+    ::= { sedMncAlarmData  4 }
+
+eamAlarmSeverity OBJECT-TYPE
+    SYNTAX     INTEGER {
+            good(0),      -- used to clear an alarm
+            none(1),      -- information only - not used for alarms
+            noneWarning(2), --important information - not used for alarms
+            warning(3),   -- warning severity level
+            minor(4),     -- minor severity level
+            major(5),     -- major severity level
+            critical(6)  -- critical severity level
+		}
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The current severity of the alarm good(0) when cleared." 
+    ::= { sedMncAlarmData  5 }
+
+eamAlarmMaxSeverity OBJECT-TYPE
+    SYNTAX     INTEGER {
+            good(0),      -- used to clear an alarm
+            none(1),      -- information only - not used for alarms
+            noneWarning(2), --important information - not used for alarms
+            warning(3),   -- warning severity level
+            minor(4),     -- minor severity level
+            major(5),     -- major severity level
+            critical(6)  -- critical severity level
+		}
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "The maximum severity of the alarm." 
+    ::= { sedMncAlarmData  6 }
+
+eamAlarmAcknowledged OBJECT-TYPE
+    SYNTAX     INTEGER {
+            notAcknowledged(0),     -- not acknowledged
+            acknowledged(1)         -- acknowledged
+		}
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Whether an alarm has been acknowledged.  The acknowledged flag is
+         cleared after a configurable timeout if the alarm does not clear." 
+    ::= { sedMncAlarmData  7 }
+
+eamAlarmAcknowledgedBy OBJECT-TYPE
+    SYNTAX  DisplayString 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION
+	    "Login ID of the user who acknowledged the alarm." 
+    ::= { sedMncAlarmData  8 }
+
+eamAlarmAcknowledgedTime OBJECT-TYPE
+    SYNTAX  DisplayString 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION
+	    "The time (UTC) the alarm was last acknowledged in a 
+         sortable time string. yyyy/mm/dd hh:mm:ss.mmm format" 
+    ::= { sedMncAlarmData  9 }
+
+eamAlarmOld OBJECT-TYPE
+    SYNTAX     INTEGER {
+            notOld(0),              -- not old
+            old(1)                  -- old
+		}
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Whether an alarm has been marked as old.  Old alarms are move to 
+         the MNC historical alarm log." 
+    ::= { sedMncAlarmData  10 }
+
+eamAlarmOldBy OBJECT-TYPE
+    SYNTAX  DisplayString 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION
+	    "Login ID of the user who marked the alarm as old." 
+    ::= { sedMncAlarmData  11 }
+
+eamAlarmOldTime OBJECT-TYPE
+    SYNTAX  DisplayString 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION
+	    "The time (UTC) the alarm was marked as old in a sortable 
+         time string.  yyyy/mm/dd hh:mm:ss.mmm format." 
+    ::= { sedMncAlarmData  12 }
+
+eamAlarmCleared OBJECT-TYPE
+    SYNTAX     INTEGER {
+            notCleared(0),          -- not cleared
+            cleared(1)              -- cleared
+		}
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION
+	    "Wether an alarm has been marked as old.  Old alarms are move to 
+         the MNC historical alarm log." 
+    ::= { sedMncAlarmData  13 }
+
+eamAlarmTriggeringEventNumber OBJECT-TYPE
+    SYNTAX  Counter32 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION 
+        "The serial number of the event that triggered the alarm.  The 
+         host IP/hostname + the serial number uniquely identifies an event."
+    ::= { sedMncAlarmData  14 }
+
+eamAlarmTriggeringEventTime OBJECT-TYPE
+    SYNTAX  DisplayString 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION 
+        "The time (UTC) of the event that triggered the alarm 
+         in a sortable time string.  yyyy/mm/dd hh:mm:ss.mmm format." 
+    ::= { sedMncAlarmData  15 }
+
+eamAlarmLastUpdateEventNumber OBJECT-TYPE
+    SYNTAX  Counter32 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION 
+        "The serial number of the event that last updated 
+         the alarm.  The host IP/hostname + the serial number 
+         uniquely identifies the event."
+    ::= { sedMncAlarmData  16 }
+
+eamAlarmLastUpdateEventTime OBJECT-TYPE
+    SYNTAX  DisplayString 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION
+	    "The time (UTC) of the event that last updated the 
+         alarm in a sortable time string. yyyy/mm/dd hh:mm:ss.mmm format." 
+    ::= { sedMncAlarmData  17 }
+
+eamAlarmNotes OBJECT-TYPE
+    SYNTAX  DisplayString 
+    MAX-ACCESS read-only 
+    STATUS current 
+    DESCRIPTION
+	    "Note attached to the alarm."  -- Not currently used by the MNC. 
+    ::= { sedMncAlarmData  18 }
+
+sedMncAlarmTrap NOTIFICATION-TYPE
+    OBJECTS  {  eamAlarmKeyServerGroup,  -- Alarm key is composed of server group, systemId, sourceId, eventId.
+                eamAlarmKeySystemId,     
+                eamAlarmKeySourceId,
+                eamAlarmKeyEventId,
+
+                eamAlarmSerialNumber,
+                eamAlarmProbableCause,   -- Probable cause not used by MNC
+                eamAlarmDescription,
+                eamAlarmSeverity,
+                eamAlarmMaxSeverity,
+                eamAlarmAcknowledged,
+                eamAlarmAcknowledgedBy,
+                eamAlarmAcknowledgedTime,
+                eamAlarmOld,
+                eamAlarmOldBy,
+                eamAlarmOldTime,
+                eamAlarmCleared,
+                eamAlarmTriggeringEventNumber,
+                eamAlarmTriggeringEventTime,
+                eamAlarmLastUpdateEventNumber,
+                eamAlarmLastUpdateEventTime,
+                eamAlarmNotes }         -- Notes not used by MNC
+    STATUS  current
+    DESCRIPTION
+        "This trap is sent when a MNC alarm has been update by the MNC."
+    ::= { sedMncAlarmTraps 2 }
+
+
+END
+

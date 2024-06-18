@@ -1,0 +1,11 @@
+<datacollection-group xmlns="http://xmlns.opennms.org/xsd/config/datacollection" name="SBAS-EMS-MIB">
+   <group name="sbasNotifyObjects" ifType="ignore">
+      <mibObj oid=".1.3.6.1.4.1.303.3.3.9.45.1.1.1" instance="0" alias="alarmID" type="integer"/>
+      <mibObj oid=".1.3.6.1.4.1.303.3.3.9.45.1.1.2" instance="0" alias="alarmDescription" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.303.3.3.9.45.1.1.3" instance="0" alias="alarmSeverity" type="string"/>
+      <mibObj oid=".1.3.6.1.4.1.303.3.3.9.45.1.1.4" instance="0" alias="reportingEntityID" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.303.3.3.9.45.1.1.5" instance="0" alias="faultyEntityID" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.303.3.3.9.45.1.1.6" instance="0" alias="timeStamp" type="octetstring"/>
+      <mibObj oid=".1.3.6.1.4.1.303.3.3.9.45.1.1.7" instance="0" alias="supportingData" type="octetstring"/>
+   </group>
+</datacollection-group>

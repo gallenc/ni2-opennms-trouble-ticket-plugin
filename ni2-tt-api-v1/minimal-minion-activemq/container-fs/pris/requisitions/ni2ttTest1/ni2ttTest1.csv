@@ -1,0 +1,16 @@
+Node_Label,ID_,Location,Parent_Foreign_Id,Parent_Foreign_Source,IP_Management,MgmtType_,svc_Forced,cat_,Asset_region,Asset_serialNumber,Asset_assetNumber,Asset_latitude,Asset_longitude,Asset_thresholdCategory,Asset_notifyCategory,Asset_pollerCategory,Asset_displayCategory,Asset_managedObjectType,Asset_managedObjectInstance,Asset_circuitId,Asset_description
+database,database,Default,,,172.20.0.10,N,ICMP,,,,,,,,,,,,,,5432
+phppgadmin,phppgadmin,Default,,,172.20.0.15,N,ICMP,,,,,,,,,,,,,,80
+grafana,grafana,Default,,,172.20.0.18,N,ICMP,,,,,,,,,,,,,,3000
+horizon,horizon,Default,,,172.20.0.30,N,ICMP,,,,,,,,,,,,,,8980
+minion_01,minion_01,Default,,,172.20.0.25,N,ICMP,,,,,,,,,,,,,,8201
+pris,pris,Default,,,172.20.0.35,N,ICMP,,,,,,,,,,,,,,8000
+monaco_01,monaco_01,Default,,,172.20.0.101,P,ICMP,,,,,,,,,,,,,,161
+monaco_5,monaco_5,Default,,,172.20.0.104,P,ICMP,,,,,,,,,,,,,,161
+monaco_6,monaco_6,Default,,,172.20.0.106,P,ICMP,,,,,,,,,,,,,,161
+adam_01,adam_01,Default,,,172.20.0.108,P,ICMP,,,,,,,,,,,,,,161
+adam,adam,Default,,,172.20.0.110,P,ICMP,,,,,,,,,,,,,,161
+sbss_ems_ext_man,sbss_ems_ext_man,Default,,,172.20.0.112,P,ICMP,,,,,,,,,,,,,,161
+sbas,sbas,Default,,,172.20.0.114,P,ICMP,,,,,,,,,,,,,,161
+netsnmp_1_1,netsnmp_1_1,Default,,,172.20.0.201,P,ICMP,,,,,,,,,,,,,,161
+netsnmp_2_1,netsnmp_2_1,minion1-location,,,172.20.2.201,P,ICMP,,,,,,,,,,,,,,161

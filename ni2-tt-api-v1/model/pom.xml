@@ -1,0 +1,87 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.opennms.integration.ni2.ttapi</groupId>
+      <artifactId>ni2-tt-api-v1</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+   </parent>
+
+   <artifactId>ni2-tt-api-v1-model</artifactId>
+   <packaging>bundle</packaging>
+
+   <properties>
+   </properties>
+
+   <build>
+      <plugins>
+
+         <plugin>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>maven-bundle-plugin</artifactId>
+            <extensions>true</extensions>
+            <configuration>
+               <obrRepository>NONE</obrRepository>
+               <instructions>
+                  <!-- Don't add Import-Service MANIFEST.MF headers, just rely on normal OSGi service resolution -->
+                  <_removeheaders>Import-Service</_removeheaders>
+
+                  <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                  <Bundle-Version>${project.version}</Bundle-Version>
+                  <Export-package>{local-packages}</Export-package>
+                  <Import-Package>
+                     <!-- org.apache.felix.service.command, -->
+                     <!-- javax.ws.rs;version="[2.0,3)", -->
+                     <!-- javax.ws.rs.core;version="[2.0,3)", -->
+                     *
+                  </Import-Package>
+                  <!-- <Karaf-Commands>*</Karaf-Commands> -->
+               </instructions>
+            </configuration>
+         </plugin>
+
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+               <testFailureIgnore>true</testFailureIgnore>
+               <excludes>
+                  <!-- prevent tests running in this package. These are manual one off development tests -->
+                  <exclude>**/manual/*.java</exclude>
+               </excludes>
+            </configuration>
+         </plugin>
+
+      </plugins>
+   </build>
+
+
+   <dependencies>
+
+      <dependency>
+         <groupId>com.fasterxml.jackson.jaxrs</groupId>
+         <artifactId>jackson-jaxrs-json-provider</artifactId>
+         <version>${jackson.version}</version>
+         <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>org.apache.logging.log4j</groupId>
+         <artifactId>log4j-slf4j-impl</artifactId>
+         <scope>test</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>junit</groupId>
+         <artifactId>junit</artifactId>
+         <scope>test</scope>
+      </dependency>
+
+   </dependencies>
+
+
+
+</project>
+
+

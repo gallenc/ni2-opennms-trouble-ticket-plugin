@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+   <Properties>
+      <Property name="APP_LOG_ROOT">./target/log</Property>
+      <Property name="logPath">target/logs</Property>
+      <Property name="rollingFileName">myapp</Property>
+   </Properties>
+   <Appenders>
+      <Console name="ConsoleAppender" target="SYSTEM_OUT">
+         <PatternLayout
+            pattern="%style{%date{DEFAULT}}{yellow}
+                [%t] %highlight{%-5level}{FATAL=bg_red, ERROR=red, WARN=yellow, INFO=green} %logger{36} - %message\n" />
+      </Console>
+<!--       <RollingFile name="rollingFile" fileName="${logPath}/${rollingFileName}.log" filePattern="${logPath}/${rollingFileName}_%d{yyyy-MM-dd}.log"> -->
+<!--          <PatternLayout pattern="[%highlight{%-5level}] %d{DEFAULT} %c{1}.%M() - %msg%n%throwable{short.lineNumber}" /> -->
+<!--          <Policies> -->
+<!--             Causes a rollover if the log file is older than the current JVM's start time -->
+<!--             <OnStartupTriggeringPolicy /> -->
+<!--             Causes a rollover once the date/time pattern no longer applies to the active file -->
+<!--             <TimeBasedTriggeringPolicy interval="1" modulate="true" /> -->
+<!--          </Policies> -->
+<!--       </RollingFile> -->
+   </Appenders>
+   <Loggers>
+   
+      <Logger name="org.ni2" level="debug" additivity="false">
+            <AppenderRef ref="ConsoleAppender" />
+       </Logger>
+       
+       <!-- logs cxf client request and response messages -->
+       <Logger name="org.apache.cxf.interceptor" level="debug" additivity="false">
+            <AppenderRef ref="ConsoleAppender" />
+       </Logger>
+
+      <Root level="error">
+         <AppenderRef ref="ConsoleAppender" />
+<!--          <AppenderRef ref="rollingFile" /> -->
+      </Root>
+      
+ 
+   </Loggers>
+</Configuration>

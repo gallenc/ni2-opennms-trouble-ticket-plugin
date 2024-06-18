@@ -1,0 +1,207 @@
+<events xmlns="http://xmlns.opennms.org/xsd/eventconf">
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.10297.101.2.10</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>1</mevalue>
+         </maskelement>
+      </mask>
+      <uei>uei.opennms.org/traps/ADVANTECH-IO-COMMON-MIB/trapIoModuleEvent</uei>
+      <event-label>ADVANTECH-IO-COMMON-MIB defined trap event: trapIoModuleEvent</event-label>
+      <descr>
+&lt;p>Refers to the IO module present condition has changed&lt;/p>&lt;table>
+	&lt;tr>&lt;td>&lt;b>
+
+	trapModuleIndex&lt;/b>&lt;/td>&lt;td>
+	%parm[#1]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	trapHwdEvent&lt;/b>&lt;/td>&lt;td>
+	%parm[#2]%;&lt;/td>&lt;td>&lt;p>
+		insert(1)
+		remove(2)
+		all(3)
+	&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+	</descr>
+      <logmsg dest="logndisplay">&lt;p>
+	trapIoModuleEvent trap received
+	trapModuleIndex=%parm[#1]%
+	trapHwdEvent=%parm[#2]%&lt;/p>
+	</logmsg>
+      <severity>Indeterminate</severity>
+      <varbindsdecode>
+         <parmid>parm[#2]</parmid>
+         <decode varbindvalue="1" varbinddecodedstring="insert"/>
+         <decode varbindvalue="2" varbinddecodedstring="remove"/>
+         <decode varbindvalue="3" varbinddecodedstring="all"/>
+      </varbindsdecode>
+   </event>
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.10297.101.2.10</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>11</mevalue>
+         </maskelement>
+      </mask>
+      <uei>uei.opennms.org/traps/ADVANTECH-IO-COMMON-MIB/trapDiEvent</uei>
+      <event-label>ADVANTECH-IO-COMMON-MIB defined trap event: trapDiEvent</event-label>
+      <descr>
+&lt;p>Refers to the DI value changed.&lt;/p>&lt;table>
+	&lt;tr>&lt;td>&lt;b>
+
+	trapModuleIndex&lt;/b>&lt;/td>&lt;td>
+	%parm[#1]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	trapIoIndex&lt;/b>&lt;/td>&lt;td>
+	%parm[#2]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	trapIoValue&lt;/b>&lt;/td>&lt;td>
+	%parm[#3]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+	</descr>
+      <logmsg dest="logndisplay">&lt;p>
+	trapDiEvent trap received
+	trapModuleIndex=%parm[#1]%
+	trapIoIndex=%parm[#2]%
+	trapIoValue=%parm[#3]%&lt;/p>
+	</logmsg>
+      <severity>Indeterminate</severity>
+   </event>
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.10297.101.2.10</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>12</mevalue>
+         </maskelement>
+      </mask>
+      <uei>uei.opennms.org/traps/ADVANTECH-IO-COMMON-MIB/trapDoEvent</uei>
+      <event-label>ADVANTECH-IO-COMMON-MIB defined trap event: trapDoEvent</event-label>
+      <descr>
+&lt;p>Refers to the DO value changed.&lt;/p>&lt;table>
+	&lt;tr>&lt;td>&lt;b>
+
+	trapModuleIndex&lt;/b>&lt;/td>&lt;td>
+	%parm[#1]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	trapIoIndex&lt;/b>&lt;/td>&lt;td>
+	%parm[#2]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	trapIoValue&lt;/b>&lt;/td>&lt;td>
+	%parm[#3]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+	</descr>
+      <logmsg dest="logndisplay">&lt;p>
+	trapDoEvent trap received
+	trapModuleIndex=%parm[#1]%
+	trapIoIndex=%parm[#2]%
+	trapIoValue=%parm[#3]%&lt;/p>
+	</logmsg>
+      <severity>Indeterminate</severity>
+   </event>
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.10297.101.2.10</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>13</mevalue>
+         </maskelement>
+      </mask>
+      <uei>uei.opennms.org/traps/ADVANTECH-IO-COMMON-MIB/trapHiAlarmEvent</uei>
+      <event-label>ADVANTECH-IO-COMMON-MIB defined trap event: trapHiAlarmEvent</event-label>
+      <descr>
+&lt;p>Refers to the high alarm trigger.&lt;/p>&lt;table>
+	&lt;tr>&lt;td>&lt;b>
+
+	trapModuleIndex&lt;/b>&lt;/td>&lt;td>
+	%parm[#1]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	trapIoIndex&lt;/b>&lt;/td>&lt;td>
+	%parm[#2]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	trapIoValue&lt;/b>&lt;/td>&lt;td>
+	%parm[#3]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+	</descr>
+      <logmsg dest="logndisplay">&lt;p>
+	trapHiAlarmEvent trap received
+	trapModuleIndex=%parm[#1]%
+	trapIoIndex=%parm[#2]%
+	trapIoValue=%parm[#3]%&lt;/p>
+	</logmsg>
+      <severity>Indeterminate</severity>
+   </event>
+   <event>
+      <mask>
+         <maskelement>
+            <mename>id</mename>
+            <mevalue>.1.3.6.1.4.1.10297.101.2.10</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>generic</mename>
+            <mevalue>6</mevalue>
+         </maskelement>
+         <maskelement>
+            <mename>specific</mename>
+            <mevalue>14</mevalue>
+         </maskelement>
+      </mask>
+      <uei>uei.opennms.org/traps/ADVANTECH-IO-COMMON-MIB/trapLoAlarmEvent</uei>
+      <event-label>ADVANTECH-IO-COMMON-MIB defined trap event: trapLoAlarmEvent</event-label>
+      <descr>
+&lt;p>Refers to the low alarm trigger.&lt;/p>&lt;table>
+	&lt;tr>&lt;td>&lt;b>
+
+	trapModuleIndex&lt;/b>&lt;/td>&lt;td>
+	%parm[#1]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	trapIoIndex&lt;/b>&lt;/td>&lt;td>
+	%parm[#2]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>
+	&lt;tr>&lt;td>&lt;b>
+
+	trapIoValue&lt;/b>&lt;/td>&lt;td>
+	%parm[#3]%;&lt;/td>&lt;td>&lt;p>&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+	</descr>
+      <logmsg dest="logndisplay">&lt;p>
+	trapLoAlarmEvent trap received
+	trapModuleIndex=%parm[#1]%
+	trapIoIndex=%parm[#2]%
+	trapIoValue=%parm[#3]%&lt;/p>
+	</logmsg>
+      <severity>Indeterminate</severity>
+   </event>
+</events>
