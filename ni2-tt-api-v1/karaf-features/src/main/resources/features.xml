@@ -6,7 +6,7 @@
       <feature>aries-blueprint</feature>
       <requirement>osgi.service;effective:=active;filter:=(objectClass=org.osgi.service.http.HttpService)</requirement>
 
-      <feature version="${cxf.version}" dependency="true">cxf-jaxrs</feature>
+<!--       <feature version="${cxf.version}" dependency="true">cxf-jaxrs</feature> -->
       <bundle dependency="true">mvn:com.fasterxml.jackson.core/jackson-core/${jackson.version}</bundle>
       <bundle dependency="true">mvn:com.fasterxml.jackson.core/jackson-annotations/${jackson.version}</bundle>
       <bundle dependency="true">mvn:com.fasterxml.jackson.core/jackson-databind/${jackson.version}</bundle>
@@ -14,20 +14,20 @@
       <bundle dependency="true">mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/${jackson.version}</bundle>
       <bundle dependency="true">mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-yaml/${jackson.version}</bundle>
 
-      <!-- ADDED SO THAT cxf-jaxr feature loads in opennms -->
-      <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-rs-json-basic/${cxf.version}</bundle>
-      <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-rs-extension-providers/${cxf.version}</bundle>
-      <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-rs-client/${cxf.version}</bundle>
-      <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-rs-extension-search/${cxf.version}</bundle>
+<!--       ADDED SO THAT cxf-jaxr feature loads in opennms -->
+<!--       <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-rs-json-basic/${cxf.version}</bundle> -->
+<!--       <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-rs-extension-providers/${cxf.version}</bundle> -->
+<!--       <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-rs-client/${cxf.version}</bundle> -->
+<!--       <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-rs-extension-search/${cxf.version}</bundle> -->
 
-      <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-rs-service-description/${cxf.version}</bundle>
-      <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-frontend-jaxrs/${cxf.version}</bundle>
-      <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-security/${cxf.version}</bundle>
+<!--       <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-rs-service-description/${cxf.version}</bundle> -->
+<!--       <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-frontend-jaxrs/${cxf.version}</bundle> -->
+<!--       <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-security/${cxf.version}</bundle> -->
 
-      <bundle dependency="true">mvn:org.apache.cxf.karaf/cxf-karaf-commands/${cxf.version}</bundle>
-      <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-security/${cxf.version}</bundle>
+<!--       <bundle dependency="true">mvn:org.apache.cxf.karaf/cxf-karaf-commands/${cxf.version}</bundle> -->
+<!--       <bundle dependency="true">mvn:org.apache.cxf/cxf-rt-security/${cxf.version}</bundle> -->
 
-      <bundle dependency="true">mvn:org.codehaus.jettison/jettison/1.5.3</bundle>
+<!--       <bundle dependency="true">mvn:org.codehaus.jettison/jettison/1.5.3</bundle> -->
 
 
       <!-- <feature version="${cxf-version}">cxf-bindings-soap</feature> -->

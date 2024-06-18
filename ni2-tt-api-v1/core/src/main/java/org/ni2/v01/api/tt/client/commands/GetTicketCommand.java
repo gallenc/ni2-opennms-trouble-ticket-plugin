@@ -28,14 +28,12 @@ import org.ni2.v01.api.tt.model.TroubleTicketEventExtended;
 import org.ni2.v01.api.tt.opennms.plugin.Ni2TicketerPlugin;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
 

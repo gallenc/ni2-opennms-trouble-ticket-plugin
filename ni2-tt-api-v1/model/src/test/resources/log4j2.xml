@@ -27,10 +27,6 @@
             <AppenderRef ref="ConsoleAppender" />
        </Logger>
        
-       <!-- logs cxf client request and response messages -->
-       <Logger name="org.apache.cxf.interceptor" level="debug" additivity="false">
-            <AppenderRef ref="ConsoleAppender" />
-       </Logger>
 
       <Root level="error">
          <AppenderRef ref="ConsoleAppender" />
