@@ -57,40 +57,6 @@
             </executions>
          </plugin>
 
-         <!-- <plugin> -->
-         <!-- <groupId>org.apache.karaf.tooling</groupId> -->
-         <!-- <artifactId>karaf-maven-plugin</artifactId> -->
-         <!-- <configuration> -->
-         <!-- <skip>${skipTests}</skip> -->
-         <!-- </configuration> -->
-         <!-- <executions> -->
-         <!-- <execution> -->
-         <!-- <id>verify</id> -->
-         <!-- <phase>process-resources</phase> -->
-         <!-- <goals> -->
-         <!-- <goal>verify</goal> -->
-         <!-- </goals> -->
-         <!-- <configuration> -->
-         <!-- <javase>${java.version}</javase> -->
-         <!-- <descriptors> -->
-         <!-- <descriptor>mvn:org.apache.karaf.features/framework/${karaf.version}/xml/features</descriptor> -->
-         <!-- <descriptor>mvn:org.apache.karaf.features/standard/${karaf.version}/xml/features</descriptor> -->
-         <!-- <descriptor>mvn:org.apache.cxf.karaf/apache-cxf/${cxf-version}/xml/features</descriptor> -->
-         <!-- <descriptor>mvn:org.opennms.integration.api/karaf-features/${opennms.api.version.min}/xml</descriptor> -->
-         <!-- <descriptor>file:${project.build.directory}/classes/features.xml</descriptor> -->
-         <!-- </descriptors> -->
-         <!-- <distribution>org.apache.karaf.features:framework</distribution> -->
-         <!-- <framework> -->
-         <!-- <feature>framework</feature> -->
-         <!-- </framework> -->
-         <!-- <features> -->
-         <!-- <feature>ni2-ticketing</feature> -->
-         <!-- </features> -->
-         <!-- </configuration> -->
-         <!-- </execution> -->
-         <!-- </executions> -->
-         <!-- </plugin> -->
-
       </plugins>
    </build>
 
@@ -99,7 +65,6 @@
       <dependency>
          <groupId>org.apache.karaf.features</groupId>
          <artifactId>framework</artifactId>
-         <version>${karaf.version}</version>
          <type>kar</type>
          <scope>provided</scope>
       </dependency>
@@ -118,31 +83,12 @@
          <scope>provided</scope>
       </dependency>
 
-<!--       <dependency> -->
-<!--          <groupId>${project.groupId}</groupId> -->
-<!--          <artifactId>ni2-api-cxf-client</artifactId> -->
-<!--          <version>${project.version}</version> -->
-<!--          <scope>provided</scope> -->
-<!--       </dependency> -->
-
-<!--       <dependency> -->
-<!--          <groupId>io.swagger</groupId> -->
-<!--          <artifactId>swagger-annotations</artifactId> -->
-<!--          <version>1.5.22</version> -->
-<!--          <scope>provided</scope> -->
-<!--       </dependency> -->
-
       <dependency>
          <groupId>org.slf4j</groupId>
          <artifactId>slf4j-api</artifactId>
          <scope>provided</scope>
       </dependency>
-      
-<!--       <dependency> -->
-<!--          <groupId>jakarta.annotation</groupId> -->
-<!--          <artifactId>jakarta.annotation-api</artifactId> -->
-<!--          <scope>provided</scope> -->
-<!--       </dependency> -->
+
 
    </dependencies>
 </project>

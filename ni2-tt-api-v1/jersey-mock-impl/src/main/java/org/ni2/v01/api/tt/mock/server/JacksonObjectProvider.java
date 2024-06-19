@@ -22,18 +22,13 @@
 
 package org.ni2.v01.api.tt.mock.server;
 
-import com.fasterxml.jackson.core.JsonFactory.Feature;
-import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.ext.ContextResolver;
 import jakarta.ws.rs.ext.Provider;
 
 @Provider
-//@Produces(MediaType.APPLICATION_JSON)
 public class JacksonObjectProvider implements ContextResolver<ObjectMapper> {
 
    final ObjectMapper defaultObjectMapper;

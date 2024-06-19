@@ -28,6 +28,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
 /**
+ * JUST PROVIDED AS EXAMPLE - NOT NEEDED
  * Root resource (exposed at "myresource" path)
  */
 @Path("myresource")

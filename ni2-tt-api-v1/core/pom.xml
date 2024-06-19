@@ -32,9 +32,6 @@
                   <Bundle-Version>${project.version}</Bundle-Version>
                   <Export-package>{local-packages}</Export-package>
                   <Import-Package>
-                     <!-- org.apache.felix.service.command, -->
-                     <!-- javax.ws.rs;version="[2.0,3)", -->
-                     <!-- javax.ws.rs.core;version="[2.0,3)", -->
                      *
                   </Import-Package>
                   <Karaf-Commands>*</Karaf-Commands>

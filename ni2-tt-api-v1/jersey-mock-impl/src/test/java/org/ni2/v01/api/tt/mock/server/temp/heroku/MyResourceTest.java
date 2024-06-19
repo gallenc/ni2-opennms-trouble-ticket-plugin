@@ -36,6 +36,9 @@ import org.ni2.v01.api.tt.mock.server.temp.MyResource;
 
 import static org.junit.Assert.*;
 
+/**
+ * just provided as an example - not needed
+ */
 public class MyResourceTest extends JerseyTest {
 
     @Override
@@ -44,7 +47,7 @@ public class MyResourceTest extends JerseyTest {
     }
 
     /**
-     * Test to see that the message "Got it!" is sent in the response.
+     * Test to see that the message "Hello, Heroku!" is sent in the response.
      */
     @Test
     public void testGetIt() {

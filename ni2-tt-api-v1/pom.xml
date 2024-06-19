@@ -37,7 +37,6 @@
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <java.version>11</java.version>
 
-<!--       <cxf.version>3.5.5</cxf.version> -->
       <jackson.version>2.14.1</jackson.version>
       <karaf.version>4.3.10</karaf.version>
       <junit-version>4.13.2</junit-version>

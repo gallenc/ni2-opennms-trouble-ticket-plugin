@@ -66,9 +66,9 @@ docker compose cp ../ni2-tt-api-v1/assembly/kar/target/ni2-tt-api-v1-kar-0.0.1-S
 
 A [Pris](https://docs.opennms.com/pris/2.1.0/index.html) instance is provided which can be used to generate a requisition from a spreadsheet or csv file.
 
-The current example uses ni2terrestar.csv as the requisition.
+The current example uses ni2ttTest1.csv as the requisition.
 
-To view this requisition outside the docker compose project, browse to http://localhost:8000/requisitions/ni2terrestar
+To view this requisition outside the docker compose project, browse to http://localhost:8000/requisitions/ni2ttTest1
 
 To load the requisition from inside the running OpenNMS use
 
