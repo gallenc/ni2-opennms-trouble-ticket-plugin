@@ -58,7 +58,7 @@ a number of commands are provided to allow testing of the plugin
 ```
 cd minimal-minion-activemq
 
-docker compose cp ../ni2-tt-api-v1/assembly/kar/target/ni2-tt-api-v1-kar-0.0.1-SNAPSHOT.kar  horizon:/usr/share/opennms/deploy/
+docker compose cp ../ni2-tt-api-v1/assembly/kar/target/ni2-tt-api-v1-kar-0.0.1.kar  horizon:/usr/share/opennms/deploy/
 
 ```
 
