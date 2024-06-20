@@ -157,8 +157,8 @@ opennms.ticketer.plugin=org.opennms.netmgt.ticketd.OSGiBasedTicketerPlugin
 
 opennms.alarmTroubleTicketEnabled=true
 
-# note this should be set up to get the url linking to the ticket
-opennms.alarmTroubleTicketLinkTemplate=http://localhost:8080/api/v1/entity/event/get/event/extended/${id}
+# note this should be set up to get the url linking to the ticket on the web ui
+opennms.alarmTroubleTicketLinkTemplate=http://localhost:8080/Ni2CMDBWebApi/overviewByCategoryAndAttribute/Event/UniversalId/${id}
 
 # this sets up rules for mapping values in alarms and nodes to tickets
 opennms.ticketer.servicelayer=org.opennms.netmgt.ticketd.DroolsTicketerServiceLayer
