@@ -1,4 +1,6 @@
-# RENAME this file to test-properties.properties and change values
+# This file contains configuration properties for the Ni2 Trouble Ticket Plugin
+#
+# RENAME or copy this file to ni2-troubleticket.properties and change values appropriately
 # DO NOT check passwords into git
 
 # url of the Ni2 trouble ticket server
