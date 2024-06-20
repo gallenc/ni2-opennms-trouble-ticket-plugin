@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
 
 public class Ni2TicketerPlugin implements TicketingPlugin {
    private static final Logger LOG = LoggerFactory.getLogger(Ni2TicketerPlugin.class);
-   
+
    // maximum length of a description in ni2 ticket
    public static final int MAX_DESCRIPTION_LENGTH = 255;
 
@@ -55,6 +55,7 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
    public static final String TT_TRUST_ALL_CERTIFICATES_PROPERTY = "ni2.tt.server.trustallcertificates";
    public static final String TT_OPENNMS_INSTANCE_PROPERTY = "ni2.tt.opennms.instance";
    public static final String TT_FALLBACK_RESOURCE_PROPERTY = "ni2.tt.opennms.fallbackresource";
+   public static final String TT_CLIENT_TIMEOUT_PROPERTY = "ni2.tt.opennms.clienttimeout";
 
    public static final String DEFAULT_TT_SERVER_URL_PROPERTY = "http://localhost:8080";
    public static final String DEFAULT_TT_USERNAME_PROPERTY = "username";
@@ -62,54 +63,76 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
    public static final String DEFAULT_TT_OPENNMS_INSTANCE_PROPERTY = "OpenNMS-Instance-not-set";
    public static final String DEFAULT_TT_TRUST_ALL_CERTIFICATES_PROPERTY = "true";
    public static final String DEFAULT_TT_FALLBACK_RESOURCE_ID = "DEFAULT_RESOURCE_ID";
+   public static final String DEFAULT_CLIENT_TIMEOUT = "10000"; // 10 seconds
 
    // trouble ticket contains csv list of resourceids (node names)
    public static final String ONMS_TICKET_ATTRIBUTE_KEY_RESOURCE_IDS = "ni2.tt.resourceids";
-   
-   // key to access user defined atributes
+
+   // key to access user defined attributes
    public static final String ONMS_TICKET_NI2_ATTRIBUTES_KEY_PREFIX = "ni2.tt.attributes.";
 
-   private String ttServerUrl = DEFAULT_TT_SERVER_URL_PROPERTY;
-   private String ttUsername = DEFAULT_TT_USERNAME_PROPERTY;
-   private String ttPassword = DEFAULT_TT_PASSWORD_PROPERTY;
-   private boolean ttTrustAllCertificates = Boolean.valueOf(DEFAULT_TT_TRUST_ALL_CERTIFICATES_PROPERTY);
-   private String onmsInstanceId = DEFAULT_TT_OPENNMS_INSTANCE_PROPERTY;
-   private String fallbackResourceId = DEFAULT_TT_FALLBACK_RESOURCE_ID;
+   private String _ttServerUrl = DEFAULT_TT_SERVER_URL_PROPERTY;
+   private String _ttUsername = DEFAULT_TT_USERNAME_PROPERTY;
+   private String _ttPassword = DEFAULT_TT_PASSWORD_PROPERTY;
+   private boolean _ttTrustAllCertificates = Boolean.valueOf(DEFAULT_TT_TRUST_ALL_CERTIFICATES_PROPERTY);
+   private String _onmsInstanceId = DEFAULT_TT_OPENNMS_INSTANCE_PROPERTY;
+   private String _fallbackResourceId = DEFAULT_TT_FALLBACK_RESOURCE_ID;
+   private int _connectionTimeout = Integer.parseInt(DEFAULT_CLIENT_TIMEOUT);
 
    Ni2TTApiClient ttclient = null;
 
    public void setTtServerUrl(String ttServerUrl) {
-      this.ttServerUrl = ttServerUrl;
+      if (ttServerUrl != null && !ttServerUrl.isBlank()) {
+         this._ttServerUrl = ttServerUrl;
+      }
    }
 
    public void setTtUsername(String ttUsername) {
-      this.ttUsername = ttUsername;
+      if (ttUsername != null && !ttUsername.isBlank()) {
+         this._ttUsername = ttUsername;
+      }
    }
 
    public void setTtPassword(String ttPassword) {
-      this.ttPassword = ttPassword;
+      if (ttPassword != null && !ttPassword.isBlank()) {
+         this._ttPassword = ttPassword;
+      }
    }
 
    public void setTtTrustAllCertificates(String ttTrustAllCertificates) {
-      this.ttTrustAllCertificates = Boolean.valueOf(ttTrustAllCertificates);
+      if (ttTrustAllCertificates != null && !ttTrustAllCertificates.isBlank()) {
+         this._ttTrustAllCertificates = Boolean.valueOf(ttTrustAllCertificates);
+      }
    }
 
    public void setOnmsInstanceId(String onmsInstanceId) {
-      this.onmsInstanceId = onmsInstanceId;
+      if (onmsInstanceId != null && !onmsInstanceId.isBlank()) {
+         this._onmsInstanceId = onmsInstanceId;
+      }
    }
 
    public void setFallbackResourceId(String fallbackResourceId) {
-      this.fallbackResourceId = fallbackResourceId;
+      if (fallbackResourceId != null && !fallbackResourceId.isBlank()) {
+         this._fallbackResourceId = fallbackResourceId;
+      }
+   }
+
+   public void setConnectionTimeout(String connectionTimeoutStr) {
+      if (connectionTimeoutStr != null && !connectionTimeoutStr.isBlank()) {
+         this._connectionTimeout = Integer.parseInt(connectionTimeoutStr);
+      }
    }
 
    public void init() {
-      LOG.info("Ni2 Trouble Ticket Plugin initialised ttServerUrl={}  ttUsername={} ttPassword=not shown ttTrustAllCertificates={} onmsInstanceId={} fallbackResourceId={}", ttServerUrl, ttUsername, ttTrustAllCertificates, onmsInstanceId, fallbackResourceId);
+      LOG.info("Ni2 Trouble Ticket Plugin initialised ttServerUrl={}  ttUsername={} ttPassword=not shown ttTrustAllCertificates={} onmsInstanceId={} fallbackResourceId={} connectionTimeout (ms) ={}",
+               _ttServerUrl, _ttUsername, _ttTrustAllCertificates, _onmsInstanceId, _fallbackResourceId, _connectionTimeout);
 
       ttclient = new Ni2TTApiClientRawJson();
-      ttclient.setTtServerUrl(ttServerUrl);
-      ttclient.setTtUsername(ttUsername);
-      ttclient.setTtPassword(ttPassword);
-      ttclient.setTrustAllCertificates(ttTrustAllCertificates);
+      ttclient.setTtServerUrl(_ttServerUrl);
+      ttclient.setTtUsername(_ttUsername);
+      ttclient.setTtPassword(_ttPassword);
+      ttclient.setTrustAllCertificates(_ttTrustAllCertificates);
+      ttclient.setConnectionTimeout(_connectionTimeout);
 
    }
 
@@ -141,7 +164,8 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
 
       } catch (Ni2ClientException ex) {
          LOG.error("unable to get ticketId {}", ticketId, ex);
-         throw new Ni2TicketerException("unable to get ticketId " + ticketId, ex);
+         // including ex.getMessage in exception message so that there is a meaningful message in trouble ticket communications fail event
+         throw new Ni2TicketerException("unable to get ticketId " + ticketId + " reason: " + ex.getMessage(), ex);
       }
 
    }
@@ -166,40 +190,40 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
 
       TroubleTicketCreateRequest createRequest = new TroubleTicketCreateRequest();
       createRequest.setAlarmId(ticket.getAlarmId().toString());
-      createRequest.setAlarmSource(onmsInstanceId);
-      
+      createRequest.setAlarmSource(_onmsInstanceId);
+
       // summary must be limited in length
       String summary = ticket.getSummary().substring(0, Math.min(MAX_DESCRIPTION_LENGTH, ticket.getSummary().length()));
       createRequest.setDescription(summary);
       createRequest.setLongDescription(ticket.getDetails());
 
       // set default resource id
-      createRequest.setResourceIds(Arrays.asList(fallbackResourceId));
+      createRequest.setResourceIds(Arrays.asList(_fallbackResourceId));
 
       if (ticket.getAttributes() != null) {
          Map<String, String> ticketAttributeMap = ticket.getAttributes();
-         
+
          String resources = ticketAttributeMap.get(ONMS_TICKET_ATTRIBUTE_KEY_RESOURCE_IDS);
          if (resources == null || resources.isBlank() || resources.contains(" ")) {
-            LOG.debug("resources must not be null or empty or contain spaces. Using defaultResourceId=" + fallbackResourceId);
+            LOG.debug("resources must not be null or empty or contain spaces. Using defaultResourceId=" + _fallbackResourceId);
          } else {
             List<String> resourceIds = Arrays.asList(resources.split(","));
             createRequest.setResourceIds(resourceIds);
          }
-         
+
          // any attribute in the OpenNMS Ticket with key starting with ONMS_TICKET_NI2_ATTRIBUTES_KEY_PREFIX will 
          // be added to the ni2 ticket attributes with the key suffix as the attributes key
          Map<String, String> additionalNi2AttributeMap = new LinkedHashMap<String, String>();
-         for(String ticketAttributeKey : ticketAttributeMap.keySet()) {
-            if(ticketAttributeKey.startsWith(ONMS_TICKET_NI2_ATTRIBUTES_KEY_PREFIX)) {
-               String additionalAttributeKey = ticketAttributeKey.replace(ONMS_TICKET_NI2_ATTRIBUTES_KEY_PREFIX,"");
+         for (String ticketAttributeKey : ticketAttributeMap.keySet()) {
+            if (ticketAttributeKey.startsWith(ONMS_TICKET_NI2_ATTRIBUTES_KEY_PREFIX)) {
+               String additionalAttributeKey = ticketAttributeKey.replace(ONMS_TICKET_NI2_ATTRIBUTES_KEY_PREFIX, "");
                String ticketAttributeValue = ticketAttributeMap.get(ticketAttributeKey);
                additionalNi2AttributeMap.put(additionalAttributeKey, ticketAttributeValue);
             }
          }
-         
+
          createRequest.getCustomAttributes().putAll(additionalNi2AttributeMap);
-         
+
       }
 
       TroubleTicketCreateResponse troubleTicketCreateResponse;
@@ -209,7 +233,8 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
          return troubleTicketCreateResponse.getUniversalId();
       } catch (Ni2ClientException ex) {
          LOG.error("unable to create ticket {}", ticket, ex);
-         throw new Ni2TicketerException("unable to create ticket " + ticket, ex);
+         // including ex.getMessage in exception message so that there is a meaningful message in trouble ticket communications fail event
+         throw new Ni2TicketerException("unable to create ticket reason: " + ex.getMessage() + "ticket:" + ticket, ex);
       }
 
    }
@@ -236,6 +261,5 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
       }
 
    }
-
 
 }

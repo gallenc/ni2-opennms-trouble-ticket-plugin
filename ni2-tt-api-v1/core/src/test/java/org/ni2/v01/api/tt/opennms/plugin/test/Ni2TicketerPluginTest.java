@@ -44,11 +44,14 @@ public class Ni2TicketerPluginTest {
    
    public static final String DEFAULT_OPENNMS_INSTANCE = "opennms_01";
    public static final String DEFAULT_FALLBACK_RESOURCE_ID="defaultResource1";
+   public static final String DEFAULT_CONNECTION_TIMEOUT="5000"; //5 s
+   
 
    public String ttServerUrl = DEFAULT_TT_SERVER_URL;
    public String ttUsername = DEFAULT_TT_USERNAME;
    public String ttPassword = DEFAULT_TT_PASSWORD;
    public String trustAllCertificates ="true";
+   public String connectionTimeoutStr = DEFAULT_CONNECTION_TIMEOUT;
 
    private String onmsInstance = DEFAULT_OPENNMS_INSTANCE;
    private String fallbackResourceId = DEFAULT_FALLBACK_RESOURCE_ID;
@@ -78,6 +81,10 @@ public class Ni2TicketerPluginTest {
    public void setFallbackResourceId(String fallbackResourceId) {
       this.fallbackResourceId = fallbackResourceId;
    }
+   
+   public void setConnectionTimeoutStr(String connectionTimeoutStr) {
+      this.connectionTimeoutStr = connectionTimeoutStr;
+   }
 
    @Before
    public void setup() {
@@ -89,6 +96,8 @@ public class Ni2TicketerPluginTest {
       
       ttplugin.setOnmsInstanceId(onmsInstance);
       ttplugin.setFallbackResourceId(fallbackResourceId);
+
+      ttplugin.setConnectionTimeout(connectionTimeoutStr);
       
       ttplugin.init();
 

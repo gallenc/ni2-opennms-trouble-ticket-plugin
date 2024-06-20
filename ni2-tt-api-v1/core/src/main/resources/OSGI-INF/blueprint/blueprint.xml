@@ -26,6 +26,7 @@
       <property name="ttTrustAllCertificates" value="$[ni2.tt.server.trustallcertificates]" />
       <property name="onmsInstanceId" value="$[ni2.tt.opennms.instance]" />
       <property name="fallbackResourceId" value="$[ni2.tt.opennms.fallbackresource]" />
+      <property name="connectionTimeout" value="$[ni2.tt.opennms.clienttimeout]" />
    </bean>
 
    <service ref="ticketerPlugin" interface="org.opennms.integration.api.v1.ticketing.TicketingPlugin" />

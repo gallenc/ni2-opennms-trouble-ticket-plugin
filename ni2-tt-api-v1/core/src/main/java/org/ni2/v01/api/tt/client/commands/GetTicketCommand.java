@@ -57,6 +57,10 @@ public class GetTicketCommand implements Action {
    @Option(name = "--trustAllCertificates", description = "if true self signed certificates are trusted - defaults to OpenNMS property "
             + Ni2TicketerPlugin.TT_PASSWORD_PROPERTY, required = false, multiValued = false)
    boolean trustAllCertificates = Boolean.valueOf(System.getProperty(Ni2TicketerPlugin.TT_TRUST_ALL_CERTIFICATES_PROPERTY, Ni2TicketerPlugin.DEFAULT_TT_TRUST_ALL_CERTIFICATES_PROPERTY));
+   
+   @Option(name = "--timeout", description = "client timeout (ms) - defaults to OpenNMS property "
+            + Ni2TicketerPlugin.TT_PASSWORD_PROPERTY, required = false, multiValued = false)
+   String timeoutStr = System.getProperty(Ni2TicketerPlugin.TT_CLIENT_TIMEOUT_PROPERTY, Ni2TicketerPlugin.DEFAULT_CLIENT_TIMEOUT);
 
    @Override
    public Object execute() throws Exception {
@@ -67,6 +71,9 @@ public class GetTicketCommand implements Action {
       ttClient.setTtUsername(username);
       ttClient.setTtPassword(password);
       ttClient.setTrustAllCertificates( trustAllCertificates);
+      
+      Integer timeOut = Integer.parseInt(timeoutStr);
+      ttClient.setConnectionTimeout(timeOut);
       
       try {
          TroubleTicketEventExtended tticket = ttClient.getTroubleTicket(tticketId);

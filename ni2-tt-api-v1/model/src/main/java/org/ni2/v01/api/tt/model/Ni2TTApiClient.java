@@ -33,6 +33,8 @@ public interface Ni2TTApiClient {
    void setTtPassword(String ttPassword);
 
    void setTrustAllCertificates(boolean trustAllCertificates);
+   
+   void setConnectionTimeout(int connectionTimeout);
 
    /**
     * post {{baseUrl}}/api/v1/auth/login

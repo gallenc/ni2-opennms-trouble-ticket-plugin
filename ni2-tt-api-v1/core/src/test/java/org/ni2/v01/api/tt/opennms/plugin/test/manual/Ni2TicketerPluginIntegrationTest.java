@@ -28,7 +28,7 @@ import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
-
+import org.ni2.v01.api.tt.opennms.plugin.Ni2TicketerPlugin;
 import org.ni2.v01.api.tt.opennms.plugin.test.Ni2TicketerPluginTest;
 
 
@@ -54,14 +54,17 @@ public class Ni2TicketerPluginIntegrationTest {
          e.printStackTrace();
       }
 
-      ni2TicketerPluginTest.setTtServerUrl(testProperties.getProperty("ni2.tt.server.url"));
-      ni2TicketerPluginTest.setTtUsername(testProperties.getProperty("ni2.tt.server.username"));
-      ni2TicketerPluginTest.setTtPassword(testProperties.getProperty("ni2.tt.server.password"));
-      ni2TicketerPluginTest.setTrustAllCertificates(testProperties.getProperty("ni2.tt.server.trustallcertificates"));
+      ni2TicketerPluginTest.setTtServerUrl(testProperties.getProperty(Ni2TicketerPlugin.TT_SERVER_URL_PROPERTY));
+      ni2TicketerPluginTest.setTtUsername(testProperties.getProperty(Ni2TicketerPlugin.TT_USERNAME_PROPERTY));
+      ni2TicketerPluginTest.setTtPassword(testProperties.getProperty(Ni2TicketerPlugin.TT_PASSWORD_PROPERTY));
+      ni2TicketerPluginTest.setTrustAllCertificates(testProperties.getProperty(Ni2TicketerPlugin.TT_TRUST_ALL_CERTIFICATES_PROPERTY));
       
-      ni2TicketerPluginTest.setOnmsInstance(testProperties.getProperty("ni2.tt.opennms.instance"));
+      ni2TicketerPluginTest.setOnmsInstance(testProperties.getProperty(Ni2TicketerPlugin.TT_OPENNMS_INSTANCE_PROPERTY));
+
+      ni2TicketerPluginTest.setFallbackResourceId(testProperties.getProperty(Ni2TicketerPlugin.TT_FALLBACK_RESOURCE_PROPERTY));
       
-      ni2TicketerPluginTest.setFallbackResourceId(testProperties.getProperty("ni2.tt.opennms.fallbackresource"));
+      ni2TicketerPluginTest.setConnectionTimeoutStr(testProperties.getProperty(Ni2TicketerPlugin.TT_CLIENT_TIMEOUT_PROPERTY));
+      
 
       ni2TicketerPluginTest.setup();
    }

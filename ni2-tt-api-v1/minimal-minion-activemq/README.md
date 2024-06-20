@@ -139,6 +139,9 @@ ni2.tt.server.username=username
 # password to access api
 ni2.tt.server.password=password
 
+# client timeout (ms)
+ni2.tt.opennms.clienttimeout=12000
+
 # if true the client will trust all TLS/HTTPS certificates from server
 ni2.tt.server.trustallcertificates=true
 

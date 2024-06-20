@@ -13,8 +13,11 @@ ni2.tt.server.password=password
 # if true the client will trust all TLS/HTTPS certificates from server
 ni2.tt.server.trustallcertificates=true
 
+# client timeout (ms)
+ni2.tt.opennms.clienttimeout=12000
+
 # identify of the OpenNMS system sending tickets to the server
 ni2.tt.opennms.instance=OpenNMS1
 
 # resource id to be used if not passed in ticket attributes
-ni2.tt.opennms.fallbackresource="set_fallback_resource";
+ni2.tt.opennms.fallbackresource="set_fallback_resource"

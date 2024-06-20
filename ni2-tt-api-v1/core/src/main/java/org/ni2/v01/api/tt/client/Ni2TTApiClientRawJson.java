@@ -70,6 +70,7 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
    private String ttUsername = null;
    private String ttPassword = null;
    private boolean trustAllCertificates = false;
+   private int connectionTimeout= 10000; // default 10 seconds
 
    @Override
    public void setTtServerUrl(String ttServerUrl) {
@@ -89,6 +90,11 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
    @Override
    public void setTrustAllCertificates(boolean trustAllCertificates) {
       this.trustAllCertificates = trustAllCertificates;
+   }
+
+   @Override
+   public void setConnectionTimeout(int connectionTimeout) {
+      this.connectionTimeout = connectionTimeout;
    }
 
    /**
@@ -153,6 +159,8 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
       httpUrlConnection.setRequestProperty("Accept", "application/json");
       httpUrlConnection.setDoOutput(true);
       httpUrlConnection.setDoInput(true);
+      
+      httpUrlConnection.setConnectTimeout(connectionTimeout);
 
       return httpUrlConnection;
    }
