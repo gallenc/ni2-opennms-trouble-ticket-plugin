@@ -322,5 +322,5 @@ log4j2.appender.plugin.policies.size.size = 16MB
 
 [OpenNMS Provisioning integration server](https://docs.opennms.com/pris/2.1.0/index.html) which loads OpenNMS configuration from a csv file
 
-Requisition [ni2ttTest1.csv] (../minimal-minion-activemq/container-fs/pris/requisitions/localTestNetwork/ni2ttTest1.csv)
+Requisition [ni2ttTest1.csv](../minimal-minion-activemq/container-fs/pris/requisitions/localTestNetwork/ni2ttTest1.csv)
  holds the monitoring for a local test environment and OpenNMS itself
