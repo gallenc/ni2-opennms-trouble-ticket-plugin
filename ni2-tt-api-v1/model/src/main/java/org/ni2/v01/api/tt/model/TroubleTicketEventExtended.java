@@ -23,27 +23,44 @@
 package org.ni2.v01.api.tt.model;
 
 import java.util.ArrayList;
-
+import java.util.Arrays;
 import java.util.List;
-
-//import org.ni2.v01.model.AddressCreateBodyCustomAttributesValue;
-
-//import org.ni2.v01.model.Described;
-//import org.ni2.v01.model.Documentation;
-//import org.ni2.v01.model.Event;
-//import org.ni2.v01.model.Party;
-//import org.ni2.v01.model.Service;
-
-import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class TroubleTicketEventExtended {
+  
+   @JsonIgnore
+   public static final String ALARM_SEVERITY_INDETERMINATE = "Indeterminate";
+   @JsonIgnore
+   public static final String ALARM_SEVERITY_CLEARED = "Cleared";
+   @JsonIgnore
+   public static final String ALARM_SEVERITY_NORMAL = "Normal";
+   @JsonIgnore
+   public static final String ALARM_SEVERITY_WARNING = "Warning";
+   @JsonIgnore
+   public static final String ALARM_SEVERITY_MINOR = "Minor";
+   @JsonIgnore
+   public static final String ALARM_SEVERITY_MAJOR = "Major";
+   @JsonIgnore
+   public static final String ALARM_SEVERITY_CRITICAL = "Critical";
+   
+   @JsonIgnore
+   public static final String ALARM_STATUS_ACKNOWLEDGED="Acknowledged";
+   @JsonIgnore
+   public static final String ALARM_STATUS_UNACKNOWLEDGED="Unacknowledged";
+
+   @JsonIgnore
+   public static final List<String> VALID_ALARM_SEVERITIES = Arrays.asList(ALARM_SEVERITY_INDETERMINATE, ALARM_SEVERITY_CLEARED, 
+            ALARM_SEVERITY_NORMAL, ALARM_SEVERITY_WARNING, ALARM_SEVERITY_MINOR,
+            ALARM_SEVERITY_MAJOR, ALARM_SEVERITY_CRITICAL);
+
+   @JsonIgnore
+   public static final List<String> VALID_ALARM_STATUS = Arrays.asList(ALARM_STATUS_ACKNOWLEDGED,ALARM_STATUS_UNACKNOWLEDGED );
 
    // @ApiModelProperty(required = true, value = "The Universal Id of the instance")
    /**
@@ -354,6 +371,24 @@ public class TroubleTicketEventExtended {
    public void setStatus(String status) {
       ObjectNode on = (ObjectNode) customAttributes;
       on.put("Status", status);
+   }
+
+   @JsonIgnore
+   public void setAlarmStatus(String alarmStatus) {
+      if (!VALID_ALARM_STATUS.contains(alarmStatus)) {
+         throw new IllegalArgumentException("alarmSeverity must be one of " + VALID_ALARM_STATUS);
+      }
+      ObjectNode on = (ObjectNode) customAttributes;
+      on.put("AlarmStatus", alarmStatus);
+   }
+
+   @JsonIgnore
+   public void setAlarmSeverity(String alarmSeverity) {
+      if (!VALID_ALARM_SEVERITIES.contains(alarmSeverity)) {
+         throw new IllegalArgumentException("alarmSeverity must be one of " + VALID_ALARM_SEVERITIES);
+      }
+      ObjectNode on = (ObjectNode) customAttributes;
+      on.put("AlarmSeverity", alarmSeverity);
    }
 
    @JsonIgnore

@@ -19,27 +19,6 @@
  * language governing permissions and limitations under the
  * License.
  */
-/*
- * Licensed to The OpenNMS Group, Inc (TOG) under one or more
- * contributor license agreements.  See the LICENSE.md file
- * distributed with this work for additional information
- * regarding copyright ownership.
- *
- * TOG licenses this file to You under the GNU Affero General
- * Public License Version 3 (the "License") or (at your option)
- * any later version.  You may not use this file except in
- * compliance with the License.  You may obtain a copy of the
- * License at:
- *
- *      https://www.gnu.org/licenses/agpl-3.0.txt
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied.  See the License for the specific
- * language governing permissions and limitations under the
- * License.
- */
 
 package org.ni2.v01.api.tt.client.commands;
 
@@ -47,6 +26,7 @@ import org.ni2.v01.api.tt.client.Ni2TTApiClientRawJson;
 import org.ni2.v01.api.tt.model.Ni2TTApiClient;
 import org.ni2.v01.api.tt.model.TroubleTicketCreateRequest;
 import org.ni2.v01.api.tt.model.TroubleTicketCreateResponse;
+import org.ni2.v01.api.tt.model.TroubleTicketEventExtended;
 import org.ni2.v01.api.tt.opennms.plugin.Ni2TicketerPlugin;
 
 import org.apache.karaf.shell.api.action.Action;
@@ -77,6 +57,12 @@ public class CreateRemoteTicketCommand implements Action {
    
    @Option(name = "--alarmsource", description = "source of alarm - defaults to OpenNMS instance property", required = false, multiValued = false)
    String alarmSource = System.getProperty(Ni2TicketerPlugin.TT_OPENNMS_INSTANCE_PROPERTY, Ni2TicketerPlugin.DEFAULT_TT_OPENNMS_INSTANCE_PROPERTY);
+   
+   @Option(name = "--alarmseverity", description = "severity of alarm (one of Indeterminate,Cleared,Normal,Warning,Minor,Major,Critical) defaults to Minor", required = false, multiValued = false)
+   String alarmSeverity = TroubleTicketEventExtended.ALARM_SEVERITY_MINOR;
+   
+   @Option(name = "--alarmstatus", description = "status of alarm alarm - Acknowledged or Unacknowledged (default)", required = false, multiValued = false)
+   String alarmStatus = TroubleTicketEventExtended.ALARM_STATUS_UNACKNOWLEDGED;
 
    @Option(name = "--url", description = "Location of the ni2 trouble ticket service - defaults to OpenNMS property "
             + Ni2TicketerPlugin.TT_SERVER_URL_PROPERTY, required = false, multiValued = false)
@@ -117,6 +103,8 @@ public class CreateRemoteTicketCommand implements Action {
          troubleTicketCreateRequest.setAlarmSource(alarmSource);
          troubleTicketCreateRequest.setDescription(description);
          troubleTicketCreateRequest.setLongDescription(longDescription);
+         troubleTicketCreateRequest.setAlarmSeverity(alarmSeverity);
+         troubleTicketCreateRequest.setAlarmStatus(alarmStatus);
          
          if(resources==null || resources.isBlank() || resources.contains(" ")) throw new IllegalArgumentException("resources must not be null or empty or contain spaces");
          List<String> resourceIds= Arrays.asList(resources.split(","));

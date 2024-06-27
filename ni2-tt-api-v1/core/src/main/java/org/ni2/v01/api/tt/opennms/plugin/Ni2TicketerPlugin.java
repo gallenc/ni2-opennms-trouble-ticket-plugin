@@ -65,12 +65,22 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
    public static final String DEFAULT_TT_FALLBACK_RESOURCE_ID = "DEFAULT_RESOURCE_ID";
    public static final String DEFAULT_CLIENT_TIMEOUT = "10000"; // 10 seconds
 
+   // these keys are used in the drools ticketer plugin to map values into a ticket for ni2
+   
    // trouble ticket contains csv list of resourceids (node names)
    public static final String ONMS_TICKET_ATTRIBUTE_KEY_RESOURCE_IDS = "ni2.tt.resourceids";
+   
+   // trouble ticket contains alarm status (without this defaults to Unacknowledged)
+   public static final String ONMS_TICKET_ATTRIBUTE_KEY_ALARM_STATUS = "ni2.tt.alarmstatus";
+   
+   // trouble ticket contains alarm severity (without this defaults to Indeterminate)
+   public static final String ONMS_TICKET_ATTRIBUTE_KEY_ALARM_SEVERITY = "ni2.tt.alarmseverity";
 
    // key to access user defined attributes
    public static final String ONMS_TICKET_NI2_ATTRIBUTES_KEY_PREFIX = "ni2.tt.attributes.";
 
+   
+   
    private String _ttServerUrl = DEFAULT_TT_SERVER_URL_PROPERTY;
    private String _ttUsername = DEFAULT_TT_USERNAME_PROPERTY;
    private String _ttPassword = DEFAULT_TT_PASSWORD_PROPERTY;
@@ -202,6 +212,20 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
 
       if (ticket.getAttributes() != null) {
          Map<String, String> ticketAttributeMap = ticket.getAttributes();
+         
+         String alarmStatus = ticketAttributeMap.get(ONMS_TICKET_ATTRIBUTE_KEY_ALARM_STATUS);
+         if(alarmStatus!=null) {
+            createRequest.setAlarmStatus(alarmStatus);
+         } else {
+            createRequest.setAlarmStatus(TroubleTicketEventExtended.ALARM_STATUS_ACKNOWLEDGED);
+         }
+                  
+         String alarmSeverity = ticketAttributeMap.get(ONMS_TICKET_ATTRIBUTE_KEY_ALARM_SEVERITY);
+         if (alarmSeverity!=null) {
+            createRequest.setAlarmSeverity(alarmSeverity);
+         } else {
+            createRequest.setAlarmSeverity(TroubleTicketEventExtended.ALARM_SEVERITY_INDETERMINATE);
+         }
 
          String resources = ticketAttributeMap.get(ONMS_TICKET_ATTRIBUTE_KEY_RESOURCE_IDS);
          if (resources == null || resources.isBlank() || resources.contains(" ")) {

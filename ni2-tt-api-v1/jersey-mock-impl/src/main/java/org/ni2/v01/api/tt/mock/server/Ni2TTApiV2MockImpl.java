@@ -135,6 +135,8 @@ public class Ni2TTApiV2MockImpl {
     *       "Category": "{{categoryUpdated}}",
     *       "AlarmSource": "{{alarmSource}}",
     *       "AlarmId": "{{alarmId}}"
+    *       "AlarmStatus": "Unacknowledged",
+            "AlarmSeverity": "Critical"
     *    },
     *    "resourceIds": ["{{resourceUID}}"]
     * }
@@ -173,6 +175,8 @@ public class Ni2TTApiV2MockImpl {
 
          tticket.setTTCategory(troubleTicketCreateRequest.getTTCategory());
          tticket.setResourceIds(troubleTicketCreateRequest.getResourceIds());
+         tticket.setAlarmSeverity(troubleTicketCreateRequest.getAlarmSeverity());
+         tticket.setAlarmStatus(troubleTicketCreateRequest.getAlarmStatus());
 
          // add ticket to dao
          troubleTicketDao.put(ticketId, tticket);

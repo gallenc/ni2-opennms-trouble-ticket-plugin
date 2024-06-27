@@ -106,7 +106,7 @@ public class Ni2TTApiClientTest {
       try {
          authenticationToken = ttclient.getAuthenticationToken();
       } catch (Ni2ClientException ex) {
-         LOG.debug("testAuthentication expected fail exception", ex);
+         LOG.debug("testAuthentication expected fail exception"+ex.toString());
          fail = true;
       }
 
@@ -133,6 +133,9 @@ public class Ni2TTApiClientTest {
       createRequest.setAlarmId(ALARM_ID);
       createRequest.setAlarmSource(onmsInstance);
       createRequest.setTTCategory(TT_CATEGORY);
+      
+      createRequest.setAlarmSeverity(TroubleTicketEventExtended.ALARM_SEVERITY_CRITICAL);
+      createRequest.setAlarmStatus(TroubleTicketEventExtended.ALARM_STATUS_UNACKNOWLEDGED);
 
       TroubleTicketCreateResponse troubleTicketCreateResponse = ttclient.createTroubleTicket(createRequest);
       LOG.debug("created ticket:" + troubleTicketCreateResponse);

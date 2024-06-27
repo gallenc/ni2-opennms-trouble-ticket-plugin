@@ -93,6 +93,7 @@ public class TestJsonTTEventExtendedMarshalling {
             + "        \"AddedStartPendingTime\": 0,\r\n"
             + "        \"PendingTime\": 0,\r\n"
             + "        \"LoanEquipment\": \"0 Loaned\",\r\n"
+            + "        \"AlarmSeverity\": \"Critical\",\r\n"
             + "        \"RequestSysMode\": \"new\",\r\n"
             + "        \"Priority\": \"3-Moderate\",\r\n"
             + "        \"RequiresAttention\": false,\r\n"
@@ -102,6 +103,7 @@ public class TestJsonTTEventExtendedMarshalling {
             + "        \"LongDescription\": \"something happened a lot\",\r\n"
             + "        \"RootCause\": \"Software [Provider]\",\r\n"
             + "        \"LastModificationDate\": 1715179491887,\r\n"
+            + "        \"AlarmStatus\": \"Unacknowledged\",\r\n"
             + "        \"AddedPendingTime\": 0\r\n"
             + "    },\r\n"
             + "    \"category\": \"Event\",\r\n"
@@ -229,25 +231,27 @@ public class TestJsonTTEventExtendedMarshalling {
       JsonMapper mapper = new JsonMapper();
       mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
       
-      TroubleTicketEventExtended request = new TroubleTicketEventExtended();
+      TroubleTicketEventExtended ticket = new TroubleTicketEventExtended();
       
-      request.setClassificationPath("Event(\"Event/Support/Incident/Monitoring Incident\")");
-      request.setDescription("this is a dummy tiket - something happened");
-      request.setLongDescription("something really really happened");
-      request.setUniversalId("EVT-12345");
+      ticket.setClassificationPath("Event(\"Event/Support/Incident/Monitoring Incident\")");
+      ticket.setDescription("this is a dummy ticket - something happened");
+      ticket.setLongDescription("something really really happened");
+      ticket.setUniversalId("EVT-12345");
+      ticket.setAlarmSeverity("Minor");
+      ticket.setAlarmStatus("Acknowledged");
 
-      request.setAlarmId("1234");
+      ticket.setAlarmId("1234");
       
       StringWriter stringwriter = new StringWriter();
-      mapper.writeValue(stringwriter, request);
+      mapper.writeValue(stringwriter, ticket);
       
-      String reaquestStr = stringwriter.toString();
-      System.out.println("TroubleTicketEventExtended JSON is\n"+reaquestStr);
+      String ticketStr = stringwriter.toString();
+      System.out.println("TroubleTicketEventExtended JSON is\n"+ticketStr);
      
-      TroubleTicketEventExtended request2 = mapper.readValue(reaquestStr, TroubleTicketEventExtended.class);
-      System.out.println("unmarshalled TroubleTicketEventExtended is\n"+request2.toString());
+      TroubleTicketEventExtended ticket2 = mapper.readValue(ticketStr, TroubleTicketEventExtended.class);
+      System.out.println("unmarshalled TroubleTicketEventExtended is\n"+ticket2.toString());
       
-      assertTrue(request.toString().equals(request2.toString()));
+      assertTrue(ticket.toString().equals(ticket2.toString()));
       
    }
    

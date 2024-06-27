@@ -23,6 +23,7 @@
 package org.ni2.v01.api.tt.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,6 +115,30 @@ public class TroubleTicketCreateRequest {
       customAttributes.put("AlarmId", alarmId);
    }
    
+   /**
+    * 
+    * @param alarmSeverity must be one of TroubleTicketEventExtended.VALID_ALARM_STATUS
+    */
+   @JsonIgnore
+   public void setAlarmSeverity(String alarmSeverity) {
+      if(! TroubleTicketEventExtended.VALID_ALARM_SEVERITIES.contains(alarmSeverity)) {
+         throw new IllegalArgumentException ("alarmSeverity must be one of "+TroubleTicketEventExtended.VALID_ALARM_SEVERITIES);
+      }
+      customAttributes.put("AlarmSeverity", alarmSeverity);
+   }
+
+   /**
+    * 
+    * @param alarmStatus must be one of TroubleTicketEventExtended.VALID_ALARM_SEVERITIES
+    */
+   @JsonIgnore
+   public void setAlarmStatus(String alarmStatus) {
+      if(! TroubleTicketEventExtended.VALID_ALARM_STATUS.contains(alarmStatus)) {
+         throw new IllegalArgumentException ("alarmSeverity must be one of "+TroubleTicketEventExtended.VALID_ALARM_STATUS);
+      }
+      customAttributes.put("AlarmStatus", alarmStatus);
+   }
+   
    @JsonIgnore
    public String getTTCategory() {
       return customAttributes.get("Category");
@@ -128,6 +153,17 @@ public class TroubleTicketCreateRequest {
    public String getAlarmId() {
       return customAttributes.get("AlarmId");
    }
+  
+   @JsonIgnore
+   public String getAlarmSeverity() {
+      return customAttributes.get("AlarmSeverity");
+   }
+   
+   @JsonIgnore
+   public String getAlarmStatus() {
+      return customAttributes.get("AlarmStatus");
+   }
+
 
    /**
     * Note toString does not use customAttributes but only getters for ticket request. Can be used as simple equals()
@@ -136,7 +172,8 @@ public class TroubleTicketCreateRequest {
    public String toString() {
       return "TroubleTicketCreateRequest [getClassificationPath()=" + getClassificationPath() + ", getDescription()=" + getDescription()
                + ", getLongDescription()=" + getLongDescription() + ", getResourceIds()=" + getResourceIds() + ", getCategory()=" + getTTCategory()
-               + ", getAlarmSource()=" + getAlarmSource() + ", getAlarmId()=" + getAlarmId() + "]";
+               + ", getAlarmSource()=" + getAlarmSource() + ", getAlarmId()=" + getAlarmId() + ", getAlarmSeverity()"+ getAlarmSeverity() 
+               + ", getAlarmStatus()"+ getAlarmStatus()+"]";
    }
   
    

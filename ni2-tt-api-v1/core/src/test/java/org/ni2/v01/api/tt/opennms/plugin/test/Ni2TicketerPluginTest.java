@@ -26,6 +26,10 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.ni2.v01.api.tt.model.TroubleTicketEventExtended;
 import org.ni2.v01.api.tt.opennms.plugin.Ni2TicketerPlugin;
 import org.opennms.integration.api.v1.ticketing.Ticket;
 import org.opennms.integration.api.v1.ticketing.Ticket.State;
@@ -112,6 +116,15 @@ public class Ni2TicketerPluginTest {
       builder.setState(State.OPEN);
       builder.setUser("opennms");
       builder.setAlarmId(1);
+      
+      // add alarm details to attributes map
+      Map<String, String> attributesMap = new LinkedHashMap<>();
+      attributesMap.put(Ni2TicketerPlugin.ONMS_TICKET_ATTRIBUTE_KEY_ALARM_STATUS, TroubleTicketEventExtended.ALARM_STATUS_ACKNOWLEDGED);
+      attributesMap.put(Ni2TicketerPlugin.ONMS_TICKET_ATTRIBUTE_KEY_ALARM_SEVERITY, TroubleTicketEventExtended.ALARM_SEVERITY_CRITICAL);
+      
+      builder.setAttributes(attributesMap);
+      
+      
       Ticket newTicket = builder.build();
 
       String ticketId = ttplugin.saveOrUpdate(newTicket);

@@ -153,6 +153,21 @@ rule "createCriticalTicket"
     $ticketer.createTicket($alarm, new Date($sessionClock.getCurrentTime()));
 end
 
+rule "createCriticalOrMajorTicket"
+  enabled true
+  when
+    $sessionClock : SessionClock()
+    $ticketer : AlarmTicketerService(isTicketingEnabled() == true)
+    $alarm : OnmsAlarm(severity.isGreaterThan(OnmsSeverity.MAJOR) &&
+                       (alarmType == OnmsAlarm.PROBLEM_TYPE || alarmType == OnmsAlarm.PROBLEM_WITHOUT_RESOLUTION_TYPE) &&
+                       alarmAckUser == null &&
+                       TTicketState == null)
+    not( OnmsAlarm( this == $alarm ) over window:time( 1m ) )
+  then
+    alarmService.acknowledgeAlarm($alarm, new Date($sessionClock.getCurrentTime()));
+    $ticketer.createTicket($alarm, new Date($sessionClock.getCurrentTime()));
+end
+
 /*
   When changing window times, ensure that they are compatible with other rules.
   For example: when window time for updateTickets is less than cleanUp rule,
