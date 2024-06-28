@@ -48,10 +48,12 @@ import org.ni2.v01.api.tt.model.AuthenticationRequest;
 import org.ni2.v01.api.tt.model.AuthenticationResponse;
 import org.ni2.v01.api.tt.model.ErrorResponse;
 import org.ni2.v01.api.tt.model.LifecycleActionRequest;
+import org.ni2.v01.api.tt.model.Ni2ClientException;
 import org.ni2.v01.api.tt.model.Ni2TTStatus;
 import org.ni2.v01.api.tt.model.TroubleTicketCreateRequest;
 import org.ni2.v01.api.tt.model.TroubleTicketCreateResponse;
 import org.ni2.v01.api.tt.model.TroubleTicketEventExtended;
+import org.ni2.v01.api.tt.model.TroubleTicketUpdateRequest;
 
 @Path("/api")
 public class Ni2TTApiV2MockImpl {
@@ -100,9 +102,9 @@ public class Ni2TTApiV2MockImpl {
                || authenticationRequest.getPassword() == null || authenticationRequest.getPassword().isBlank()) {
 
          Status status = Response.Status.UNAUTHORIZED;
-         String code=status.name();
-         String reason = "username unauthorised:"+authenticationRequest.getUsername();
-         
+         String code = status.name();
+         String reason = "username unauthorised:" + authenticationRequest.getUsername();
+
          ErrorResponse errorResponse = new ErrorResponse();
          errorResponse.setCode(code);
          errorResponse.setStatusCode(status.getStatusCode());
@@ -196,7 +198,6 @@ public class Ni2TTApiV2MockImpl {
 
       if (status.getStatusCode() >= Response.Status.BAD_REQUEST.getStatusCode()) {
 
-         
          ErrorResponse errorResponse = new ErrorResponse();
          errorResponse.setCode(status.name());
          errorResponse.setStatusCode(status.getStatusCode());
@@ -215,6 +216,92 @@ public class Ni2TTApiV2MockImpl {
          Response response = Response
                   .status(status)
                   .entity(responseMessage)
+                  .build();
+         return response;
+      }
+
+   }
+
+   /**
+    * post {{baseUrl}}/api/v1/entity/event/update/event/{{eventId}}
+    * {
+    *    "description": "{{description}}",
+    *    "longDescription": "{{longDescription}}",
+    *    "customAttributes": {
+    *       "Category": "{{categoryUpdated}}",
+    *       "AlarmSource": "{{alarmSource}}",
+    *       "AlarmId": "{{alarmId}}",
+    *       "AlarmSeverity": "{{alarmSeverity}}",
+    *       "AlarmStatus": "{{alarmStatus}}"
+     *   }
+    * }
+    * 
+    * @param ticketId
+    * @param TroubleTicketUpdateRequest updateRequest
+    * @throws Ni2ClientException 
+    * 
+    */
+   @Path("/v1/entity/event/update/event/{eventId}")
+   @POST
+   @Consumes({ "application/json" })
+   @Produces({ "application/json" })
+   public Response updateTroubleTicket(@PathParam("eventId") String ticketId, TroubleTicketUpdateRequest troubleTicketUpdateRequest, @HeaderParam("Authorization") String authorisation,
+            @Context HttpServletRequest httpRequest) {
+      String requestURI = httpRequest.getRequestURI();
+      LOG.warn("calling createTroubleTicket troubleTicketUpdateRequest: {} Authorization Header value {} requestURI: {}", troubleTicketUpdateRequest, authorisation, requestURI);
+
+      Status status = null;
+      String reason = null;
+
+      if (!this.checkAuthorisation(authorisation)) {
+         status = Response.Status.UNAUTHORIZED;
+         reason = status.getReasonPhrase();
+      } else if (ticketId == null || ticketId.isBlank()) {
+         status = Response.Status.BAD_REQUEST;
+         reason = "ticketId is empty";
+      } else {
+
+         TroubleTicketEventExtended tticket = troubleTicketDao.get(ticketId);
+         if (tticket == null) {
+            status = Response.Status.NOT_FOUND;
+            reason = "ticket not found ticketId=" + ticketId;
+         } else {
+
+            tticket.setAlarmId(troubleTicketUpdateRequest.getAlarmId());
+            tticket.setDescription(troubleTicketUpdateRequest.getDescription());
+            tticket.setLongDescription(troubleTicketUpdateRequest.getLongDescription());
+            tticket.setAlarmSource(troubleTicketUpdateRequest.getAlarmSource());
+            tticket.setTTCategory(troubleTicketUpdateRequest.getTTCategory());
+            tticket.setAlarmSeverity(troubleTicketUpdateRequest.getAlarmSeverity());
+            tticket.setAlarmStatus(troubleTicketUpdateRequest.getAlarmStatus());
+
+            // update ticket in dao
+            troubleTicketDao.put(ticketId, tticket);
+            status = Response.Status.OK;
+         }
+      }
+
+      // error response
+      if (status.getStatusCode() >= Response.Status.BAD_REQUEST.getStatusCode()) {
+
+         ErrorResponse errorResponse = new ErrorResponse();
+         errorResponse.setCode(status.name());
+         errorResponse.setStatusCode(status.getStatusCode());
+         errorResponse.setDescription(status.getReasonPhrase());
+         errorResponse.setDescription(reason);
+         errorResponse.setPath(requestURI);
+         errorResponse.setTimestampDate(new Date());
+
+         Response response = Response
+                  .status(status)
+                  .entity(errorResponse)
+                  .build();
+         return response;
+
+      } else {
+         // OK response
+         Response response = Response
+                  .status(status)
                   .build();
          return response;
       }
@@ -397,7 +484,7 @@ public class Ni2TTApiV2MockImpl {
       if (status.getStatusCode() >= Response.Status.BAD_REQUEST.getStatusCode()) {
 
          ErrorResponse errorResponse = new ErrorResponse();
-         
+
          errorResponse.setCode(status.name());
          errorResponse.setStatusCode(status.getStatusCode());
          errorResponse.setDescription(status.getReasonPhrase());
@@ -489,11 +576,11 @@ public class Ni2TTApiV2MockImpl {
                   ticket.setStatus(Ni2TTStatus.RESOLVED);
                   status = Response.Status.OK;
                   break;
-               default : 
+               default:
                   status = Response.Status.BAD_REQUEST;
                   reason = "action cannot be processed";
                }
-               
+
             }
          }
 
@@ -502,7 +589,7 @@ public class Ni2TTApiV2MockImpl {
       if (status.getStatusCode() >= Response.Status.BAD_REQUEST.getStatusCode()) {
 
          ErrorResponse errorResponse = new ErrorResponse();
-         
+
          errorResponse.setCode(status.name());
          errorResponse.setStatusCode(status.getStatusCode());
          errorResponse.setDescription(status.getReasonPhrase());

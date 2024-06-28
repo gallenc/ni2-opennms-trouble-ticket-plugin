@@ -580,6 +580,9 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
       
       if (ttServerUrl == null || ttServerUrl.isBlank())
          throw new IllegalArgumentException("ttServerUrl must not be null or empty");
+      
+      if (ticketId == null ||  ticketId.isBlank())
+         throw new IllegalArgumentException("ticketId must not be null or empty");
 
       if (comment == null)
          throw new IllegalArgumentException("comment must be set");
@@ -671,10 +674,14 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
    public void updateTroubleTicket(String ticketId, TroubleTicketUpdateRequest updateRequest) throws Ni2ClientException {
 
          LOG.debug("updateTroubleTicket:" + updateRequest);
+         
          if (ttServerUrl == null || ttServerUrl.isBlank())
             throw new IllegalArgumentException("ttServerUrl must not be null or empty");
+         
+         if (ticketId == null ||  ticketId.isBlank())
+            throw new IllegalArgumentException("ticketId must not be null or empty");
 
-         String requestUrl = ttServerUrl + "/api/v1/entity/event/update/event";
+         String requestUrl = ttServerUrl + "/api/v1/entity/event/update/event/"+ticketId;
 
          try {
             
