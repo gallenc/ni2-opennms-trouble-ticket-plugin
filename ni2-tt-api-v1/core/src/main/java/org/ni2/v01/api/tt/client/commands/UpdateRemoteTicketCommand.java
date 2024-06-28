@@ -25,6 +25,7 @@ package org.ni2.v01.api.tt.client.commands;
 import org.ni2.v01.api.tt.client.Ni2TTApiClientRawJson;
 import org.ni2.v01.api.tt.model.Ni2TTApiClient;
 import org.ni2.v01.api.tt.model.TroubleTicketEventExtended;
+import org.ni2.v01.api.tt.model.TroubleTicketUpdateRequest;
 import org.ni2.v01.api.tt.opennms.plugin.Ni2TicketerPlugin;
 
 import org.apache.karaf.shell.api.action.Action;
@@ -33,14 +34,33 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
-@Command(scope = "ni2ticket", name = "get-ticket", description = "get trouble ticket")
-public class GetTicketCommand implements Action {
-
+@Command(scope = "ni2ticket", name = "create-remote-ticket", description = "Update an existing ticket in remote system. (Note - this does not link a ticket to a real alarm in OpenNMS")
+public class UpdateRemoteTicketCommand implements Action {
+   
    @Argument(index = 0, name = "tticketId", description = "trouble ticket id", required = true, multiValued = false)
    String tticketId;
-      
+   
+   @Option(name = "--alarmId", description = "optional integer id of associated alarm. If omitted a random Id will be created", required = false, multiValued = false)
+   String alarmId =Integer.toString(ThreadLocalRandom.current().nextInt(10000, 100000 + 1));
+
+   @Option(name = "--description", description = "optional ticket description - defaults to empty string ", required = false, multiValued = false)
+   String description = "";
+   
+   @Option(name = "--longdescription", description = "optional ticket long description - defaults to empty string ", required = false, multiValued = false)
+   String longDescription = "";
+   
+   @Option(name = "--alarmsource", description = "source of alarm - defaults to OpenNMS instance property", required = false, multiValued = false)
+   String alarmSource = System.getProperty(Ni2TicketerPlugin.TT_OPENNMS_INSTANCE_PROPERTY, Ni2TicketerPlugin.DEFAULT_TT_OPENNMS_INSTANCE_PROPERTY);
+   
+   @Option(name = "--alarmseverity", description = "severity of alarm (one of Indeterminate,Cleared,Normal,Warning,Minor,Major,Critical) defaults to Minor", required = false, multiValued = false)
+   String alarmSeverity = TroubleTicketEventExtended.ALARM_SEVERITY_MINOR;
+   
+   @Option(name = "--alarmstatus", description = "status of alarm alarm - Acknowledged or Unacknowledged (default)", required = false, multiValued = false)
+   String alarmStatus = TroubleTicketEventExtended.ALARM_STATUS_UNACKNOWLEDGED;
+
    @Option(name = "--url", description = "Location of the ni2 trouble ticket service - defaults to OpenNMS property "
             + Ni2TicketerPlugin.TT_SERVER_URL_PROPERTY, required = false, multiValued = false)
    String serverUrl = System.getProperty(Ni2TicketerPlugin.TT_SERVER_URL_PROPERTY, Ni2TicketerPlugin.DEFAULT_TT_SERVER_URL_PROPERTY);
@@ -52,7 +72,7 @@ public class GetTicketCommand implements Action {
    @Option(name = "--password", description = "Password - defaults to OpenNMS property "
             + Ni2TicketerPlugin.TT_PASSWORD_PROPERTY, required = false, multiValued = false)
    String password = System.getProperty(Ni2TicketerPlugin.TT_PASSWORD_PROPERTY, Ni2TicketerPlugin.DEFAULT_TT_PASSWORD_PROPERTY);
-
+   
    @Option(name = "--trustAllCertificates", description = "if true self signed certificates are trusted - defaults to OpenNMS property "
             + Ni2TicketerPlugin.TT_PASSWORD_PROPERTY, required = false, multiValued = false)
    boolean trustAllCertificates = Boolean.valueOf(System.getProperty(Ni2TicketerPlugin.TT_TRUST_ALL_CERTIFICATES_PROPERTY, Ni2TicketerPlugin.DEFAULT_TT_TRUST_ALL_CERTIFICATES_PROPERTY));
@@ -63,22 +83,34 @@ public class GetTicketCommand implements Action {
 
    @Override
    public Object execute() throws Exception {
-      System.out.println("get=ticket trying to get ticket tticketId="+tticketId + " serverUrl="+serverUrl+" username="+username + " password not shown"+ " trustAllCertificates="+trustAllCertificates);
-      
+      System.out.println("create-remote-ticket trying to create ticket. serverUrl="+serverUrl+" username="+username + " password not shown"+ " trustAllCertificates="+trustAllCertificates);
+
       Ni2TTApiClient ttClient = new Ni2TTApiClientRawJson();
       ttClient.setTtServerUrl(serverUrl );
       ttClient.setTtUsername(username);
       ttClient.setTtPassword(password);
-      ttClient.setTrustAllCertificates( trustAllCertificates);
+      ttClient.setTrustAllCertificates(trustAllCertificates);
       
       Integer timeOut = Integer.parseInt(timeoutStr);
       ttClient.setConnectionTimeout(timeOut);
       
       try {
-         TroubleTicketEventExtended tticket = ttClient.getTroubleTicket(tticketId);
-         System.out.println("received trouble ticket: " + tticket);
+         TroubleTicketUpdateRequest troubleTicketUpdateRequest = new TroubleTicketUpdateRequest();
+         troubleTicketUpdateRequest.setAlarmId(alarmId);
+         troubleTicketUpdateRequest.setAlarmSource(alarmSource);
+         troubleTicketUpdateRequest.setDescription(description);
+         troubleTicketUpdateRequest.setLongDescription(longDescription);
+         troubleTicketUpdateRequest.setAlarmSeverity(alarmSeverity);
+         troubleTicketUpdateRequest.setAlarmStatus(alarmStatus);
+         
+         System.out.println("sending ticket update request:"+troubleTicketUpdateRequest);
+         
+         ttClient.updateTroubleTicket(tticketId, troubleTicketUpdateRequest);
+         
+         System.out.println("success: updated ticket tticketId="+tticketId );
+         
       } catch (Exception ex) {
-         System.out.println("failed request for trouble ticke: " + ex);
+         System.out.println("failed request create ticket: " + ex);
          ex.printStackTrace(System.out);
       }
 

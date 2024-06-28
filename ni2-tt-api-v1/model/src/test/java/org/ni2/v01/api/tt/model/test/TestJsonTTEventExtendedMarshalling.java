@@ -237,10 +237,10 @@ public class TestJsonTTEventExtendedMarshalling {
       ticket.setDescription("this is a dummy ticket - something happened");
       ticket.setLongDescription("something really really happened");
       ticket.setUniversalId("EVT-12345");
-      ticket.setAlarmSeverity("Minor");
-      ticket.setAlarmStatus("Acknowledged");
+      ticket.setTTAlarmSeverity("Minor");
+      ticket.setTTAlarmStatus("Acknowledged");
 
-      ticket.setAlarmId("1234");
+      ticket.setTTAlarmId("1234");
       
       StringWriter stringwriter = new StringWriter();
       mapper.writeValue(stringwriter, ticket);

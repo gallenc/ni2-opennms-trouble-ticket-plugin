@@ -151,11 +151,11 @@ public class Ni2TTApiClientTest {
 
       String description = tticket.getDescription();
       String longDescription = tticket.getLongDescription();
-      List<String> resourceIds = tticket.getResourceIds();
+      List<String> resourceIds = tticket.getTTResourceIds();
 
-      String alarmId = tticket.getAlarmId();
-      String alarmSource = tticket.getAlarmSource();
-      String status = tticket.getStatus();
+      String alarmId = tticket.getTTAlarmId();
+      String alarmSource = tticket.getTTAlarmSource();
+      String status = tticket.getTTStatus();
       String ttCategory = tticket.getTTCategory();
 
       LOG.debug("received tticket values: alarmId: {} alarmSource: {} status: {} ttCategory: {} resourceIds: {}", alarmId, alarmSource, status, ttCategory, resourceIds);
@@ -191,16 +191,16 @@ public class Ni2TTApiClientTest {
       ttclient.updateTroubleTicket(ticketId, updateRequest);
       
       tticket = ttclient.getTroubleTicket(ticketId);
-      status = tticket.getStatus();
+      status = tticket.getTTStatus();
       LOG.debug("after update ticket: {} tticket: {}", status, tticket);
       
       description = tticket.getDescription();
       longDescription = tticket.getLongDescription();
-      resourceIds = tticket.getResourceIds();
+      resourceIds = tticket.getTTResourceIds();
 
-      alarmId = tticket.getAlarmId();
-      alarmSource = tticket.getAlarmSource();
-      status = tticket.getStatus();
+      alarmId = tticket.getTTAlarmId();
+      alarmSource = tticket.getTTAlarmSource();
+      status = tticket.getTTStatus();
       ttCategory = tticket.getTTCategory();
       
       assertTrue(UPDATE_DESCRIPTION.equals(description));
@@ -219,7 +219,7 @@ public class Ni2TTApiClientTest {
          LOG.debug("test problem starting ticket", ex);
       }
       tticket = ttclient.getTroubleTicket(ticketId);
-      status = tticket.getStatus();
+      status = tticket.getTTStatus();
       LOG.debug("after start request status: {} tticket: {}", status, tticket);
 
       // try resolve trouble ticket (user may not be able to resolve)
@@ -230,7 +230,7 @@ public class Ni2TTApiClientTest {
          LOG.debug("test problem resolving ticket", ex);
       }
       tticket = ttclient.getTroubleTicket(ticketId);
-      status = tticket.getStatus();
+      status = tticket.getTTStatus();
       LOG.debug("after resolve request status: {} tticket: {}", status, tticket);
       
       // try close trouble ticket (user may not be able to close)
@@ -241,7 +241,7 @@ public class Ni2TTApiClientTest {
          LOG.debug("test problem closing ticket", ex);
       }
       tticket = ttclient.getTroubleTicket(ticketId);
-      status = tticket.getStatus();
+      status = tticket.getTTStatus();
       LOG.debug("after close request status: {} tticket: {}", status, tticket);
 
       // try cancel trouble ticket
@@ -254,7 +254,7 @@ public class Ni2TTApiClientTest {
       
       tticket = ttclient.getTroubleTicket(ticketId);
       LOG.debug("after cancel request status: {} tticket: {}", status, tticket);
-      status = tticket.getStatus();
+      status = tticket.getTTStatus();
       
       // fails in integration test - wrong status
       //assertTrue(Ni2TTStatus.CANCELED.equals(status));

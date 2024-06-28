@@ -27,7 +27,6 @@ import org.ni2.v01.api.tt.model.Ni2TTApiClient;
 import org.ni2.v01.api.tt.opennms.plugin.Ni2TicketerPlugin;
 
 import org.apache.karaf.shell.api.action.Action;
-import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;

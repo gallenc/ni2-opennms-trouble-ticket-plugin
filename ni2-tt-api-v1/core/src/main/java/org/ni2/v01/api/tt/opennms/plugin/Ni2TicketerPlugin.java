@@ -23,6 +23,7 @@
 package org.ni2.v01.api.tt.opennms.plugin;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ import org.ni2.v01.api.tt.model.Ni2TTStatus;
 import org.ni2.v01.api.tt.model.TroubleTicketCreateRequest;
 import org.ni2.v01.api.tt.model.TroubleTicketCreateResponse;
 import org.ni2.v01.api.tt.model.TroubleTicketEventExtended;
+import org.ni2.v01.api.tt.model.TroubleTicketUpdateRequest;
 import org.opennms.integration.api.v1.ticketing.Ticket;
 import org.opennms.integration.api.v1.ticketing.Ticket.State;
 import org.opennms.integration.api.v1.ticketing.TicketingPlugin;
@@ -66,21 +68,22 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
    public static final String DEFAULT_CLIENT_TIMEOUT = "10000"; // 10 seconds
 
    // these keys are used in the drools ticketer plugin to map values into a ticket for ni2
-   
+
    // trouble ticket contains csv list of resourceids (node names)
    public static final String ONMS_TICKET_ATTRIBUTE_KEY_RESOURCE_IDS = "ni2.tt.resourceids";
-   
+
    // trouble ticket contains alarm status (without this defaults to Unacknowledged)
    public static final String ONMS_TICKET_ATTRIBUTE_KEY_ALARM_STATUS = "ni2.tt.alarmstatus";
-   
+
    // trouble ticket contains alarm severity (without this defaults to Indeterminate)
    public static final String ONMS_TICKET_ATTRIBUTE_KEY_ALARM_SEVERITY = "ni2.tt.alarmseverity";
+   
+   // trouble ticket contains trouble ticket category 
+   public static final String ONMS_TICKET_ATTRIBUTE_KEY_CATEGORY= "ni2.tt.category";
 
    // key to access user defined attributes
    public static final String ONMS_TICKET_NI2_ATTRIBUTES_KEY_PREFIX = "ni2.tt.attributes.";
 
-   
-   
    private String _ttServerUrl = DEFAULT_TT_SERVER_URL_PROPERTY;
    private String _ttUsername = DEFAULT_TT_USERNAME_PROPERTY;
    private String _ttPassword = DEFAULT_TT_PASSWORD_PROPERTY;
@@ -153,20 +156,44 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
          throw new IllegalStateException("ttclient=null. init() must be called on Ni2Ticketer plugin before use.");
 
       if (ticketId == null) {
-         LOG.error("No Ni2 ticketID available in OpenNMS Ticket");
-         throw new Ni2TicketerException("No ni2 ticketID available in OpenNMS Ticket");
+         LOG.error("No Ni2 ticketID set in OpenNMS Ticket");
+         throw new Ni2TicketerException("No ni2 ticketID set in OpenNMS Ticket");
       }
 
       try {
          TroubleTicketEventExtended troubleTicketEventExtended = ttclient.getTroubleTicket(ticketId);
          LOG.debug("received ni2 ticket ", troubleTicketEventExtended);
 
+         // Note this maps the ni2 ticket back to the OpenNMS ticket.
+         // However OpenNMS may update the ticket with new values based on the alarm state
          final Builder builder = ImmutableTicket.newBuilder();
          builder.setId(ticketId);
          builder.setSummary(troubleTicketEventExtended.getDescription());
          builder.setDetails(troubleTicketEventExtended.getLongDescription());
-         builder.setState(ni2StateToONMSState(troubleTicketEventExtended.getStatus()));
+         builder.setState(ni2StateToONMSState(troubleTicketEventExtended.getTTStatus()));
+         builder.setAlarmId(Integer.parseInt(troubleTicketEventExtended.getTTAlarmId()));
+         
+         //TODO USER MAPPING
          builder.setUser("troubleTicketUser");
+
+         Map<String, String> ticketAttributeMap = new LinkedHashMap<>();
+         builder.setAttributes(ticketAttributeMap);
+         
+         ticketAttributeMap.put(ONMS_TICKET_ATTRIBUTE_KEY_ALARM_STATUS, troubleTicketEventExtended.getTTAlarmStatus());
+         ticketAttributeMap.put(ONMS_TICKET_ATTRIBUTE_KEY_ALARM_SEVERITY,troubleTicketEventExtended.getTTAlarmSeverity());
+         ticketAttributeMap.put(ONMS_TICKET_ATTRIBUTE_KEY_CATEGORY,troubleTicketEventExtended.getTTCategory());
+
+         List<String> resourceIds = troubleTicketEventExtended.getTTResourceIds();
+         if (resourceIds !=null) {
+            StringBuffer resourceIdbuff = new StringBuffer();
+            Iterator<String> it = resourceIds.iterator();
+            while(it.hasNext()) {
+               resourceIdbuff.append(it.next());
+               if(it.hasNext()) resourceIdbuff.append(",");
+            }
+            ticketAttributeMap.put(ONMS_TICKET_ATTRIBUTE_KEY_RESOURCE_IDS, resourceIdbuff.toString());
+         }
+
          Ticket ticket = builder.build();
 
          LOG.debug("mapped ni2 ticket to onms ticket : {}", ticket);
@@ -212,16 +239,16 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
 
       if (ticket.getAttributes() != null) {
          Map<String, String> ticketAttributeMap = ticket.getAttributes();
-         
+
          String alarmStatus = ticketAttributeMap.get(ONMS_TICKET_ATTRIBUTE_KEY_ALARM_STATUS);
-         if(alarmStatus!=null) {
+         if (alarmStatus != null) {
             createRequest.setAlarmStatus(alarmStatus);
          } else {
             createRequest.setAlarmStatus(TroubleTicketEventExtended.ALARM_STATUS_ACKNOWLEDGED);
          }
-                  
+
          String alarmSeverity = ticketAttributeMap.get(ONMS_TICKET_ATTRIBUTE_KEY_ALARM_SEVERITY);
-         if (alarmSeverity!=null) {
+         if (alarmSeverity != null) {
             createRequest.setAlarmSeverity(alarmSeverity);
          } else {
             createRequest.setAlarmSeverity(TroubleTicketEventExtended.ALARM_SEVERITY_INDETERMINATE);
@@ -265,13 +292,66 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
 
    private void update(Ticket ticket) {
       LOG.debug("update ticket {}", ticket);
-      //TODO CREATE UPDATE TICKET PROCESS
+
+      String tticketId = ticket.getId();
+
+      TroubleTicketUpdateRequest updateRequest = new TroubleTicketUpdateRequest();
+      updateRequest.setAlarmId(ticket.getAlarmId().toString());
+      updateRequest.setAlarmSource(_onmsInstanceId);
+
+      // summary must be limited in length
+      String summary = ticket.getSummary().substring(0, Math.min(MAX_DESCRIPTION_LENGTH, ticket.getSummary().length()));
+      updateRequest.setDescription(summary);
+      updateRequest.setLongDescription(ticket.getDetails());
+
+      if (ticket.getAttributes() != null) {
+         Map<String, String> ticketAttributeMap = ticket.getAttributes();
+
+         String alarmStatus = ticketAttributeMap.get(ONMS_TICKET_ATTRIBUTE_KEY_ALARM_STATUS);
+         if (alarmStatus != null) {
+            updateRequest.setAlarmStatus(alarmStatus);
+         } else {
+            updateRequest.setAlarmStatus(TroubleTicketEventExtended.ALARM_STATUS_ACKNOWLEDGED);
+         }
+
+         String alarmSeverity = ticketAttributeMap.get(ONMS_TICKET_ATTRIBUTE_KEY_ALARM_SEVERITY);
+         if (alarmSeverity != null) {
+            updateRequest.setAlarmSeverity(alarmSeverity);
+         } else {
+            updateRequest.setAlarmSeverity(TroubleTicketEventExtended.ALARM_SEVERITY_INDETERMINATE);
+         }
+
+         // any attribute in the OpenNMS Ticket with key starting with ONMS_TICKET_NI2_ATTRIBUTES_KEY_PREFIX will 
+         // be added to the ni2 ticket attributes with the key suffix as the attributes key
+         Map<String, String> additionalNi2AttributeMap = new LinkedHashMap<String, String>();
+         for (String ticketAttributeKey : ticketAttributeMap.keySet()) {
+            if (ticketAttributeKey.startsWith(ONMS_TICKET_NI2_ATTRIBUTES_KEY_PREFIX)) {
+               String additionalAttributeKey = ticketAttributeKey.replace(ONMS_TICKET_NI2_ATTRIBUTES_KEY_PREFIX, "");
+               String ticketAttributeValue = ticketAttributeMap.get(ticketAttributeKey);
+               additionalNi2AttributeMap.put(additionalAttributeKey, ticketAttributeValue);
+            }
+         }
+
+         updateRequest.getCustomAttributes().putAll(additionalNi2AttributeMap);
+
+      }
+
+      try {
+         ttclient.updateTroubleTicket(tticketId, updateRequest);
+
+      } catch (Ni2ClientException ex) {
+         LOG.error("unable to create ticket {}", ticket, ex);
+         // including ex.getMessage in exception message so that there is a meaningful message in trouble ticket communications fail event
+         throw new Ni2TicketerException("unable to create ticket reason: " + ex.getMessage() + "ticket:" + ticket, ex);
+      }
 
    }
 
    private State ni2StateToONMSState(String ni2Status) {
 
       switch (ni2Status) {
+      case Ni2TTStatus.IN_PROCESS:
+         return State.OPEN;
       case Ni2TTStatus.OPEN:
          return State.OPEN;
       case Ni2TTStatus.CLOSED:
@@ -281,6 +361,7 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
       case Ni2TTStatus.RESOLVED:
          return State.CLOSED;
       default:
+         LOG.debug("unknown ni2 ticket status {}", ni2Status);
          return State.OPEN;
       }
 

@@ -165,20 +165,20 @@ public class Ni2TTApiV2MockImpl {
          TroubleTicketEventExtended tticket = new TroubleTicketEventExtended();
          String ticketId = getTicketId();
 
-         tticket.setStatus(Ni2TTStatus.OPEN);
+         tticket.setTTStatus(Ni2TTStatus.OPEN);
          tticket.setUniversalId(ticketId);
 
          tticket.setClassificationPath("Event(\"Event/Support/Incident/Monitoring Incident\")");
-         tticket.setAlarmId(troubleTicketCreateRequest.getAlarmId());
+         tticket.setTTAlarmId(troubleTicketCreateRequest.getAlarmId());
          tticket.setDescription(troubleTicketCreateRequest.getDescription());
          tticket.setLongDescription(troubleTicketCreateRequest.getLongDescription());
 
-         tticket.setAlarmSource(troubleTicketCreateRequest.getAlarmSource());
+         tticket.setTTAlarmSource(troubleTicketCreateRequest.getAlarmSource());
 
          tticket.setTTCategory(troubleTicketCreateRequest.getTTCategory());
-         tticket.setResourceIds(troubleTicketCreateRequest.getResourceIds());
-         tticket.setAlarmSeverity(troubleTicketCreateRequest.getAlarmSeverity());
-         tticket.setAlarmStatus(troubleTicketCreateRequest.getAlarmStatus());
+         tticket.setTTResourceIds(troubleTicketCreateRequest.getResourceIds());
+         tticket.setTTAlarmSeverity(troubleTicketCreateRequest.getAlarmSeverity());
+         tticket.setTTAlarmStatus(troubleTicketCreateRequest.getAlarmStatus());
 
          // add ticket to dao
          troubleTicketDao.put(ticketId, tticket);
@@ -267,13 +267,13 @@ public class Ni2TTApiV2MockImpl {
             reason = "ticket not found ticketId=" + ticketId;
          } else {
 
-            tticket.setAlarmId(troubleTicketUpdateRequest.getAlarmId());
+            tticket.setTTAlarmId(troubleTicketUpdateRequest.getAlarmId());
             tticket.setDescription(troubleTicketUpdateRequest.getDescription());
             tticket.setLongDescription(troubleTicketUpdateRequest.getLongDescription());
-            tticket.setAlarmSource(troubleTicketUpdateRequest.getAlarmSource());
+            tticket.setTTAlarmSource(troubleTicketUpdateRequest.getAlarmSource());
             tticket.setTTCategory(troubleTicketUpdateRequest.getTTCategory());
-            tticket.setAlarmSeverity(troubleTicketUpdateRequest.getAlarmSeverity());
-            tticket.setAlarmStatus(troubleTicketUpdateRequest.getAlarmStatus());
+            tticket.setTTAlarmSeverity(troubleTicketUpdateRequest.getAlarmSeverity());
+            tticket.setTTAlarmStatus(troubleTicketUpdateRequest.getAlarmStatus());
 
             // update ticket in dao
             troubleTicketDao.put(ticketId, tticket);
@@ -561,19 +561,19 @@ public class Ni2TTApiV2MockImpl {
                // todo check status and update
                switch (action) {
                case LifecycleActionRequest.START:
-                  ticket.setStatus(Ni2TTStatus.IN_PROCESS);
+                  ticket.setTTStatus(Ni2TTStatus.IN_PROCESS);
                   status = Response.Status.OK;
                   break;
                case LifecycleActionRequest.CANCEL:
-                  ticket.setStatus(Ni2TTStatus.CANCELED);
+                  ticket.setTTStatus(Ni2TTStatus.CANCELED);
                   status = Response.Status.OK;
                   break;
                case LifecycleActionRequest.CLOSE:
-                  ticket.setStatus(Ni2TTStatus.CLOSED);
+                  ticket.setTTStatus(Ni2TTStatus.CLOSED);
                   status = Response.Status.OK;
                   break;
                case LifecycleActionRequest.RESOLVE:
-                  ticket.setStatus(Ni2TTStatus.RESOLVED);
+                  ticket.setTTStatus(Ni2TTStatus.RESOLVED);
                   status = Response.Status.OK;
                   break;
                default:

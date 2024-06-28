@@ -320,17 +320,27 @@ public class TroubleTicketEventExtended {
    // convenience methods to access custom attributes for trouble ticket
 
    @JsonIgnore
-   public String getAlarmSource() {
+   public String getTTAlarmSource() {
       return customAttributes.get("AlarmSource").asText();
    }
 
    @JsonIgnore
-   public String getAlarmId() {
+   public String getTTAlarmId() {
       return customAttributes.get("AlarmId").asText();
+   }
+   
+   @JsonIgnore
+   public String getTTAlarmSeverity() {
+      return customAttributes.get("AlarmSeverity").asText();
    }
 
    @JsonIgnore
-   public String getStatus() {
+   public String getTTAlarmStatus() {
+      return customAttributes.get("AlarmStatus").asText();
+   }
+
+   @JsonIgnore
+   public String getTTStatus() {
       return customAttributes.get("Status").asText();
    }
 
@@ -340,7 +350,7 @@ public class TroubleTicketEventExtended {
    }
 
    @JsonIgnore
-   public List<String> getResourceIds() {
+   public List<String> getTTResourceIds() {
       List<String> resourceIds = new ArrayList<String>();
       for (JsonNode resource : resources) {
          String id = resource.get("universalId").asText();
@@ -356,25 +366,25 @@ public class TroubleTicketEventExtended {
    }
 
    @JsonIgnore
-   public void setAlarmSource(String alarmSource) {
+   public void setTTAlarmSource(String alarmSource) {
       ObjectNode on = (ObjectNode) customAttributes;
       on.put("AlarmSource", alarmSource);
    }
 
    @JsonIgnore
-   public void setAlarmId(String alarmId) {
+   public void setTTAlarmId(String alarmId) {
       ObjectNode on = (ObjectNode) customAttributes;
       on.put("AlarmId", alarmId);
    }
 
    @JsonIgnore
-   public void setStatus(String status) {
+   public void setTTStatus(String status) {
       ObjectNode on = (ObjectNode) customAttributes;
       on.put("Status", status);
    }
 
    @JsonIgnore
-   public void setAlarmStatus(String alarmStatus) {
+   public void setTTAlarmStatus(String alarmStatus) {
       if (!VALID_ALARM_STATUS.contains(alarmStatus)) {
          throw new IllegalArgumentException("alarmSeverity must be one of " + VALID_ALARM_STATUS);
       }
@@ -382,41 +392,51 @@ public class TroubleTicketEventExtended {
       on.put("AlarmStatus", alarmStatus);
    }
 
+   /**
+    * 
+    * @param alarmSeverity
+    */
    @JsonIgnore
-   public void setAlarmSeverity(String alarmSeverity) {
+   public void setTTAlarmSeverity(String alarmSeverity) {
       if (!VALID_ALARM_SEVERITIES.contains(alarmSeverity)) {
          throw new IllegalArgumentException("alarmSeverity must be one of " + VALID_ALARM_SEVERITIES);
       }
       ObjectNode on = (ObjectNode) customAttributes;
       on.put("AlarmSeverity", alarmSeverity);
    }
+   
 
+   /**
+    *  creates resources with some of the fields populated
+    *  
+    *     "resources": [
+    *                   {
+    *                       "customAttributes": {
+    *                           "Status": "In Process",
+    *                           "Identifier": "FUN-00002497",
+    *                           "NamingConvention": "oneTimeFree",
+    *                           "LastModificationDate": 1718279484392,
+    *                           "UniversalId": "monaco_01",
+    *                           "Name": "Monaco 01"
+    *                       },
+    *                       "category": "Function",
+    *                       "classifications": [
+    *                           "Function",
+    *                           "Function",
+    *                           "Network",
+    *                           "Generic Node",
+    *                           "EMS Node"
+    *                       ],
+    *                       "classificationPath": "Function(\"Function/Network/Generic Node/EMS Node\")",
+    *                       "name": "Monaco 01",
+    *                       "universalId": "monaco_01"
+    *                   }
+    *               ]
+    * 
+    * @param resourceIds
+    */
    @JsonIgnore
-   public void setResourceIds(List<String> resourceIds) {
-      // creates resources with some of the fields populated
-      //     "resources": [
-      //                   {
-      //                       "customAttributes": {
-      //                           "Status": "In Process",
-      //                           "Identifier": "FUN-00002497",
-      //                           "NamingConvention": "oneTimeFree",
-      //                           "LastModificationDate": 1718279484392,
-      //                           "UniversalId": "monaco_01",
-      //                           "Name": "Monaco 01"
-      //                       },
-      //                       "category": "Function",
-      //                       "classifications": [
-      //                           "Function",
-      //                           "Function",
-      //                           "Network",
-      //                           "Generic Node",
-      //                           "EMS Node"
-      //                       ],
-      //                       "classificationPath": "Function(\"Function/Network/Generic Node/EMS Node\")",
-      //                       "name": "Monaco 01",
-      //                       "universalId": "monaco_01"
-      //                   }
-      //               ]
+   public void setTTResourceIds(List<String> resourceIds) {
 
       for (String resourceId : resourceIds) {
          ObjectNode resource = JsonNodeFactory.instance.objectNode();

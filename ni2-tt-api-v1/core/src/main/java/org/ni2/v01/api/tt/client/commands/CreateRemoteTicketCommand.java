@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
-@Command(scope = "ni2ticket", name = "create-remote-ticket", description = "Create a new ticket in remote system. (Note - this does not link a ticket to an alarm in OpenNMS")
+@Command(scope = "ni2ticket", name = "create-remote-ticket", description = "Create ticket in remote system. (Note - this does not link a ticket to a real alarm in OpenNMS")
 public class CreateRemoteTicketCommand implements Action {
 
    @Argument(index = 0, name = "resourceids", description = "single resource id or comma separated list of resource ids with no spaces)", required = true, multiValued = false)

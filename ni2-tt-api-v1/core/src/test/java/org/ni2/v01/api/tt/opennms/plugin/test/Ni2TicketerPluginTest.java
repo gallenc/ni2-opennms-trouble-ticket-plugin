@@ -109,13 +109,22 @@ public class Ni2TicketerPluginTest {
 
    @Test
    public void testTicket() {
+      LOG.debug("testTicket create new ticket");
+      
+      final String DESCRIPTION = "testTicket my description";
+      final String LONG_DESCRIPTION = "testTicket my long description";
 
-      final Builder builder = ImmutableTicket.newBuilder();
-      builder.setSummary("test ticket");
-      builder.setDetails("test ticket details");
-      builder.setState(State.OPEN);
-      builder.setUser("opennms");
-      builder.setAlarmId(1);
+      final String RESOURCE_ID = fallbackResourceId;
+      final Integer ALARM_ID = 1234567;
+      final State TICKET_STATE = State.OPEN;
+      final String TICKET_USER = "opennms";
+
+      Builder builder = ImmutableTicket.newBuilder();
+      builder.setSummary(DESCRIPTION);
+      builder.setDetails(LONG_DESCRIPTION);
+      builder.setState(TICKET_STATE);
+      builder.setUser(TICKET_USER);
+      builder.setAlarmId(ALARM_ID);
       
       // add alarm details to attributes map
       Map<String, String> attributesMap = new LinkedHashMap<>();
@@ -123,10 +132,9 @@ public class Ni2TicketerPluginTest {
       attributesMap.put(Ni2TicketerPlugin.ONMS_TICKET_ATTRIBUTE_KEY_ALARM_SEVERITY, TroubleTicketEventExtended.ALARM_SEVERITY_CRITICAL);
       
       builder.setAttributes(attributesMap);
-      
-      
       Ticket newTicket = builder.build();
 
+      // now create new ticket
       String ticketId = ttplugin.saveOrUpdate(newTicket);
       LOG.debug("testTicket created ticketId: " + ticketId);
       assertNotNull(ticketId);
@@ -134,6 +142,58 @@ public class Ni2TicketerPluginTest {
       Ticket createdTicket = ttplugin.get(ticketId);
       assertNotNull(createdTicket);
       LOG.debug("testTicket createdTicket: " + createdTicket);
+
+      assertEquals(DESCRIPTION,createdTicket.getSummary());
+      assertEquals(LONG_DESCRIPTION,createdTicket.getDetails());
+      assertEquals(TICKET_STATE,createdTicket.getState());
+      assertEquals(ALARM_ID,createdTicket.getAlarmId());
+      
+      // TODO user is not pushed to ni2 ticket so can't test
+      // assertEquals(TICKET_USER,createdTicket.getUser());
+      
+      Map<String, String> createdTicketAttributesMap = createdTicket.getAttributes();
+      assertNotNull(createdTicketAttributesMap);
+      
+      assertEquals(TroubleTicketEventExtended.ALARM_STATUS_ACKNOWLEDGED, attributesMap.get(Ni2TicketerPlugin.ONMS_TICKET_ATTRIBUTE_KEY_ALARM_STATUS));
+      assertEquals(TroubleTicketEventExtended.ALARM_SEVERITY_CRITICAL, attributesMap.get(Ni2TicketerPlugin.ONMS_TICKET_ATTRIBUTE_KEY_ALARM_SEVERITY));
+
+      LOG.debug("testTicket updating created ticket");
+      
+      final String UPDATE_DESCRIPTION = "testTicket my updated description";
+      final String UPDATE_LONG_DESCRIPTION = "testTicket my updated long description";
+
+      
+      builder = ImmutableTicket.newBuilderFrom(createdTicket);
+      builder.setSummary(UPDATE_DESCRIPTION);
+      builder.setDetails(UPDATE_LONG_DESCRIPTION);
+
+      
+      // add alarm details to attributes map
+      attributesMap = new LinkedHashMap<>();
+      if (createdTicket.getAttributes()!=null) attributesMap.putAll(createdTicket.getAttributes());
+      
+      attributesMap.put(Ni2TicketerPlugin.ONMS_TICKET_ATTRIBUTE_KEY_ALARM_STATUS, TroubleTicketEventExtended.ALARM_STATUS_UNACKNOWLEDGED);
+      attributesMap.put(Ni2TicketerPlugin.ONMS_TICKET_ATTRIBUTE_KEY_ALARM_SEVERITY, TroubleTicketEventExtended.ALARM_SEVERITY_CLEARED);
+      
+      Ticket updateTicket = builder.build();
+      
+      LOG.debug("testTicket updated ticket to send {}",updateTicket );
+      
+      ttplugin.saveOrUpdate(updateTicket);
+      
+      Ticket updatedTicket = ttplugin.get(ticketId);
+      assertNotNull(updatedTicket);
+      LOG.debug("testTicket updatedTicket: " + updatedTicket);
+      
+      assertEquals(UPDATE_DESCRIPTION,updatedTicket.getSummary());
+      assertEquals(UPDATE_LONG_DESCRIPTION,updatedTicket.getDetails());
+      assertEquals(ALARM_ID,updatedTicket.getAlarmId());
+      
+      Map<String, String> updatedTicketAttributesMap = createdTicket.getAttributes();
+      assertNotNull(updatedTicketAttributesMap);
+      
+      assertEquals(TroubleTicketEventExtended.ALARM_STATUS_UNACKNOWLEDGED, updatedTicketAttributesMap.get(Ni2TicketerPlugin.ONMS_TICKET_ATTRIBUTE_KEY_ALARM_STATUS));
+      assertEquals(TroubleTicketEventExtended.ALARM_SEVERITY_CLEARED, updatedTicketAttributesMap.get(Ni2TicketerPlugin.ONMS_TICKET_ATTRIBUTE_KEY_ALARM_SEVERITY));
 
    }
 
