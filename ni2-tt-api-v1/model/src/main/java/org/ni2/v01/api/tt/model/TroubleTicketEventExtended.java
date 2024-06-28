@@ -321,32 +321,38 @@ public class TroubleTicketEventExtended {
 
    @JsonIgnore
    public String getTTAlarmSource() {
-      return customAttributes.get("AlarmSource").asText();
+      JsonNode jn = customAttributes.get("AlarmSource");
+      return (jn==null) ? null : jn.asText();
    }
 
    @JsonIgnore
    public String getTTAlarmId() {
-      return customAttributes.get("AlarmId").asText();
+      JsonNode jn = customAttributes.get("AlarmId");
+      return (jn==null) ? null : jn.asText();
    }
    
    @JsonIgnore
    public String getTTAlarmSeverity() {
-      return customAttributes.get("AlarmSeverity").asText();
+      JsonNode jn = customAttributes.get("AlarmSeverity");
+      return (jn==null) ? null : jn.asText();
    }
 
    @JsonIgnore
    public String getTTAlarmStatus() {
-      return customAttributes.get("AlarmStatus").asText();
+      JsonNode jn = customAttributes.get("AlarmStatus");
+      return (jn==null) ? null : jn.asText();
    }
 
    @JsonIgnore
    public String getTTStatus() {
-      return customAttributes.get("Status").asText();
+      JsonNode jn = customAttributes.get("Status");
+      return (jn==null) ? null : jn.asText();
    }
 
    @JsonIgnore
    public String getTTCategory() {
-      return customAttributes.get("Category").asText();
+      JsonNode jn = customAttributes.get("Category");
+      return (jn==null) ? null : jn.asText();
    }
 
    @JsonIgnore

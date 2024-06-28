@@ -77,9 +77,9 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
 
    // trouble ticket contains alarm severity (without this defaults to Indeterminate)
    public static final String ONMS_TICKET_ATTRIBUTE_KEY_ALARM_SEVERITY = "ni2.tt.alarmseverity";
-   
+
    // trouble ticket contains trouble ticket category 
-   public static final String ONMS_TICKET_ATTRIBUTE_KEY_CATEGORY= "ni2.tt.category";
+   public static final String ONMS_TICKET_ATTRIBUTE_KEY_CATEGORY = "ni2.tt.category";
 
    // key to access user defined attributes
    public static final String ONMS_TICKET_NI2_ATTRIBUTES_KEY_PREFIX = "ni2.tt.attributes.";
@@ -172,24 +172,25 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
          builder.setDetails(troubleTicketEventExtended.getLongDescription());
          builder.setState(ni2StateToONMSState(troubleTicketEventExtended.getTTStatus()));
          builder.setAlarmId(Integer.parseInt(troubleTicketEventExtended.getTTAlarmId()));
-         
+
          //TODO USER MAPPING
          builder.setUser("troubleTicketUser");
 
          Map<String, String> ticketAttributeMap = new LinkedHashMap<>();
          builder.setAttributes(ticketAttributeMap);
-         
+
          ticketAttributeMap.put(ONMS_TICKET_ATTRIBUTE_KEY_ALARM_STATUS, troubleTicketEventExtended.getTTAlarmStatus());
-         ticketAttributeMap.put(ONMS_TICKET_ATTRIBUTE_KEY_ALARM_SEVERITY,troubleTicketEventExtended.getTTAlarmSeverity());
-         ticketAttributeMap.put(ONMS_TICKET_ATTRIBUTE_KEY_CATEGORY,troubleTicketEventExtended.getTTCategory());
+         ticketAttributeMap.put(ONMS_TICKET_ATTRIBUTE_KEY_ALARM_SEVERITY, troubleTicketEventExtended.getTTAlarmSeverity());
+         ticketAttributeMap.put(ONMS_TICKET_ATTRIBUTE_KEY_CATEGORY, troubleTicketEventExtended.getTTCategory());
 
          List<String> resourceIds = troubleTicketEventExtended.getTTResourceIds();
-         if (resourceIds !=null) {
+         if (resourceIds != null) {
             StringBuffer resourceIdbuff = new StringBuffer();
             Iterator<String> it = resourceIds.iterator();
-            while(it.hasNext()) {
+            while (it.hasNext()) {
                resourceIdbuff.append(it.next());
-               if(it.hasNext()) resourceIdbuff.append(",");
+               if (it.hasNext())
+                  resourceIdbuff.append(",");
             }
             ticketAttributeMap.put(ONMS_TICKET_ATTRIBUTE_KEY_RESOURCE_IDS, resourceIdbuff.toString());
          }
@@ -254,6 +255,13 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
             createRequest.setAlarmSeverity(TroubleTicketEventExtended.ALARM_SEVERITY_INDETERMINATE);
          }
 
+         String ttCategory = ticketAttributeMap.get(ONMS_TICKET_ATTRIBUTE_KEY_CATEGORY);
+         if (ttCategory != null) {
+            createRequest.setTTCategory(ttCategory);
+         } else {
+            createRequest.setTTCategory("NOT_SET");
+         }
+
          String resources = ticketAttributeMap.get(ONMS_TICKET_ATTRIBUTE_KEY_RESOURCE_IDS);
          if (resources == null || resources.isBlank() || resources.contains(" ")) {
             LOG.debug("resources must not be null or empty or contain spaces. Using defaultResourceId=" + _fallbackResourceId);
@@ -311,14 +319,24 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
          if (alarmStatus != null) {
             updateRequest.setAlarmStatus(alarmStatus);
          } else {
-            updateRequest.setAlarmStatus(TroubleTicketEventExtended.ALARM_STATUS_ACKNOWLEDGED);
+            // if no value set- do not update this value in the ticket
+            //updateRequest.setAlarmStatus(TroubleTicketEventExtended.ALARM_STATUS_ACKNOWLEDGED);
          }
 
          String alarmSeverity = ticketAttributeMap.get(ONMS_TICKET_ATTRIBUTE_KEY_ALARM_SEVERITY);
          if (alarmSeverity != null) {
             updateRequest.setAlarmSeverity(alarmSeverity);
          } else {
-            updateRequest.setAlarmSeverity(TroubleTicketEventExtended.ALARM_SEVERITY_INDETERMINATE);
+            // if no value set- do not update this value in the ticket
+            //updateRequest.setAlarmSeverity(TroubleTicketEventExtended.ALARM_SEVERITY_INDETERMINATE);
+         }
+         
+         String ttCategory = ticketAttributeMap.get(ONMS_TICKET_ATTRIBUTE_KEY_CATEGORY);
+         if (ttCategory != null) {
+            updateRequest.setTTCategory(ttCategory);
+         } else {
+            // if no value set- do not update this value in the ticket
+           // updateRequest.setTTCategory("NOT_SET");
          }
 
          // any attribute in the OpenNMS Ticket with key starting with ONMS_TICKET_NI2_ATTRIBUTES_KEY_PREFIX will 
