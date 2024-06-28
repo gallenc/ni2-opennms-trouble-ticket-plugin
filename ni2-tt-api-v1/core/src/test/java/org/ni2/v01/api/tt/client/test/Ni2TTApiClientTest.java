@@ -31,6 +31,7 @@ import java.util.List;
 
 import org.ni2.v01.api.tt.client.Ni2TTApiClientRawJson;
 import org.ni2.v01.api.tt.model.TroubleTicketEventExtended;
+import org.ni2.v01.api.tt.model.TroubleTicketUpdateRequest;
 import org.ni2.v01.api.tt.model.LifecycleActionRequest;
 import org.ni2.v01.api.tt.model.Ni2ClientException;
 import org.ni2.v01.api.tt.model.Ni2TTApiClient;
@@ -106,7 +107,7 @@ public class Ni2TTApiClientTest {
       try {
          authenticationToken = ttclient.getAuthenticationToken();
       } catch (Ni2ClientException ex) {
-         LOG.debug("testAuthentication expected fail exception"+ex.toString());
+         LOG.debug("testAuthentication expected fail exception: "+ex.toString());
          fail = true;
       }
 
@@ -146,7 +147,7 @@ public class Ni2TTApiClientTest {
       LOG.debug("********** testCreateGetAndUpdateTicket() get created ticket");
 
       TroubleTicketEventExtended tticket = ttclient.getTroubleTicket(ticketId);
-      LOG.debug("tticket:" + tticket);
+      LOG.debug("received tticket:" + tticket);
 
       String description = tticket.getDescription();
       String longDescription = tticket.getLongDescription();
@@ -157,40 +158,92 @@ public class Ni2TTApiClientTest {
       String status = tticket.getStatus();
       String ttCategory = tticket.getTTCategory();
 
-      LOG.debug("tticket specific values: alarmId: {} alarmSource: {} status: {} ttCategory: {} resourceIds: {}", alarmId, alarmSource, status, ttCategory, resourceIds);
+      LOG.debug("received tticket values: alarmId: {} alarmSource: {} status: {} ttCategory: {} resourceIds: {}", alarmId, alarmSource, status, ttCategory, resourceIds);
 
       assertTrue(DESCRIPTION.equals(description));
-
       assertTrue(LONG_DESCRIPTION.equals(longDescription));
       assertTrue(ALARM_ID.equals(alarmId));
       assertTrue(TT_CATEGORY.equals(ttCategory));
       assertTrue(resourceIds.contains(RESOURCE_ID));
       assertTrue(Ni2TTStatus.OPEN.equals(status));
+      
+      // update ticket
+      LOG.debug("********** testCreateGetAndUpdateTicket() update created ticket");
+      TroubleTicketUpdateRequest updateRequest = new TroubleTicketUpdateRequest();
+      
+      final String UPDATE_DESCRIPTION = "my updated description";
+      final String UPDATE_LONG_DESCRIPTION = "my updated long description";
 
+      final String UPDATE_RESOURCE_ID = fallbackResourceId;
+      final String UPDATE_ALARM_ID = "89101112";
+      final String UPDATE_TT_CATEGORY = "Network";
+
+      updateRequest.setDescription(UPDATE_DESCRIPTION);
+      updateRequest.setLongDescription(UPDATE_LONG_DESCRIPTION);
+
+      updateRequest.setAlarmId(UPDATE_ALARM_ID);
+      updateRequest.setAlarmSource(onmsInstance);
+      updateRequest.setTTCategory(UPDATE_TT_CATEGORY);
+      
+      updateRequest.setAlarmSeverity(TroubleTicketEventExtended.ALARM_SEVERITY_CLEARED);
+      updateRequest.setAlarmStatus(TroubleTicketEventExtended.ALARM_STATUS_ACKNOWLEDGED);
+
+      ttclient.updateTroubleTicket(ticketId, updateRequest);
+      
+      tticket = ttclient.getTroubleTicket(ticketId);
+      status = tticket.getStatus();
+      LOG.debug("after update ticket: {} tticket: {}", status, tticket);
+      
+      description = tticket.getDescription();
+      longDescription = tticket.getLongDescription();
+      resourceIds = tticket.getResourceIds();
+
+      alarmId = tticket.getAlarmId();
+      alarmSource = tticket.getAlarmSource();
+      status = tticket.getStatus();
+      ttCategory = tticket.getTTCategory();
+      
+      assertTrue(DESCRIPTION.equals(description));
+
+      assertTrue(UPDATE_LONG_DESCRIPTION.equals(longDescription));
+      assertTrue(UPDATE_ALARM_ID.equals(alarmId));
+      assertTrue(UPDATE_TT_CATEGORY.equals(ttCategory));
+      assertTrue(resourceIds.contains(RESOURCE_ID));
+      assertTrue(Ni2TTStatus.OPEN.equals(status));
+      
+
+      // try start trouble ticket (user may not be able to start)
+      LOG.debug("********** testCreateGetAndUpdateTicket() start ticket");
+      try {
+         ttclient.changeTicketState(ticketId, LifecycleActionRequest.START, "start ticket test");
+      } catch (Ni2ClientException ex) {
+         LOG.debug("test problem starting ticket", ex);
+      }
+      tticket = ttclient.getTroubleTicket(ticketId);
+      status = tticket.getStatus();
+      LOG.debug("after start request status: {} tticket: {}", status, tticket);
+
+      // try resolve trouble ticket (user may not be able to resolve)
+      LOG.debug("********** testCreateGetAndUpdateTicket() resolve ticket");
+      try {
+         ttclient.changeTicketState(ticketId, LifecycleActionRequest.RESOLVE, "resolve ticket test");
+      } catch (Ni2ClientException ex) {
+         LOG.debug("test problem resolving ticket", ex);
+      }
+      tticket = ttclient.getTroubleTicket(ticketId);
+      status = tticket.getStatus();
+      LOG.debug("after resolve request status: {} tticket: {}", status, tticket);
+      
       // try close trouble ticket (user may not be able to close)
       LOG.debug("********** testCreateGetAndUpdateTicket() close ticket");
-
       try {
          ttclient.changeTicketState(ticketId, LifecycleActionRequest.CLOSE, "close ticket test");
       } catch (Ni2ClientException ex) {
          LOG.debug("test problem closing ticket", ex);
       }
-
       tticket = ttclient.getTroubleTicket(ticketId);
       status = tticket.getStatus();
       LOG.debug("after close request status: {} tticket: {}", status, tticket);
-
-      // try resolve trouble ticket (user may not be able to resolve)
-      LOG.debug("********** testCreateGetAndUpdateTicket() resolve ticket");
-      try {
-         ttclient.changeTicketState(ticketId, LifecycleActionRequest.RESOLVE, "close ticket test");
-      } catch (Ni2ClientException ex) {
-         LOG.debug("test problem resolving ticket", ex);
-      }
-
-      tticket = ttclient.getTroubleTicket(ticketId);
-      status = tticket.getStatus();
-      LOG.debug("after resolve request status: {} tticket: {}", status, tticket);
 
       // try cancel trouble ticket
       LOG.debug("********** testCreateGetAndUpdateTicket() cancel ticket");
@@ -199,7 +252,6 @@ public class Ni2TTApiClientTest {
       } catch (Ni2ClientException ex) {
          LOG.debug("test problem cancelling ticket", ex);
       }
-
       tticket = ttclient.getTroubleTicket(ticketId);
       LOG.debug("after cancel request status: {} tticket: {}", status, tticket);
       status = tticket.getStatus();

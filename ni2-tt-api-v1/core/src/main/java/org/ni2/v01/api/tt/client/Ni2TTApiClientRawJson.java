@@ -50,6 +50,7 @@ import org.ni2.v01.api.tt.model.LifecycleActionRequest;
 import org.ni2.v01.api.tt.model.Ni2ClientException;
 import org.ni2.v01.api.tt.model.Ni2TTApiClient;
 import org.ni2.v01.api.tt.model.TroubleTicketEventExtended;
+import org.ni2.v01.api.tt.model.TroubleTicketUpdateRequest;
 import org.ni2.v01.api.tt.model.TroubleTicketCreateRequest;
 import org.ni2.v01.api.tt.model.TroubleTicketCreateResponse;
 import org.ni2.v01.api.tt.opennms.plugin.Ni2TicketerPlugin;
@@ -645,5 +646,87 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
       }
 
    }
+
+   
+   /**
+    * post {{baseUrl}}/api/v1/entity/event/update/event/{{eventId}}
+    * {
+    *    "description": "{{description}}",
+    *    "longDescription": "{{longDescription}}",
+    *    "customAttributes": {
+    *       "Category": "{{categoryUpdated}}",
+    *       "AlarmSource": "{{alarmSource}}",
+    *       "AlarmId": "{{alarmId}}",
+    *       "AlarmSeverity": "{{alarmSeverity}}",
+    *       "AlarmStatus": "{{alarmStatus}}"
+     *   }
+    * }
+    * 
+    * @param ticketId
+    * @param TroubleTicketUpdateRequest updateRequest
+    * @throws Ni2ClientException 
+    * 
+    */
+   @Override
+   public void updateTroubleTicket(String ticketId, TroubleTicketUpdateRequest updateRequest) throws Ni2ClientException {
+
+         LOG.debug("updateTroubleTicket:" + updateRequest);
+         if (ttServerUrl == null || ttServerUrl.isBlank())
+            throw new IllegalArgumentException("ttServerUrl must not be null or empty");
+
+         String requestUrl = ttServerUrl + "/api/v1/entity/event/update/event";
+
+         try {
+            
+            String authenticationToken = getAuthenticationToken();
+
+            HttpURLConnection httpURLConnection = getHttpURLConnection(requestUrl);
+            httpURLConnection.setRequestProperty("Authorization", "Bearer " + authenticationToken);
+
+            JsonMapper mapper = new JsonMapper();
+            mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+
+            StringWriter stringwriter = new StringWriter();
+            mapper.writeValue(stringwriter, updateRequest);
+            String requestBody = stringwriter.toString();
+            LOG.debug("POST requestUrl=" + requestUrl + " requestBody: " + requestBody);
+
+            try (OutputStream os = httpURLConnection.getOutputStream()) {
+               byte[] output = requestBody.toString().getBytes("utf-8");
+               os.write(output, 0, output.length);
+            }
+
+            int responseCode = httpURLConnection.getResponseCode();
+            LOG.debug("POST Response Code :: " + responseCode);
+
+            if (responseCode == HttpURLConnection.HTTP_OK) { //success
+
+               LOG.debug("success updating ticketId: {} ", ticketId);
+
+            } else {
+               // read error stream
+               String error = null;
+               if (httpURLConnection.getErrorStream() != null) {
+                  try (BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream(), "utf-8"))) {
+                     StringBuilder response = new StringBuilder();
+                     String responseLine = null;
+                     while ((responseLine = br.readLine()) != null) {
+                        response.append(responseLine.trim());
+                     }
+                     error = response.toString();
+                  }
+               }
+
+               throw new Ni2ClientException("failed update ticket " + requestUrl
+                        + " for username=" + ttUsername
+                        + " error response:" + error);
+            }
+
+         } catch (Exception ex) {
+            throw new Ni2ClientException("problem updating trouble ticket", ex);
+         }
+
+      }
+
 
 }

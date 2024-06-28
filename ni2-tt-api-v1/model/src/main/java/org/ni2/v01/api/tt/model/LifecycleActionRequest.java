@@ -36,6 +36,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class LifecycleActionRequest {
    
    @JsonIgnore
+   public static final String START = "Start";
+   
+   @JsonIgnore
    public static final String CLOSE = "Close";
    
    @JsonIgnore
@@ -44,7 +47,7 @@ public class LifecycleActionRequest {
    @JsonIgnore
    public static final String RESOLVE = "Resolve";
    
-   public static final List<String> ALLOWED_ACTIONS_LIST = Arrays.asList(CLOSE,CANCEL,RESOLVE);
+   public static final List<String> ALLOWED_ACTIONS_LIST = Arrays.asList(START,CLOSE,CANCEL,RESOLVE);
    
    private String action = null;
    private String comment = null;

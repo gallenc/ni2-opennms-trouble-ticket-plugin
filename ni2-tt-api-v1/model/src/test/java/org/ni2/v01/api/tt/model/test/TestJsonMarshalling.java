@@ -34,6 +34,7 @@ import org.junit.Test;
 import org.ni2.v01.api.tt.model.AuthenticationRequest;
 import org.ni2.v01.api.tt.model.LifecycleActionRequest;
 import org.ni2.v01.api.tt.model.TroubleTicketCreateRequest;
+import org.ni2.v01.api.tt.model.TroubleTicketUpdateRequest;
 
 import com.fasterxml.jackson.core.exc.StreamWriteException;
 import com.fasterxml.jackson.databind.DatabindException;
@@ -130,18 +131,18 @@ public class TestJsonMarshalling {
    }
    
    @Test
-   public void testTroubleTicketGetRequestObject() throws StreamWriteException, DatabindException, IOException {
+   public void testTroubleTicketUpdateRequestObject() throws StreamWriteException, DatabindException, IOException {
       
       JsonMapper mapper = new JsonMapper();
       mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
       
-      TroubleTicketCreateRequest request = new TroubleTicketCreateRequest();
+      TroubleTicketUpdateRequest request = new TroubleTicketUpdateRequest();
       
-      request.setDescription("my descritpion");
-      request.setLongDescription("my long description");
-      request.setResourceIds(Arrays.asList("resource01","resource02"));
+      request.setDescription("my updated descritpion");
+      request.setLongDescription("my updated long description");
+
       
-      request.setAlarmId("1234567");
+      request.setAlarmId("78910");
       request.setAlarmSource("opennms");
       request.setTTCategory("Network");
       
@@ -149,10 +150,10 @@ public class TestJsonMarshalling {
       mapper.writeValue(stringwriter, request);
       
       String reaquestStr = stringwriter.toString();
-      System.out.println("TroubleTicketCreateRequest JSON is\n"+reaquestStr);
+      System.out.println("TroubleTicketUpdateRequest JSON is\n"+reaquestStr);
      
-      TroubleTicketCreateRequest request2 = mapper.readValue(reaquestStr, TroubleTicketCreateRequest.class);
-      System.out.println("unmarshalled TroubleTicketCreateRequest is\n"+request2.toString());
+      TroubleTicketUpdateRequest request2 = mapper.readValue(reaquestStr, TroubleTicketUpdateRequest.class);
+      System.out.println("unmarshalled TroubleTicketUpdateRequest is\n"+request2.toString());
       
       // note this works because toString does not use customAttributes directly
       assertTrue(request.toString().equals(request2.toString()));

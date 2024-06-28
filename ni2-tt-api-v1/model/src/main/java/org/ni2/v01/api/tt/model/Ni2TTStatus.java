@@ -32,6 +32,8 @@ public class Ni2TTStatus {
    
    public static final String RESOLVED = "Resolved";
    
+   public static final String IN_PROCESS ="In Process";
+   
    // other statuses available
 
 }

@@ -473,6 +473,10 @@ public class Ni2TTApiV2MockImpl {
 
                // todo check status and update
                switch (action) {
+               case LifecycleActionRequest.START:
+                  ticket.setStatus(Ni2TTStatus.IN_PROCESS);
+                  status = Response.Status.OK;
+                  break;
                case LifecycleActionRequest.CANCEL:
                   ticket.setStatus(Ni2TTStatus.CANCELED);
                   status = Response.Status.OK;
@@ -485,8 +489,10 @@ public class Ni2TTApiV2MockImpl {
                   ticket.setStatus(Ni2TTStatus.RESOLVED);
                   status = Response.Status.OK;
                   break;
+               default : 
+                  status = Response.Status.BAD_REQUEST;
+                  reason = "action cannot be processed";
                }
-
                
             }
          }

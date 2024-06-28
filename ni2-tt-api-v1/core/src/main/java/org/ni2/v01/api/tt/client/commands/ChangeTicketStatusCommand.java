@@ -41,7 +41,7 @@ public class ChangeTicketStatusCommand implements Action {
    @Argument(index = 0, name = "tticketId", description = "trouble ticket id", required = true, multiValued = false)
    String tticketId;
 
-   @Argument(index = 1, name = "status", description = "requested change of status. (Must be one of 'Close', 'Cancel', 'Resolve')", required = true, multiValued = false)
+   @Argument(index = 1, name = "status", description = "requested change of status. (Must be one of 'Start', 'Close', 'Cancel', 'Resolve')", required = true, multiValued = false)
    String status;
 
    @Option(name = "--comment", description = "optional comment for change state - defaults to empty string ", required = false, multiValued = false)

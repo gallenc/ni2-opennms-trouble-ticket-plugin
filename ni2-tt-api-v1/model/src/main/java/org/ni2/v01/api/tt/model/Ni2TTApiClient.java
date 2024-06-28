@@ -64,6 +64,24 @@ public interface Ni2TTApiClient {
     * @throws Ni2ClientException 
     */
    TroubleTicketCreateResponse createTroubleTicket(TroubleTicketCreateRequest createRequest) throws Ni2ClientException;
+   
+   
+   /**
+    * post {{baseUrl}}/api/v1/entity/event/update/event/{{eventId}}
+    * {
+    *    "description": "{{description}}",
+    *    "longDescription": "{{longDescription}}",
+    *    "customAttributes": {
+    *       "Category": "{{categoryUpdated}}",
+    *       "AlarmSource": "{{alarmSource}}",
+    *       "AlarmId": "{{alarmId}}",
+    *       "AlarmSeverity": "{{alarmSeverity}}",
+    *       "AlarmStatus": "{{alarmStatus}}"
+     *   }
+    * }
+    * @throws Ni2ClientException 
+    */
+   void updateTroubleTicket(String ticketId, TroubleTicketUpdateRequest updateRequest) throws Ni2ClientException;
 
    /**
     * post {{baseUrl}}/api/v1/entity/event/get/event/extended/{{eventId}}
@@ -216,9 +234,9 @@ public interface Ni2TTApiClient {
     *  "action": "Cancel",
     *  "comment": "{{closeComment}}"
     *  }
-    *  action can be any of Close" "Cancel" "Resolve" (or others) determined by 
+    *  action can be any of 'Start', 'Close' 'Cancel' 'Resolve' (or others) determined by 
     *  states in LifecycleActionRequest.ALLOWED_ACTIONS_LIST
-    *  LifecycleActionRequest.CLOSE, LifecycleActionRequest.CANCEL, LifecycleActionRequest.RESOLVE
+    *  LifecycleActionRequest.CLOSE, LifecycleActionRequest.CANCEL, LifecycleActionRequest.RESOLVE, LifecycleActionRequest.START
     *  
     * @param ticketId
     * @param action
