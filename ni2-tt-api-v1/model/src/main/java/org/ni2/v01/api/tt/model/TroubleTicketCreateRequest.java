@@ -172,8 +172,8 @@ public class TroubleTicketCreateRequest {
    public String toString() {
       return "TroubleTicketCreateRequest [getClassificationPath()=" + getClassificationPath() + ", getDescription()=" + getDescription()
                + ", getLongDescription()=" + getLongDescription() + ", getResourceIds()=" + getResourceIds() + ", getCategory()=" + getTTCategory()
-               + ", getAlarmSource()=" + getAlarmSource() + ", getAlarmId()=" + getAlarmId() + ", getAlarmSeverity()"+ getAlarmSeverity() 
-               + ", getAlarmStatus()"+ getAlarmStatus()+"]";
+               + ", getAlarmSource()=" + getAlarmSource() + ", getAlarmId()=" + getAlarmId() + ", getAlarmSeverity()="+ getAlarmSeverity() 
+               + ", getAlarmStatus()="+ getAlarmStatus()+"]";
    }
   
    

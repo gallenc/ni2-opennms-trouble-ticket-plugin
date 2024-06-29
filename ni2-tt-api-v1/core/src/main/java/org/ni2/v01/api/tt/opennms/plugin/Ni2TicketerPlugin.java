@@ -51,21 +51,25 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
    // maximum length of a description in ni2 ticket
    public static final int MAX_DESCRIPTION_LENGTH = 255;
 
+   // properties used in ni2-troubleticket.properties
    public static final String TT_SERVER_URL_PROPERTY = "ni2.tt.server.url";
    public static final String TT_USERNAME_PROPERTY = "ni2.tt.server.username";
    public static final String TT_PASSWORD_PROPERTY = "ni2.tt.server.password";
    public static final String TT_TRUST_ALL_CERTIFICATES_PROPERTY = "ni2.tt.server.trustallcertificates";
    public static final String TT_OPENNMS_INSTANCE_PROPERTY = "ni2.tt.opennms.instance";
-   public static final String TT_FALLBACK_RESOURCE_PROPERTY = "ni2.tt.opennms.fallbackresource";
    public static final String TT_CLIENT_TIMEOUT_PROPERTY = "ni2.tt.opennms.clienttimeout";
+   
+   public static final String TT_FALLBACK_RESOURCE_PROPERTY = "ni2.tt.opennms.fallbackresource";
+   public static final String TT_FALLBACK_CATEGORY_PROPERTY = "ni2.tt.opennms.fallbackcategory";
 
    public static final String DEFAULT_TT_SERVER_URL_PROPERTY = "http://localhost:8080";
    public static final String DEFAULT_TT_USERNAME_PROPERTY = "username";
    public static final String DEFAULT_TT_PASSWORD_PROPERTY = "password";
    public static final String DEFAULT_TT_OPENNMS_INSTANCE_PROPERTY = "OpenNMS-Instance-not-set";
    public static final String DEFAULT_TT_TRUST_ALL_CERTIFICATES_PROPERTY = "true";
-   public static final String DEFAULT_TT_FALLBACK_RESOURCE_ID = "DEFAULT_RESOURCE_ID";
    public static final String DEFAULT_CLIENT_TIMEOUT = "10000"; // 10 seconds
+   public static final String DEFAULT_TT_FALLBACK_RESOURCE_ID = "DEFAULT_RESOURCE_ID";
+   public static final String DEFAULT_TT_FALLBACK_CATEGORY = "Network";
 
    // these keys are used in the drools ticketer plugin to map values into a ticket for ni2
 

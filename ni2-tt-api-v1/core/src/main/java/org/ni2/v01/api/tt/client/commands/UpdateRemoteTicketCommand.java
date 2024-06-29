@@ -37,29 +37,32 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
-@Command(scope = "ni2ticket", name = "create-remote-ticket", description = "Update an existing ticket in remote system. (Note - this does not link a ticket to a real alarm in OpenNMS")
+@Command(scope = "ni2-ticketing", name = "update-remote-ticket", description = "Update an existing ticket in remote system. (Note - this does not link a ticket to a real alarm in OpenNMS")
 public class UpdateRemoteTicketCommand implements Action {
    
    @Argument(index = 0, name = "tticketId", description = "trouble ticket id", required = true, multiValued = false)
    String tticketId;
    
    @Option(name = "--alarmId", description = "optional integer id of associated alarm. If omitted a random Id will be created", required = false, multiValued = false)
-   String alarmId =Integer.toString(ThreadLocalRandom.current().nextInt(10000, 100000 + 1));
+   String alarmId = null;
 
    @Option(name = "--description", description = "optional ticket description - defaults to empty string ", required = false, multiValued = false)
-   String description = "";
+   String description =  null;
    
    @Option(name = "--longdescription", description = "optional ticket long description - defaults to empty string ", required = false, multiValued = false)
-   String longDescription = "";
+   String longDescription = null;
    
    @Option(name = "--alarmsource", description = "source of alarm - defaults to OpenNMS instance property", required = false, multiValued = false)
-   String alarmSource = System.getProperty(Ni2TicketerPlugin.TT_OPENNMS_INSTANCE_PROPERTY, Ni2TicketerPlugin.DEFAULT_TT_OPENNMS_INSTANCE_PROPERTY);
+   String alarmSource = null;
    
    @Option(name = "--alarmseverity", description = "severity of alarm (one of Indeterminate,Cleared,Normal,Warning,Minor,Major,Critical) defaults to Minor", required = false, multiValued = false)
-   String alarmSeverity = TroubleTicketEventExtended.ALARM_SEVERITY_MINOR;
+   String alarmSeverity = null;
    
    @Option(name = "--alarmstatus", description = "status of alarm alarm - Acknowledged or Unacknowledged (default)", required = false, multiValued = false)
-   String alarmStatus = TroubleTicketEventExtended.ALARM_STATUS_UNACKNOWLEDGED;
+   String alarmStatus = null;
+
+   @Option(name = "--ttcategory", description = "category of trouble ticket", required = false, multiValued = false)
+   String ttcategory = null;
 
    @Option(name = "--url", description = "Location of the ni2 trouble ticket service - defaults to OpenNMS property "
             + Ni2TicketerPlugin.TT_SERVER_URL_PROPERTY, required = false, multiValued = false)
@@ -96,12 +99,13 @@ public class UpdateRemoteTicketCommand implements Action {
       
       try {
          TroubleTicketUpdateRequest troubleTicketUpdateRequest = new TroubleTicketUpdateRequest();
-         troubleTicketUpdateRequest.setAlarmId(alarmId);
-         troubleTicketUpdateRequest.setAlarmSource(alarmSource);
-         troubleTicketUpdateRequest.setDescription(description);
-         troubleTicketUpdateRequest.setLongDescription(longDescription);
-         troubleTicketUpdateRequest.setAlarmSeverity(alarmSeverity);
-         troubleTicketUpdateRequest.setAlarmStatus(alarmStatus);
+         if( alarmId!=null ) troubleTicketUpdateRequest.setAlarmId(alarmId);
+         if( alarmSource!=null ) troubleTicketUpdateRequest.setAlarmSource(alarmSource);
+         if( description!=null ) troubleTicketUpdateRequest.setDescription(description);
+         if( longDescription!=null ) troubleTicketUpdateRequest.setLongDescription(longDescription);
+         if( alarmSeverity!=null ) troubleTicketUpdateRequest.setAlarmSeverity(alarmSeverity);
+         if( alarmStatus!=null ) troubleTicketUpdateRequest.setAlarmStatus(alarmStatus);
+         if( ttcategory!=null ) troubleTicketUpdateRequest.setTTCategory(ttcategory);
          
          System.out.println("sending ticket update request:"+troubleTicketUpdateRequest);
          

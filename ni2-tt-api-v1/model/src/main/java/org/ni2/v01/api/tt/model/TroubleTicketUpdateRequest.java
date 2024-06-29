@@ -28,6 +28,7 @@ import java.util.Map;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * {
@@ -44,8 +45,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 public class TroubleTicketUpdateRequest {
    
+   @JsonInclude(JsonInclude.Include.NON_NULL)
    private  String description =null;
    
+   @JsonInclude(JsonInclude.Include.NON_NULL)
    private String longDescription=null;
    
    private Map<String,String> customAttributes = new LinkedHashMap<String, String>();
@@ -146,8 +149,8 @@ public class TroubleTicketUpdateRequest {
    public String toString() {
       return "TroubleTicketUpdateRequest [ getDescription()=" + getDescription()
                + ", getLongDescription()=" + getLongDescription() + ", getCategory()=" + getTTCategory()
-               + ", getAlarmSource()=" + getAlarmSource() + ", getAlarmId()=" + getAlarmId() + ", getAlarmSeverity()"+ getAlarmSeverity() 
-               + ", getAlarmStatus()"+ getAlarmStatus()+"]";
+               + ", getAlarmSource()=" + getAlarmSource() + ", getAlarmId()=" + getAlarmId() + ", getAlarmSeverity()="+ getAlarmSeverity() 
+               + ", getAlarmStatus()="+ getAlarmStatus()+"]";
    }
   
    

@@ -6,10 +6,10 @@
 # url of the Ni2 trouble ticket server
 ni2.tt.server.url=http://localhost:8080
 
-# username to access api
+# username to access Ni2 api
 ni2.tt.server.username=username
 
-# password to access api
+# password to access Ni2 api
 ni2.tt.server.password=password
 
 # if true the client will trust all TLS/HTTPS certificates from server
@@ -21,16 +21,22 @@ ni2.tt.opennms.clienttimeout=12000
 # identify of the OpenNMS system sending tickets to the server
 ni2.tt.opennms.instance=OpenNMS1
 
-# resource id to be used if not passed in ticket attributes from drools
-ni2.tt.opennms.fallbackresource="set_fallback_resource";
+# fallback resource id to be used if not passed in ticket attributes from drools
+ni2.tt.opennms.fallbackresource=set_fallback_resource
+
+# fallback trouble ticket category to be used if not passed in ticket attributes
+ni2.tt.opennms.fallbackcategory=Network
 
 # see OpenNMS documentation https://docs.opennms.com/horizon/33/operation/deep-dive/ticketing/introduction.html
+# also https://github.com/OpenNMS/opennms/blob/opennms-32.0.5-1/features/ticketing/inmemory/src/main/java/org/opennms/features/ticketing/inmemory/InMemoryTicketerPlugin.java
 
+# OSGi plugin picks up the first OSGi ticketing plugin found ( there whould only be one installed at a time)
 opennms.ticketer.plugin=org.opennms.netmgt.ticketd.OSGiBasedTicketerPlugin
 
+# Enables the ticketing engine and ticket features on the alarms UI
 opennms.alarmTroubleTicketEnabled=true
 
-# note this should be set up to get the url linking to the ticket on the web ui
+# note this should be set up to get the url linking to the ticket on the Ni2 web ui
 opennms.alarmTroubleTicketLinkTemplate=http://localhost:8080/Ni2CMDBWebApi/overviewByCategoryAndAttribute/Event/UniversalId/${id}
 
 # this sets up rules for mapping values in alarms and nodes to tickets

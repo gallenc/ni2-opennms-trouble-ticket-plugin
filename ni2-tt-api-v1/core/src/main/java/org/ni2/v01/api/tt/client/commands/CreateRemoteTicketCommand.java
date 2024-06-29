@@ -40,20 +40,20 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
-@Command(scope = "ni2ticket", name = "create-remote-ticket", description = "Create ticket in remote system. (Note - this does not link a ticket to a real alarm in OpenNMS")
+@Command(scope = "ni2-ticketing", name = "create-remote-ticket", description = "Create ticket in remote system. (Note - this does not link a ticket to a real alarm in OpenNMS")
 public class CreateRemoteTicketCommand implements Action {
-
-   @Argument(index = 0, name = "resourceids", description = "single resource id or comma separated list of resource ids with no spaces)", required = true, multiValued = false)
-   String resources = System.getProperty(Ni2TicketerPlugin.TT_FALLBACK_RESOURCE_PROPERTY, Ni2TicketerPlugin.DEFAULT_TT_FALLBACK_RESOURCE_ID);
    
+   @Option(name = "--resourceIds", description = "single resource id or comma separated list of resource ids with no spaces. Defaults to fallback resource id from properties", required = false, multiValued = false)
+   String resources = System.getProperty(Ni2TicketerPlugin.TT_FALLBACK_RESOURCE_PROPERTY, Ni2TicketerPlugin.DEFAULT_TT_FALLBACK_RESOURCE_ID);
+
    @Option(name = "--alarmId", description = "optional integer id of associated alarm. If omitted a random Id will be created", required = false, multiValued = false)
    String alarmId =Integer.toString(ThreadLocalRandom.current().nextInt(10000, 100000 + 1));
 
-   @Option(name = "--description", description = "optional ticket description - defaults to empty string ", required = false, multiValued = false)
-   String description = "";
+   @Option(name = "--description", description = "optional ticket description - defaults to 'description default' ", required = false, multiValued = false)
+   String description = "description default";
    
-   @Option(name = "--longdescription", description = "optional ticket long description - defaults to empty string ", required = false, multiValued = false)
-   String longDescription = "";
+   @Option(name = "--longdescription", description = "optional ticket long description - 'long description default' ", required = false, multiValued = false)
+   String longDescription = "long description default";
    
    @Option(name = "--alarmsource", description = "source of alarm - defaults to OpenNMS instance property", required = false, multiValued = false)
    String alarmSource = System.getProperty(Ni2TicketerPlugin.TT_OPENNMS_INSTANCE_PROPERTY, Ni2TicketerPlugin.DEFAULT_TT_OPENNMS_INSTANCE_PROPERTY);
@@ -63,6 +63,9 @@ public class CreateRemoteTicketCommand implements Action {
    
    @Option(name = "--alarmstatus", description = "status of alarm alarm - Acknowledged or Unacknowledged (default)", required = false, multiValued = false)
    String alarmStatus = TroubleTicketEventExtended.ALARM_STATUS_UNACKNOWLEDGED;
+   
+   @Option(name = "--ttcategory", description = "category of trouble ticket", required = false, multiValued = false)
+   String ttcategory = System.getProperty(Ni2TicketerPlugin.TT_FALLBACK_CATEGORY_PROPERTY, Ni2TicketerPlugin.DEFAULT_TT_FALLBACK_CATEGORY);
 
    @Option(name = "--url", description = "Location of the ni2 trouble ticket service - defaults to OpenNMS property "
             + Ni2TicketerPlugin.TT_SERVER_URL_PROPERTY, required = false, multiValued = false)
@@ -105,6 +108,7 @@ public class CreateRemoteTicketCommand implements Action {
          troubleTicketCreateRequest.setLongDescription(longDescription);
          troubleTicketCreateRequest.setAlarmSeverity(alarmSeverity);
          troubleTicketCreateRequest.setAlarmStatus(alarmStatus);
+         troubleTicketCreateRequest.setTTCategory(ttcategory);
          
          if(resources==null || resources.isBlank() || resources.contains(" ")) throw new IllegalArgumentException("resources must not be null or empty or contain spaces");
          List<String> resourceIds= Arrays.asList(resources.split(","));

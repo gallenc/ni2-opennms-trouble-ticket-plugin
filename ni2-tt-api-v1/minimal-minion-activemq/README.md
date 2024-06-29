@@ -46,12 +46,18 @@ a number of commands are provided to allow testing of the plugin
 
 | command | details |
 | -------- | ------- |
-| ni2ticket --help | lists help for commands |
-| ni2ticket:create-remote-ticket |Create a new ticket in remote system. (Note - this does not link a ticket to an alarm in OpenNMS) |
-| ni2ticket:change-status  | change status of ticket |
-| ni2ticket:get-auth-token | get authentication token |
-| ni2ticket:get-ticket     | get trouble ticket |
+| ni2-ticketing --help |Lists help for commands |
+| ni2-ticketing:create-remote-ticket | Create a new ticket in remote system. (Note - this does not link a ticket to an alarm in OpenNMS) |
+| ni2-ticketing:update-remote-ticket | Update an existing ticket in remote system. |
+| ni2-ticketing:change-status  | Change status of a ticket |
+| ni2-ticketing:get-auth-token | Get an authentication token |
+| ni2-ticketing:get-ticket     | Get a trouble ticket |
 
+example
+
+```
+ni2-ticketing:create-remote-ticket --description 'this is a short' --longdescription 'this is a long'
+```
 
 ## to reinstall kar manually. 
 

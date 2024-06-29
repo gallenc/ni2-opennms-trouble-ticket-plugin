@@ -35,7 +35,7 @@ import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 @Service
-@Command(scope = "ni2ticket", name = "change-status", description = "change status of ticket")
+@Command(scope = "ni2-ticketing", name = "change-status", description = "Change status of ticket")
 public class ChangeTicketStatusCommand implements Action {
 
    @Argument(index = 0, name = "tticketId", description = "trouble ticket id", required = true, multiValued = false)

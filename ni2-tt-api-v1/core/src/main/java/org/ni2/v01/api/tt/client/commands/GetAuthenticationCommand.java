@@ -34,7 +34,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 
 @Service
-@Command(scope = "ni2ticket", name = "get-auth-token", description = "get authentication token")
+@Command(scope = "ni2-ticketing", name = "get-auth-token", description = "Get authentication token")
 public class GetAuthenticationCommand implements Action {
 
    //    @Argument(index = 0, name = "username", description = "Booking ID", required = true, multiValued = false)
