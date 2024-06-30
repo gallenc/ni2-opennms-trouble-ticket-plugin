@@ -158,7 +158,9 @@ rule "createCriticalOrMajorTicket"
   when
     $sessionClock : SessionClock()
     $ticketer : AlarmTicketerService(isTicketingEnabled() == true)
-    $alarm : OnmsAlarm(severity.isGreaterThan(OnmsSeverity.MAJOR) &&
+    
+    // alarm severity Major or Critical
+    $alarm : OnmsAlarm(severity.isGreaterThan(OnmsSeverity.MINOR) &&
                        (alarmType == OnmsAlarm.PROBLEM_TYPE || alarmType == OnmsAlarm.PROBLEM_WITHOUT_RESOLUTION_TYPE) &&
                        alarmAckUser == null &&
                        TTicketState == null)
