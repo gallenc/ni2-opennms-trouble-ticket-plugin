@@ -22,7 +22,9 @@
 
 package org.ni2.v01.api.tt.mock.server;
 
-import org.ni2.v01.api.tt.model.TroubleTicketUpdateRequest;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,24 +42,34 @@ import jakarta.ws.rs.core.Response;
 /**
  * redirects to the ticket simulator JSP
  */
-@Path("/Ni2CMDBWebApi")
+@Path("/")
 public class Ni2UIRedirect {
 
    private static final Logger LOG = LoggerFactory.getLogger(Ni2UIRedirect.class);
-   
-    /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
-     *
-     * @return String that will be returned as a text/plain response.
-     */
-    @Path("/overviewByCategoryAndAttribute/Event/UniversalId/{id}")
-    @GET
-    public Response getUITroubleTicket(@PathParam("id") String ticketId) {
 
-       LOG.warn("calling getUITroubleTicket ticketID: {}", ticketId);
+   @Path("")
+   @GET
+   public Response getroot() throws URISyntaxException {
 
-       URI targetURIForRedirection = ...;
-       return Response.temporaryRedirect(targetURIForRedirection).build();
-    }
+      LOG.warn("calling getroot");
+
+      URI targetURIForRedirection = new URI("/Ni2TTSimulatorUI/index.html");
+
+      LOG.warn("redirect uri: {}", targetURIForRedirection.getPath());
+
+      return Response.temporaryRedirect(targetURIForRedirection).build();
+   }
+
+   @Path("/Ni2CMDBWebApi/overviewByCategoryAndAttribute/Event/UniversalId/{id}")
+   @GET
+   public Response getUITroubleTicket(@PathParam("id") String ticketId) throws URISyntaxException {
+
+      LOG.warn("calling getUITroubleTicket ticketID: {}", ticketId);
+
+      URI targetURIForRedirection = new URI("../Ni2TTSimulatorUI/TroubleTicket.jsp?ticketId=" + ticketId);
+
+      LOG.warn("redirect uri: {}", targetURIForRedirection.getPath());
+
+      return Response.temporaryRedirect(targetURIForRedirection).build();
+   }
 }

@@ -66,7 +66,7 @@ public class Ni2TTApiV2MockImpl {
    // <universalId, ticket>
    private static final Map<String, TroubleTicketEventExtended> troubleTicketDao = Collections.synchronizedMap(new LinkedHashMap<String, TroubleTicketEventExtended>());
 
-   public Map<String, TroubleTicketEventExtended> getTroubleTicketDao() {
+   public static Map<String, TroubleTicketEventExtended> getTroubleTicketDao() {
       return troubleTicketDao;
    }
 
