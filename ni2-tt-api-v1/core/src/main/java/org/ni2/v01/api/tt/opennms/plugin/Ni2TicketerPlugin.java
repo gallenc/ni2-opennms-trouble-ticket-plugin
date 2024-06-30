@@ -58,7 +58,7 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
    public static final String TT_TRUST_ALL_CERTIFICATES_PROPERTY = "ni2.tt.server.trustallcertificates";
    public static final String TT_OPENNMS_INSTANCE_PROPERTY = "ni2.tt.opennms.instance";
    public static final String TT_CLIENT_TIMEOUT_PROPERTY = "ni2.tt.opennms.clienttimeout";
-   
+
    public static final String TT_FALLBACK_RESOURCE_PROPERTY = "ni2.tt.opennms.fallbackresource";
    public static final String TT_FALLBACK_CATEGORY_PROPERTY = "ni2.tt.opennms.fallbackcategory";
 
@@ -92,9 +92,11 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
    private String _ttUsername = DEFAULT_TT_USERNAME_PROPERTY;
    private String _ttPassword = DEFAULT_TT_PASSWORD_PROPERTY;
    private boolean _ttTrustAllCertificates = Boolean.valueOf(DEFAULT_TT_TRUST_ALL_CERTIFICATES_PROPERTY);
+   private int _connectionTimeout = Integer.parseInt(DEFAULT_CLIENT_TIMEOUT);
+
    private String _onmsInstanceId = DEFAULT_TT_OPENNMS_INSTANCE_PROPERTY;
    private String _fallbackResourceId = DEFAULT_TT_FALLBACK_RESOURCE_ID;
-   private int _connectionTimeout = Integer.parseInt(DEFAULT_CLIENT_TIMEOUT);
+   private String _fallbackCategory = DEFAULT_TT_FALLBACK_CATEGORY;
 
    Ni2TTApiClient ttclient = null;
 
@@ -122,6 +124,12 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
       }
    }
 
+   public void setConnectionTimeout(String connectionTimeoutStr) {
+      if (connectionTimeoutStr != null && !connectionTimeoutStr.isBlank()) {
+         this._connectionTimeout = Integer.parseInt(connectionTimeoutStr);
+      }
+   }
+
    public void setOnmsInstanceId(String onmsInstanceId) {
       if (onmsInstanceId != null && !onmsInstanceId.isBlank()) {
          this._onmsInstanceId = onmsInstanceId;
@@ -134,9 +142,9 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
       }
    }
 
-   public void setConnectionTimeout(String connectionTimeoutStr) {
-      if (connectionTimeoutStr != null && !connectionTimeoutStr.isBlank()) {
-         this._connectionTimeout = Integer.parseInt(connectionTimeoutStr);
+   public void setFallbackCategory(String fallbackCategory) {
+      if (fallbackCategory != null && !fallbackCategory.isBlank()) {
+         this._fallbackCategory = fallbackCategory;
       }
    }
 
@@ -263,7 +271,7 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
          if (ttCategory != null) {
             createRequest.setTTCategory(ttCategory);
          } else {
-            createRequest.setTTCategory("NOT_SET");
+            createRequest.setTTCategory(_fallbackCategory);
          }
 
          String resources = ticketAttributeMap.get(ONMS_TICKET_ATTRIBUTE_KEY_RESOURCE_IDS);
@@ -334,13 +342,13 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
             // if no value set- do not update this value in the ticket
             //updateRequest.setAlarmSeverity(TroubleTicketEventExtended.ALARM_SEVERITY_INDETERMINATE);
          }
-         
+
          String ttCategory = ticketAttributeMap.get(ONMS_TICKET_ATTRIBUTE_KEY_CATEGORY);
          if (ttCategory != null) {
             updateRequest.setTTCategory(ttCategory);
          } else {
             // if no value set- do not update this value in the ticket
-           // updateRequest.setTTCategory("NOT_SET");
+            // updateRequest.setTTCategory("NOT_SET");
          }
 
          // any attribute in the OpenNMS Ticket with key starting with ONMS_TICKET_NI2_ATTRIBUTES_KEY_PREFIX will 

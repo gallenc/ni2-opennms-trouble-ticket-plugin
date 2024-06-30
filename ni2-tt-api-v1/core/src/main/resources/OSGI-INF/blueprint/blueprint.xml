@@ -24,9 +24,12 @@
       <property name="ttUsername" value="$[ni2.tt.server.username]" />
       <property name="ttPassword" value="$[ni2.tt.server.password]" />
       <property name="ttTrustAllCertificates" value="$[ni2.tt.server.trustallcertificates]" />
+      <property name="connectionTimeout" value="$[ni2.tt.opennms.clienttimeout]" />
+      
+      <!-- default ticket values -->
       <property name="onmsInstanceId" value="$[ni2.tt.opennms.instance]" />
       <property name="fallbackResourceId" value="$[ni2.tt.opennms.fallbackresource]" />
-      <property name="connectionTimeout" value="$[ni2.tt.opennms.clienttimeout]" />
+      <property name="fallbackCategory" value="$[ni2.tt.opennms.fallbackcategory]" />
    </bean>
 
    <service ref="ticketerPlugin" interface="org.opennms.integration.api.v1.ticketing.TicketingPlugin" />
