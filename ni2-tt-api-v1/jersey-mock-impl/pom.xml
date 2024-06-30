@@ -152,6 +152,18 @@
                <war>${project.build.directory}/${project.build.finalName}.war</war>
             </configuration>
             <dependencies>
+               <dependency>
+                  <groupId>org.eclipse.jetty</groupId>
+                  <artifactId>apache-jsp</artifactId>
+                  <version>${jetty.version}</version>
+               </dependency>
+               <dependency>
+                  <groupId>org.eclipse.jetty</groupId>
+                  <artifactId>glassfish-jstl</artifactId>
+                  <version>${jetty.version}</version>
+               </dependency>
+               
+               <!-- logging dependencies -->
                <!-- mvn -X jetty:run produces logs without these depencencies -->
                <!-- <dependency> -->
                <!-- <groupId>org.apache.logging.log4j</groupId> -->

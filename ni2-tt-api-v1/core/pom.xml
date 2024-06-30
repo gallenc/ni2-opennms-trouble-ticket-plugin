@@ -143,6 +143,18 @@
                   </goals>
                </execution>
             </executions>
+            <dependencies>
+               <dependency>
+                  <groupId>org.eclipse.jetty</groupId>
+                  <artifactId>apache-jsp</artifactId>
+                  <version>${jetty.version}</version>
+               </dependency>
+               <dependency>
+                  <groupId>org.eclipse.jetty</groupId>
+                  <artifactId>glassfish-jstl</artifactId>
+                  <version>${jetty.version}</version>
+               </dependency>
+            </dependencies>
          </plugin>
 
       </plugins>

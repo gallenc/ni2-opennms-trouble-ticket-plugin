@@ -31,8 +31,7 @@ import org.glassfish.jersey.test.JerseyTest;
 //import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.ni2.v01.api.tt.mock.server.temp.MyResource;
+import org.ni2.v01.api.tt.mock.server.Ni2UIRedirect;
 
 import static org.junit.Assert.*;
 
@@ -43,7 +42,7 @@ public class MyResourceTest extends JerseyTest {
 
     @Override
     protected Application configure() {
-        return new ResourceConfig(MyResource.class);
+        return new ResourceConfig(Ni2UIRedirect.class);
     }
 
     /**

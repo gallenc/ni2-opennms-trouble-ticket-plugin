@@ -16,4 +16,8 @@
         <servlet-name>Jersey Web Application</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>jsp</servlet-name>
+        <url-pattern>/Ni2CMDBWebApi/*</url-pattern>
+    </servlet-mapping>
 </web-app>
