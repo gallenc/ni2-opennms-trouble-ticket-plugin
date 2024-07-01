@@ -6,7 +6,7 @@
    <groupId>org.opennms.integration.ni2.ttapi</groupId>
    <artifactId>ni2-tt-api-v1-mock-impl</artifactId>
    <packaging>war</packaging>
-   <version>0.0.2-SNAPSHOT</version>
+   <version>0.0.3-SNAPSHOT</version>
    <name>ni2-tt-api-v1-mock-impl</name>
 
    <properties>

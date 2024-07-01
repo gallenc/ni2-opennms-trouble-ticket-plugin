@@ -64,7 +64,7 @@ ni2-ticketing:create-remote-ticket --description 'this is a short' --longdescrip
 ```
 cd minimal-minion-activemq
 
-docker compose cp ../ni2-tt-api-v1/assembly/kar/target/ni2-tt-api-v1-kar-0.0.2-SNAPSHOT.kar  horizon:/usr/share/opennms/deploy/
+docker compose cp ../ni2-tt-api-v1/assembly/kar/target/ni2-tt-api-v1-kar-0.0.3-SNAPSHOT.kar  horizon:/usr/share/opennms/deploy/
 
 ```
 
