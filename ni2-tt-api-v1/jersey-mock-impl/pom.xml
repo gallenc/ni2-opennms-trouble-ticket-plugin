@@ -83,6 +83,12 @@
          <version>${jetty.version}</version>
          <scope>provided</scope>
       </dependency>
+      <dependency>
+         <groupId>org.eclipse.jetty</groupId>
+         <artifactId>glassfish-jstl</artifactId>
+         <version>${jetty.version}</version>
+         <scope>provided</scope>
+      </dependency>
 
       <dependency>
          <groupId>org.glassfish.jersey.test-framework.providers</groupId>
@@ -162,7 +168,7 @@
                   <artifactId>glassfish-jstl</artifactId>
                   <version>${jetty.version}</version>
                </dependency>
-               
+
                <!-- logging dependencies -->
                <!-- mvn -X jetty:run produces logs without these depencencies -->
                <!-- <dependency> -->
