@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2024 Ni2 Inc., Entimoss Ltd.
  * Licensed to The OpenNMS Group, Inc (TOG) under one or more
  * contributor license agreements.  See the LICENSE.md file
  * distributed with this work for additional information
@@ -29,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ni2.v01.api.tt.client.Ni2TTApiClientRawJson;
+import org.ni2.v01.api.tt.model.LifecycleActionRequest;
 import org.ni2.v01.api.tt.model.Ni2ClientException;
 import org.ni2.v01.api.tt.model.Ni2TTApiClient;
 import org.ni2.v01.api.tt.model.Ni2TTStatus;
@@ -314,6 +316,23 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
       LOG.debug("Ni2Plugin update: ticket {}", ticket);
 
       String tticketId = ticket.getId();
+      
+      if (!(State.OPEN == ticket.getState()) ) {
+         try {
+            if (State.CANCELLED== ticket.getState()) {
+            ttclient.changeTicketState(tticketId, LifecycleActionRequest.CANCEL, "OpenNMS cancelled ticket");
+            } else  if (State.CLOSED== ticket.getState()) {
+               ttclient.changeTicketState(tticketId, LifecycleActionRequest.CLOSE, "OpenNMS closed ticket");
+            }
+            return;
+         } catch (Ni2ClientException ex) {
+            LOG.error("Ni2Plugin update: unable to cancel or close tticketId {}", tticketId, ex);
+            // including ex.getMessage in exception message so that there is a meaningful message in trouble ticket communications fail event
+            throw new Ni2TicketerException("unable to cancel or close tticketId : " + ex.getMessage() + "tticketId:" + tticketId, ex);
+         }
+      }
+      
+      // else update the ticket with new alarm information
 
       TroubleTicketUpdateRequest updateRequest = new TroubleTicketUpdateRequest();
       updateRequest.setAlarmId(ticket.getAlarmId().toString());
