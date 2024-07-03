@@ -1,5 +1,7 @@
 # test environment for ni2 trouble ticket plugin
 
+Using OPENNMS VERSION 33.0.5
+
 A full build of the project will place the kar file in the correct docker compose directory corresponding to OpenNMS_home/deploy.
 
 ```
