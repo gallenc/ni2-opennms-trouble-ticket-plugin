@@ -8,7 +8,7 @@
          <doNotOverride>script</doNotOverride>
       </security>
    </global>
-   
+   <!-- Custom event configs go here -->
    <!--ADAM-6000  -->
    <event-file>events/ADVANTECH-IO-COMMON-MIB.events.xml</event-file>
    

@@ -6,10 +6,16 @@ A full build of the project will place the kar file in the correct docker compos
 cd ni2-tt-api-v1
 mvn clean install
 ```
-to run the plugin start the docker compose project
+to run the plugin start the docker compose project.
+
+Note that we are injecting perl into the container to allow us to use sendevent.pl for testing. 
+This requires the `docker compose build` command on first run
 
 ```
 cd ni2-tt-api-v1/minimal-minon-activemq
+
+# if using for first time we need to create a container using the horizon docker file 
+docker compose build
 
 docker compose up -d
 
