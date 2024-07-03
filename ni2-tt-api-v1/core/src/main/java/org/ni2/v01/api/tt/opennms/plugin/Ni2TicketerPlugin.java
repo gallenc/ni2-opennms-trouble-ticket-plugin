@@ -163,18 +163,18 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
 
    @Override
    public Ticket get(String ticketId) {
-      LOG.debug("get ticketId {}", ticketId);
+      LOG.debug("Ni2Plugin get: ticketId {}", ticketId);
       if (ttclient == null)
          throw new IllegalStateException("ttclient=null. init() must be called on Ni2Ticketer plugin before use.");
 
       if (ticketId == null) {
-         LOG.error("No Ni2 ticketID set in OpenNMS Ticket");
+         LOG.error("Ni2Plugin get: No Ni2 ticketID set in OpenNMS Ticket");
          throw new Ni2TicketerException("No ni2 ticketID set in OpenNMS Ticket");
       }
 
       try {
          TroubleTicketEventExtended troubleTicketEventExtended = ttclient.getTroubleTicket(ticketId);
-         LOG.debug("received ni2 ticket ", troubleTicketEventExtended);
+         LOG.debug("Ni2Plugin get: received ni2 ticket ", troubleTicketEventExtended);
 
          // Note this maps the ni2 ticket back to the OpenNMS ticket.
          // However OpenNMS may update the ticket with new values based on the alarm state
@@ -209,11 +209,11 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
 
          Ticket ticket = builder.build();
 
-         LOG.debug("mapped ni2 ticket to onms ticket : {}", ticket);
+         LOG.debug("Ni2Plugin get: mapped ni2 ticket to onms ticket : {}", ticket);
          return ticket;
 
       } catch (Ni2ClientException ex) {
-         LOG.error("unable to get ticketId {}", ticketId, ex);
+         LOG.error("Ni2Plugin get: unable to get ticketId {}", ticketId, ex);
          // including ex.getMessage in exception message so that there is a meaningful message in trouble ticket communications fail event
          throw new Ni2TicketerException("unable to get ticketId " + ticketId + " reason: " + ex.getMessage(), ex);
       }
@@ -222,7 +222,7 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
 
    @Override
    public String saveOrUpdate(Ticket ticket) {
-      LOG.debug("saveOrUpdate ticket {}", ticket);
+      LOG.debug("Ni2Plugin saveOrUpdate: ticket {}", ticket);
       if (ttclient == null)
          throw new IllegalStateException("ttclient=null. init() must be called on Ni2Ticketer plugin before use.");
 
@@ -236,7 +236,7 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
    }
 
    private String save(Ticket ticket) {
-      LOG.debug("save ticket {}", ticket);
+      LOG.debug("Ni2Plugin save: ticket {}", ticket);
 
       TroubleTicketCreateRequest createRequest = new TroubleTicketCreateRequest();
       createRequest.setAlarmId(ticket.getAlarmId().toString());
@@ -276,7 +276,7 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
 
          String resources = ticketAttributeMap.get(ONMS_TICKET_ATTRIBUTE_KEY_RESOURCE_IDS);
          if (resources == null || resources.isBlank() || resources.contains(" ")) {
-            LOG.debug("resources must not be null or empty or contain spaces. Using defaultResourceId=" + _fallbackResourceId);
+            LOG.debug("Ni2Plugin save: resources must not be null or empty or contain spaces. Using defaultResourceId=" + _fallbackResourceId);
          } else {
             List<String> resourceIds = Arrays.asList(resources.split(","));
             createRequest.setResourceIds(resourceIds);
@@ -303,7 +303,7 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
 
          return troubleTicketCreateResponse.getUniversalId();
       } catch (Ni2ClientException ex) {
-         LOG.error("unable to create ticket {}", ticket, ex);
+         LOG.error("Ni2Plugin save: unable to create ticket {}", ticket, ex);
          // including ex.getMessage in exception message so that there is a meaningful message in trouble ticket communications fail event
          throw new Ni2TicketerException("unable to create ticket reason: " + ex.getMessage() + "ticket:" + ticket, ex);
       }
@@ -311,7 +311,7 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
    }
 
    private void update(Ticket ticket) {
-      LOG.debug("update ticket {}", ticket);
+      LOG.debug("Ni2Plugin update: ticket {}", ticket);
 
       String tticketId = ticket.getId();
 
@@ -370,9 +370,9 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
          ttclient.updateTroubleTicket(tticketId, updateRequest);
 
       } catch (Ni2ClientException ex) {
-         LOG.error("unable to create ticket {}", ticket, ex);
+         LOG.error("Ni2Plugin update: unable to update ticket {}", ticket, ex);
          // including ex.getMessage in exception message so that there is a meaningful message in trouble ticket communications fail event
-         throw new Ni2TicketerException("unable to create ticket reason: " + ex.getMessage() + "ticket:" + ticket, ex);
+         throw new Ni2TicketerException("unable to update ticket reason: " + ex.getMessage() + "ticket:" + ticket, ex);
       }
 
    }
@@ -391,7 +391,7 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
       case Ni2TTStatus.RESOLVED:
          return State.CLOSED;
       default:
-         LOG.debug("unknown ni2 ticket status {}", ni2Status);
+         LOG.debug("Ni2Plugin ni2StateToONMSState: unknown ni2 ticket status {}", ni2Status);
          return State.OPEN;
       }
 
