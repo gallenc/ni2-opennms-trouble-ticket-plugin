@@ -45,8 +45,8 @@ public class ChangeTicketStatusCommand implements Action {
    @Argument(index = 1, name = "status", description = "requested change of status. (Must be one of 'Start', 'Close', 'Cancel', 'Resolve')", required = true, multiValued = false)
    String status;
 
-   @Option(name = "--comment", description = "optional comment for change state - defaults to empty string ", required = false, multiValued = false)
-   String comment = "";
+   @Option(name = "--comment", description = "optional comment for change state - defaults to 'OpenNMS Test Comment' ", required = false, multiValued = false)
+   String comment = "OpenNMS Test Comment";
 
    @Option(name = "--url", description = "Location of the ni2 trouble ticket service - defaults to OpenNMS property "
             + Ni2TicketerPlugin.TT_SERVER_URL_PROPERTY, required = false, multiValued = false)

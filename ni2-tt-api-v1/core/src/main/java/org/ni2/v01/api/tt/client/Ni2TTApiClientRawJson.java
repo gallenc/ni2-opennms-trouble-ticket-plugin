@@ -200,7 +200,7 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
          StringWriter stringwriter = new StringWriter();
          mapper.writeValue(stringwriter, authenticationRequest);
          String requestBody = stringwriter.toString();
-         LOG.debug("getAuthenticationToken: POST requestUrl=" + requestUrl + " requestBody: " + requestBody);
+         LOG.debug("Ni2Client getAuthenticationToken: POST requestUrl=" + requestUrl + " requestBody: " + requestBody);
 
          try (OutputStream os = httpURLConnection.getOutputStream()) {
             byte[] output = requestBody.toString().getBytes("utf-8");
@@ -208,7 +208,7 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
          }
 
          int responseCode = httpURLConnection.getResponseCode();
-         LOG.debug("getAuthenticationToken: POST Response Code :: " + responseCode);
+         LOG.debug("Ni2Client getAuthenticationToken: POST Response Code :: " + responseCode);
 
          if (responseCode == HttpURLConnection.HTTP_OK) { //success
 
@@ -222,7 +222,7 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
                content = response.toString();
             }
 
-            LOG.debug("getAuthenticationToken: POST Response content: " + content);
+            LOG.debug("Ni2Client getAuthenticationToken: POST Response content: " + content);
 
             AuthenticationResponse authResponse = mapper.readValue(content, AuthenticationResponse.class);
             return authResponse.getAccessToken();
@@ -269,7 +269,7 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
     */
    @Override
    public TroubleTicketCreateResponse createTroubleTicket(TroubleTicketCreateRequest createRequest) throws Ni2ClientException {
-      LOG.debug("createTroubleTicket:" + createRequest);
+      LOG.debug("Ni2Client createTroubleTicket:" + createRequest);
       if (ttServerUrl == null || ttServerUrl.isBlank())
          throw new IllegalArgumentException("ttServerUrl must not be null or empty");
 
@@ -289,7 +289,7 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
          StringWriter stringwriter = new StringWriter();
          mapper.writeValue(stringwriter, createRequest);
          String requestBody = stringwriter.toString();
-         LOG.debug("createTroubleTicket: POST requestUrl=" + requestUrl + " requestBody: " + requestBody);
+         LOG.debug("Ni2Client createTroubleTicket: POST requestUrl=" + requestUrl + " requestBody: " + requestBody);
 
          try (OutputStream os = httpURLConnection.getOutputStream()) {
             byte[] output = requestBody.toString().getBytes("utf-8");
@@ -297,7 +297,7 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
          }
 
          int responseCode = httpURLConnection.getResponseCode();
-         LOG.debug("createTroubleTicket: POST Response Code :: " + responseCode);
+         LOG.debug("Ni2Client createTroubleTicket: POST Response Code :: " + responseCode);
 
          if (responseCode == HttpURLConnection.HTTP_OK) { //success
 
@@ -311,7 +311,7 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
                content = response.toString();
             }
 
-            LOG.debug("createTroubleTicket: POST Response content: " + content);
+            LOG.debug("Ni2Client createTroubleTicket: POST Response content: " + content);
             
             TroubleTicketCreateResponse troubleTicketCreateResponse = mapper.readValue(content, TroubleTicketCreateResponse.class);
             return troubleTicketCreateResponse;
@@ -485,7 +485,7 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
     */
    @Override
    public TroubleTicketEventExtended getTroubleTicket(String ticketId) throws Ni2ClientException {
-      LOG.debug("getTroubleTicket: ticketId:" + ticketId);
+      LOG.debug("Ni2Client getTroubleTicket: ticketId:" + ticketId);
 
       if (ttServerUrl == null || ttServerUrl.isBlank())
          throw new IllegalArgumentException("ttServerUrl must not be null or empty");
@@ -506,7 +506,7 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
          mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
 
          String requestBody = "";
-         LOG.debug("getTroubleTicket: POST requestUrl=" + requestUrl + " requestBody: " + requestBody);
+         LOG.debug("Ni2Client getTroubleTicket: POST requestUrl=" + requestUrl + " requestBody: " + requestBody);
 
          try (OutputStream os = httpURLConnection.getOutputStream()) {
             byte[] output = requestBody.toString().getBytes("utf-8");
@@ -514,7 +514,7 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
          }
 
          int responseCode = httpURLConnection.getResponseCode();
-         LOG.debug("getTroubleTicket: POST Response Code : " + responseCode);
+         LOG.debug("Ni2Client getTroubleTicket: POST Response Code : " + responseCode);
 
          if (responseCode == HttpURLConnection.HTTP_OK) { //success
 
@@ -528,7 +528,7 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
                content = response.toString();
             }
 
-            LOG.debug("getTroubleTicket: POST Response content: " + content);
+            LOG.debug("Ni2Client getTroubleTicket: POST Response content: " + content);
             
             TroubleTicketEventExtended troubleTicketEventExtendedResponse = mapper.readValue(content, TroubleTicketEventExtended.class);
             return troubleTicketEventExtendedResponse;
@@ -577,7 +577,7 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
     */
    @Override
    public void changeTicketState(String ticketId, String action, String comment) throws Ni2ClientException {
-      LOG.debug("changeTicketState: ticketId: {} action {} comment: {} ", ticketId, action, comment);
+      LOG.debug("Ni2Client changeTicketState: ticketId: {} action {} comment: {} ", ticketId, action, comment);
       
       if (ttServerUrl == null || ttServerUrl.isBlank())
          throw new IllegalArgumentException("ttServerUrl must not be null or empty");
@@ -612,7 +612,7 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
          mapper.writeValue(stringwriter, lifecycleActionRequest);
          String requestBody = stringwriter.toString();
 
-         LOG.debug("changeTicketState: POST requestUrl=" + requestUrl + " requestBody: " + requestBody);
+         LOG.debug("Ni2Client changeTicketState: POST requestUrl=" + requestUrl + " requestBody: " + requestBody);
 
          try (OutputStream os = httpURLConnection.getOutputStream()) {
             byte[] output = requestBody.toString().getBytes("utf-8");
@@ -620,11 +620,11 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
          }
 
          int responseCode = httpURLConnection.getResponseCode();
-         LOG.debug("changeTicketState: POST Response Code :: " + responseCode);
+         LOG.debug("Ni2Client changeTicketState: POST Response Code :: " + responseCode);
 
          if (responseCode == HttpURLConnection.HTTP_OK) { //success
 
-            LOG.debug("success changeTicketState ticketId: {} action {} comment: {} ", ticketId, action, comment);
+            LOG.debug("Ni2Client success changeTicketState ticketId: {} action {} comment: {} ", ticketId, action, comment);
 
          } else {
             // read error stream
@@ -674,7 +674,7 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
    @Override
    public void updateTroubleTicket(String ticketId, TroubleTicketUpdateRequest updateRequest) throws Ni2ClientException {
 
-         LOG.debug("updateTroubleTicket: updateRequest:" + updateRequest);
+         LOG.debug("Ni2Client updateTroubleTicket: updateRequest:" + updateRequest);
          
          if (ttServerUrl == null || ttServerUrl.isBlank())
             throw new IllegalArgumentException("ttServerUrl must not be null or empty");
@@ -697,7 +697,7 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
             StringWriter stringwriter = new StringWriter();
             mapper.writeValue(stringwriter, updateRequest);
             String requestBody = stringwriter.toString();
-            LOG.debug("updateTroubleTicket: POST requestUrl=" + requestUrl + " requestBody: " + requestBody);
+            LOG.debug("Ni2Client updateTroubleTicket: POST requestUrl=" + requestUrl + " requestBody: " + requestBody);
 
             try (OutputStream os = httpURLConnection.getOutputStream()) {
                byte[] output = requestBody.toString().getBytes("utf-8");
@@ -705,11 +705,11 @@ public class Ni2TTApiClientRawJson implements Ni2TTApiClient {
             }
 
             int responseCode = httpURLConnection.getResponseCode();
-            LOG.debug("updateTroubleTicket: POST Response Code : " + responseCode);
+            LOG.debug("Ni2Client updateTroubleTicket: POST Response Code : " + responseCode);
 
             if (responseCode == HttpURLConnection.HTTP_OK) { //success
 
-               LOG.debug("updateTroubleTicket: success updating ticketId: {} ", ticketId);
+               LOG.debug("Ni2Client updateTroubleTicket: success updating ticketId: {} ", ticketId);
 
             } else {
                // read error stream

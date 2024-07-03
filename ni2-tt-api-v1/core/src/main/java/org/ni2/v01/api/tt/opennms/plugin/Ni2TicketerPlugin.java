@@ -301,9 +301,15 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
 
       TroubleTicketCreateResponse troubleTicketCreateResponse;
       try {
+         
+         // first create the ticket
          troubleTicketCreateResponse = ttclient.createTroubleTicket(createRequest);
+         String tticketId = troubleTicketCreateResponse.getUniversalId();
+         
+         // now update the status of the ticket to started
+         ttclient.changeTicketState(tticketId, LifecycleActionRequest.START, "OpenNMS automatically started ticket");
 
-         return troubleTicketCreateResponse.getUniversalId();
+         return tticketId;
       } catch (Ni2ClientException ex) {
          LOG.error("Ni2Plugin save: unable to create ticket {}", ticket, ex);
          // including ex.getMessage in exception message so that there is a meaningful message in trouble ticket communications fail event
@@ -322,7 +328,8 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
             if (State.CANCELLED== ticket.getState()) {
             ttclient.changeTicketState(tticketId, LifecycleActionRequest.CANCEL, "OpenNMS cancelled ticket");
             } else  if (State.CLOSED== ticket.getState()) {
-               ttclient.changeTicketState(tticketId, LifecycleActionRequest.CLOSE, "OpenNMS closed ticket");
+               // note resolving ticket - Alarm should have cleared
+               ttclient.changeTicketState(tticketId, LifecycleActionRequest.RESOLVE, "OpenNMS resolved ticket");
             }
             return;
          } catch (Ni2ClientException ex) {
