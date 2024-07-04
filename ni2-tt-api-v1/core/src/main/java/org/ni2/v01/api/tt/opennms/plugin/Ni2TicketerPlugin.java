@@ -326,7 +326,7 @@ public class Ni2TicketerPlugin implements TicketingPlugin {
       if (!(State.OPEN == ticket.getState()) ) {
          try {
             if (State.CANCELLED== ticket.getState()) {
-            ttclient.changeTicketState(tticketId, LifecycleActionRequest.CANCEL, "OpenNMS cancelled ticket");
+               ttclient.changeTicketState(tticketId, LifecycleActionRequest.CANCEL, "OpenNMS cancelled ticket");
             } else  if (State.CLOSED== ticket.getState()) {
                // note resolving ticket - Alarm should have cleared
                ttclient.changeTicketState(tticketId, LifecycleActionRequest.RESOLVE, "OpenNMS resolved ticket");
