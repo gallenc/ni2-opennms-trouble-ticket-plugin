@@ -62,6 +62,7 @@
       <module>karaf-features</module>
       <module>assembly</module>
       <module>minimal-minion-activemq</module>
+      <module>documentation</module>
    </modules>
 
    <build>

@@ -1,0 +1,25 @@
+// Global settings
+:ascii-ids:
+:encoding: UTF-8
+:lang: en
+:icons: font
+:toc: left
+:toclevels: 3
+:numbered:
+:stem:
+
+[[ga]]
+= Administrators Guide
+:author: Copyright (c) 2015-{docyear} The OpenNMS Group, Inc.
+:revnumber: {plugin-product-name} {plugin-version}
+:revdate: {last-update-label} {docdatetime}
+:version-label!:
+
+[[ga-admin-about]]
+== About This Guide
+include::text/about/about.adoc[]
+
+[[ga-admin]]
+== {plugin-product-name} Administration
+include::text/admin/introduction.adoc[]
+include::text/admin/restart.adoc[]
