@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
    <modelVersion>4.0.0</modelVersion>
-   
+
    <parent>
       <groupId>org.opennms.integration.ni2.ttapi</groupId>
       <artifactId>ni2-tt-api-v1</artifactId>
@@ -12,12 +12,11 @@
    <artifactId>ni2-tt-api-v1-documentation</artifactId>
 
    <packaging>pom</packaging>
-   <description>Plugin documentation</description>
-   
+
    <modules>
       <module>guide-plugin</module>
    </modules>
-   
+
    <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -26,14 +25,14 @@
       <asciidoc.images.directory>images</asciidoc.images.directory>
 
       <maven.resources.plugin.version>3.1.0</maven.resources.plugin.version>
-<!--       <asciidoctorVersion>1.5.6</asciidoctorVersion> -->
-<!--       <asciidoctorjVersion>1.6.2</asciidoctorjVersion> -->
-<!--       <asciidoctorjPdfVersion>1.5.3</asciidoctorjPdfVersion> -->
-<!--       <jrubyVersion>9.2.6.0</jrubyVersion> -->
-        <asciidoctor.maven.plugin.version>3.0.0</asciidoctor.maven.plugin.version>
-        <asciidoctorj.pdf.version>2.3.17</asciidoctorj.pdf.version>
-        <asciidoctorj.version>2.5.13</asciidoctorj.version>
-        <jruby.version>9.4.6.0</jruby.version>
+      <!-- <asciidoctorVersion>1.5.6</asciidoctorVersion> -->
+      <!-- <asciidoctorjVersion>1.6.2</asciidoctorjVersion> -->
+      <!-- <asciidoctorjPdfVersion>1.5.3</asciidoctorjPdfVersion> -->
+      <!-- <jrubyVersion>9.2.6.0</jrubyVersion> -->
+      <asciidoctor.maven.plugin.version>3.0.0</asciidoctor.maven.plugin.version>
+      <asciidoctorj.pdf.version>2.3.17</asciidoctorj.pdf.version>
+      <asciidoctorj.version>2.5.13</asciidoctorj.version>
+      <jruby.version>9.4.6.0</jruby.version>
 
    </properties>
 
@@ -92,7 +91,7 @@
                      <goal>process-asciidoc</goal>
                   </goals>
                   <configuration>
-                     
+
                      <backend>html5</backend>
                      <doctype>book</doctype>
                      <attributes>
@@ -111,7 +110,7 @@
                      <skip>${skipPdfGeneration}</skip>
                      <backend>pdf</backend>
                      <doctype>book</doctype>
-                     
+
                      <attributes>
                         <!-- WARNING callout bullets don't yet work with CodeRay -->
                         <sourceHighlighter>coderay</sourceHighlighter>
@@ -124,15 +123,19 @@
                   </configuration>
                </execution>
             </executions>
+
             <configuration>
                <sourceDirectory>${asciidoc.source.directory}</sourceDirectory>
                <outputDirectory>${asciidoc.output.directory}</outputDirectory>
-               
+
                <attributes>
-                  <headerFooter>true</headerFooter>
+                  <standalone>true</standalone>
+                  >
                   <imagesDir>./images</imagesDir>
                   <plugin-product-name>Ni2 OpenNMS Trouble Ticket Plugin</plugin-product-name>
                   <plugin-version>${project.version}</plugin-version>
+                  <copyright-statement></copyright-statement>
+                  <document-licence></document-licence>
                </attributes>
             </configuration>
          </plugin>

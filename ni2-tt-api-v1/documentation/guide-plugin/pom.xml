@@ -9,8 +9,7 @@
    </parent>
    <artifactId>guide-admin</artifactId>
    <packaging>pom</packaging>
-
-   <description>Guide for OpenNMS Administrators</description>
+   
    <build>
       <plugins>
          <plugin>

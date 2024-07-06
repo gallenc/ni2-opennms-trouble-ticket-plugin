@@ -10,10 +10,14 @@
 
 [[ga]]
 = Administrators Guide
+
 :author: Copyright (c) 2015-{docyear} The OpenNMS Group, Inc.
 :revnumber: {plugin-product-name} {plugin-version}
 :revdate: {last-update-label} {docdatetime}
 :version-label!:
+
+:copyright: {copyright-statement}
+:licence: (document-licence)
 
 [[ga-admin-about]]
 == About This Guide
