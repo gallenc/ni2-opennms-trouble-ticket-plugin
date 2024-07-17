@@ -4,7 +4,6 @@
 Welcome to the {plugin-product-name} _Administrators Guide_. 
 This documentation provides information and procedures on setup, configuration, and use of the {plugin-product-name}.
 
-
 [[ga-admin-audience]]
 === Audience
 This guide is suitable for administrative users and those who will use the {plugin-product-name} to integrate OpenNMS with their ticketing system.    
@@ -15,6 +14,5 @@ This guide is suitable for administrative users and those who will use the {plug
 https://docs.opennms.com/start-page/1.0.0/index.html[OpenNMS Documentation]: OpenNMS Documentation
 
 https://docs.opennms.com/horizon/33/operation/deep-dive/ticketing/introduction.html[OpenNMS Trouble Ticket Engine]: information on the operation of OpenNMS trouble ticketing
-
 
 https://github.com/OpenNMS/opennms-integration-api[OpenNMS Integration Api]: OpenNMS Integration Api used to drive this plugin

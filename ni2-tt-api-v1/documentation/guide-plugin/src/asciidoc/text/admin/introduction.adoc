@@ -2,4 +2,20 @@
 // Allow GitHub image rendering
 :imagesdir: ../../../images
 
-This section describes administrative tasks, such as shutdown and restart, you may need to perform with your {plugin-product-name} instance.
+=== Introduction
+
+The internal architecture of OpenNMS ticketing is illustrated below. 
+
+image::admin/architecture-2.drawio.png[OpenNMS Event, Alarm and Ticketing Architecture]
+
+OpenNMS is an event driven application and eventd provides an internal unified event bus through which all processes communicate inside OpenNMS core. 
+
+
+
+The key processes involved in 
+
+
+image::admin/opennmsFolders.drawio.png[OpenNMS Folders]
+
+
+

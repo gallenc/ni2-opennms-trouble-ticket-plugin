@@ -1,54 +1,22 @@
 // Allow GitHub image rendering
 :imagesdir: ../images
 
-Welcome to the {plugin-product-name} _Administrators Guide_. 
-This documentation provides information and procedures on setup, configuration, and use of the {plugin-product-name}.
+Welcome to the {plugin-product-name} _Developers Guide_. 
+This documentation provides information for developers of the  {plugin-product-name}.
+
+image::admin/architecture-1.drawio.png[OpenNMS Core Architecture]
  
-Using a task-based approach, chapters appear in a recommended order for working with {plugin-product-name}:
+Historically, OpenNMS was developed as a pure Spring application using Hibernate to implement Data Access Objects (DAO's) which synchronise  with the PostgreSQL database. 
 
-. link:#ga-data-choices[Opt in or out] of usage statistics collection (requirement during first login).
-. link:#ga-admin-user-setup[Setup the admin user].
-. link:#ga-users-intro[Create users] and security roles.
-. link:#ga-provisioning-introduction[Provision] your system. 
+Each of the core daemons are managed as JMX beans running within Spring on top of the JVM.
 
-[[ga-admin-audience]]
-=== Audience
-This guide is suitable for administrative users and those who will use {plugin-product-name} to monitor their network.    
+OpenNMS is an event driven application and eventd provides an internal unified event bus through which all processes communicate inside OpenNMS core. The event bus can be extended to minions using Kafka or ActiveMQ.
 
-[[ga-admin-docs-related]]
-=== Related Documentation
+When minions were developed it was realised that there would be great benefit in moving OpenNMS to use Karaf as an OSGi container framework as this would allow the same OpenNMS modules to be distributed easily and also provide an 'out of the box' plugin mechanism.
+Karaf activates OSGi modules as karaf 'features' and the features internally use OSGi Blueprint instead of Spring manifests (although these are very similar).
 
-https://docs.opennms.org/opennms/releases/latest/guide-install/guide-install.html[Installation Guide]: how to install {plugin-product-name}
+ New code and enhancements to OpenNMS including plugins are now created as Karaf features however a number of core daemons such as Jetty, Alarmd, Eventd, Provisiond and Collectd still run in Spring. 
 
-https://docs.opennms.org/opennms/releases/latest/guide-development/guide-development.html[Developers Guide]: information and procedures on developing for the {plugin-product-name} project
+For this reason, Karaf currently runs on top of Jetty which allows Karaf features to access the core system.
+Over time these will be migrated so that the whole of OpenNMS runs in Karaf and Jetty is run as a karaf module instead of the other way around.
 
-https://www.youtube.com/playlist?list=PLsXgBGH3nG7iZSlssmZB3xWsAJlst2j2z[OpenNMS 101]: a series of video training tutorials that build on each other to get you up and running with {plugin-product-name}
-
-https://www.youtube.com/watch?v=aoiSjNvDC7E&list=PLsXgBGH3nG7h6zy2hENGRJbs0BYQaqBu4[OpenNMS 102]: a series of stand-alone video tutorials on OpenNMS features
-
-https://docs.opennms.org/helm/branches/master/helm/latest/welcome/index.html#[OpenNMS Helm]: a guide to OpenNMS Helm, an application for creating flexible dashboards to interact with data stored by OpenNMS
-
-https://alec.opennms.com/alec/2.0.0-snapshot/[Architecture for Learning Enabled Correlation (ALEC)]:  guide to this framework for logically grouping related faults (alarms) into higher level objects (situations) with OpenNMS.
-
-
-[[ga-admin-conventions]]
-=== Typographical Conventions
-
-This guide uses the following typographical conventions:
-
-[cols="25h,~"]
-|===
-
-|*Convention* |*Meaning*
-|*bold* | Indicates UI elements to click or select in a procedure, and the names of UI elements like dialogs or icons. 
-|_italics_| Introduces a defined or special word. Also used for the titles of publications.
-|`code` | Anything you must type or enter, and the names for code-related elements (classes, methods, commands). 
-
-|===
-
-[[ga-admin-help]]
-=== Need Help?
-
-* join the https://chat.opennms.com/opennms/channels/opennms-discussion[OpenNMS Discussion] chat
-* join our community on https://opennms.discourse.group/latest[Discourse]
-* contact sales@opennms.com to purchase https://www.opennms.com/support/[customer support]

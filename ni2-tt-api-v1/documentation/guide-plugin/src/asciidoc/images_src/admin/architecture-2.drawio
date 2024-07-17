@@ -1,0 +1,135 @@
+<mxfile host="Electron" modified="2024-07-15T14:25:53.986Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.6.4 Chrome/124.0.6367.207 Electron/30.0.6 Safari/537.36" etag="8IEwQubXbsx973udXvUo" version="24.6.4" type="device">
+  <diagram name="Page-1" id="hg4JAZvPtIoiGz0VxEVO">
+    <mxGraphModel dx="1418" dy="820" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="BCjz04vRkPIVkwQvdewG-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="BCjz04vRkPIVkwQvdewG-1" target="BCjz04vRkPIVkwQvdewG-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-1" value="Alarmd" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="370" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-2" value="Alarmd Drools" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="460" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-3" value="Ticketd" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="730" y="370" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-4" value="Ticketd drools" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="730" y="460" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="BCjz04vRkPIVkwQvdewG-5" target="BCjz04vRkPIVkwQvdewG-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-5" value="OSGI Ticketing Service" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="730" y="250" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-6" value="Ni2&lt;div&gt;OSGI Ticketing Plugin&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="730" y="120" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="BCjz04vRkPIVkwQvdewG-7" target="BCjz04vRkPIVkwQvdewG-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-7" value="Eventd" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="370" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-8" value="Ni2 TT" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="120" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-9" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="260" y="330" as="sourcePoint" />
+            <mxPoint x="930" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-11" value="drools-ticketer.drl&lt;div&gt;alarm and node to ticket mapping&lt;/div&gt;" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.document" vertex="1" parent="1">
+          <mxGeometry x="775" y="540" width="105" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-12" value="eventconf.xml&lt;div&gt;Trap to event and alarm definitions&lt;/div&gt;" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.document" vertex="1" parent="1">
+          <mxGeometry x="315" y="540" width="90" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-13" value="alarmd.drl&lt;div&gt;alarm and ticket lifecycle rules&lt;/div&gt;" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.document" vertex="1" parent="1">
+          <mxGeometry x="535" y="540" width="90" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-14" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="720" y="210" as="sourcePoint" />
+            <mxPoint x="940" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-15" value="Ticketing API" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="620" y="190" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-16" value="OSGi environment ( Karaf)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="230" y="300" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-17" value="Spring environment (OpenNMS Core)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="230" y="330" width="230" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-18" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="BCjz04vRkPIVkwQvdewG-2" target="BCjz04vRkPIVkwQvdewG-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610" y="460" as="sourcePoint" />
+            <mxPoint x="660" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-20" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="BCjz04vRkPIVkwQvdewG-4" target="BCjz04vRkPIVkwQvdewG-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610" y="460" as="sourcePoint" />
+            <mxPoint x="660" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-21" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="BCjz04vRkPIVkwQvdewG-3" target="BCjz04vRkPIVkwQvdewG-5">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610" y="460" as="sourcePoint" />
+            <mxPoint x="660" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-23" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="BCjz04vRkPIVkwQvdewG-6" target="BCjz04vRkPIVkwQvdewG-8">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610" y="460" as="sourcePoint" />
+            <mxPoint x="660" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-25" value="Ni2 Ticket API (ReST)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="870" y="80" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-26" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="980" y="180" as="sourcePoint" />
+            <mxPoint x="980" y="80" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-30" value="Trapd" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="360" width="70" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="BCjz04vRkPIVkwQvdewG-30" target="BCjz04vRkPIVkwQvdewG-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-33" value="Syslogd" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="430" width="70" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="BCjz04vRkPIVkwQvdewG-33" target="BCjz04vRkPIVkwQvdewG-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-35" value="Service polling Pollerd" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="500" width="70" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="BCjz04vRkPIVkwQvdewG-36" target="BCjz04vRkPIVkwQvdewG-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="250" y="460" />
+              <mxPoint x="250" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-36" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;flipH=1;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;size=0.5;" vertex="1" parent="1">
+          <mxGeometry x="210" y="360" width="30" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="BCjz04vRkPIVkwQvdewG-38" value="Incomming Traps, Syslog and Service Outage messages" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="30" y="440" width="60" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

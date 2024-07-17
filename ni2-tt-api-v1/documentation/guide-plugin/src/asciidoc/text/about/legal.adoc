@@ -3,7 +3,7 @@
 :imagesdir: ../images
 
 [[ga-admin-legal]]
-= Legal Notice
+=== Legal Notice
 
 Copyright © {docyear} (c) 2024 Ni2 Inc., Entimoss Ltd., The OpenNMS Group, Inc. and other contributors.
 

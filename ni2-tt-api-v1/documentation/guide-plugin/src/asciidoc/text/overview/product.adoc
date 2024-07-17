@@ -1,0 +1,86 @@
+
+// Allow GitHub image rendering
+:imagesdir: ../../../images
+
+=== Introduction to the {plugin-product-name}
+
+The {plugin-product-name} is an open source OSGi plugin which integrates OpenNMS with the Ni2 Trouble Ticketing Engine.
+
+image::overview/overview.drawio.png[Overview of Ni2 Ticketing Plugin]
+
+Ni2 provides a ReST api which the plugin uses to create and update tickets.
+
+OSGi is a standard mechanism which OpenNMS uses to allow 'plugins' to be deployed and add functionality to a standard OpenNMS release.
+
+The plugin is provided as a karaf .kar file (a kind of zip file) which is placed in the OpenNMS deploy directory. 
+The corresponding configuration files for the plugin are placed in the OpenNMS etc directory.
+A full description of the installation and configuration options are provided later in this guide.
+
+When the ticketing plugin is correctly installed and configured, additional options to manually create, update and close tickets are provided on the Alarm UI.
+Automated creation of tickets for new alarms is also possible and this is covered in the configuration section.
+
+=== Manually creating a ticket
+
+All current alarms are visible in the Alarms page of OpenNMS.
+
+image::overview/alarmList1.png[Alarm List]
+
+Selecting the ID of an alarm will take you to the alarm details page for that alarm.
+A new alarm with no associate ticket is illustrated below
+
+image::overview/alarmExampleNOTICKET.png[Alarm with no associated ticket]
+
+When the `Create Ticket` button is pressed, the ticket state changes to `CREATE_PENDING`, and if the create is successful, refreshing the alarm page will show the ticket as OPEN and a new reference link to the ticket will also be created.
+Selecting this link will take you to the corresponding page for the ticket created in Ni2.
+
+image::overview/alarmExampleOPEN.png[Alarm with an OPEN associated ticket]
+
+If the create was not successful, a `CREATE_FAILED` message will appear. 
+This can happen if the ReST API credentials are not set properly or if the Node Name associated with the alarm is not known as a resource id in the Ni2 system.
+The configuration section will talk more about troubleshooting ticket creation issues.
+
+The Update Ticket button requests the current state of an associated ticket in Ni2 (without changing its state).
+
+The `Close Ticket` button can only be pressed if the associated alarm is already `CLEARED`. 
+It sets the state of the ticket in Ni2 to `RESOLVED` (Although this is reflected on the OpenNNS UI as `CLOSED`)
+
+image::overview/alarmExampleCLOSED.png[Alarm with a CLOSED associated ticket]
+
+=== Ticket Lifecycle
+
+OpenNMS has a very simple lifecycle for tickets.
+
+Tickets associated with alarms can be in one of the following states: `OPEN, CANCELLED, CLOSED`. Alarms will only be deleted if the associated tickets are `CANCELLED` or `CLOSED`.
+
+Ni2 has a richer lifecycle illustrated below
+
+image::overview/ni2Lifecycle.png[Ni2 Ticket Lifecycle]
+
+The mapping between Ni2 tickets and OpenNMS ticket states is as follows
+
+[cols="1,1"]
+|===
+|Ni2 Ticket Status |OpenNMS Ticket Status
+
+|IN_PROCESS
+|OPEN
+
+|OPEN
+|OPEN
+
+|CLOSED
+|CLOSED
+
+|CANCELLED
+|CANCELLED
+
+|RESOLVED
+|CLOSED
+
+|any other Ni2 State
+|OPEN
+|===
+
+
+The ticket state shown on the alarm UI reflects the current state of the Ni2 ticket and can be updated using the `Update` button.
+OpenNMS can request the creation of new tickets but it can only set tickets into the resolved state if they have been set to the `IN_PROCESS` state by an Ni2 operator.

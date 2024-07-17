@@ -1,7 +1,0 @@
-
-// Allow GitHub image rendering
-:imagesdir: ../images
-
-= What is {plugin-product-name}?
-
-{plugin-product-name} is an open source OSGi plugin
