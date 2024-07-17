@@ -1,0 +1,46 @@
+<mxfile host="Electron" modified="2024-07-17T09:23:26.415Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.6.4 Chrome/124.0.6367.207 Electron/30.0.6 Safari/537.36" etag="SG11U4sQ5gb5E4g1gDS2" version="24.6.4" type="device">
+  <diagram name="Page-1" id="hg4JAZvPtIoiGz0VxEVO">
+    <mxGraphModel dx="1418" dy="820" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="DATVNR7a5BjTr2IKXFvX-1" value="Ni2 Ticketing&lt;div&gt;Application&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="160" width="140" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="DATVNR7a5BjTr2IKXFvX-2" value="OpenNMS" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=bottom;" vertex="1" parent="1">
+          <mxGeometry x="260" y="160" width="300" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="DATVNR7a5BjTr2IKXFvX-3" value="deploy" style="whiteSpace=wrap;html=1;aspect=fixed;verticalAlign=bottom;" vertex="1" parent="1">
+          <mxGeometry x="420" y="210" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="DATVNR7a5BjTr2IKXFvX-4" value="etc" style="whiteSpace=wrap;html=1;aspect=fixed;verticalAlign=bottom;" vertex="1" parent="1">
+          <mxGeometry x="280" y="210" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="DATVNR7a5BjTr2IKXFvX-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="DATVNR7a5BjTr2IKXFvX-5" target="DATVNR7a5BjTr2IKXFvX-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DATVNR7a5BjTr2IKXFvX-5" value="plugin.kar" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="435" y="255" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DATVNR7a5BjTr2IKXFvX-6" value="configfile" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=15;" vertex="1" parent="1">
+          <mxGeometry x="290" y="235" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DATVNR7a5BjTr2IKXFvX-7" value="configfile" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=15;" vertex="1" parent="1">
+          <mxGeometry x="300" y="245" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DATVNR7a5BjTr2IKXFvX-8" value="configfile" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=15;" vertex="1" parent="1">
+          <mxGeometry x="310" y="255" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DATVNR7a5BjTr2IKXFvX-14" value="ReST API" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="630" y="399" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DATVNR7a5BjTr2IKXFvX-15" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="660" y="380" as="sourcePoint" />
+            <mxPoint x="660" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
