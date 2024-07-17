@@ -8,14 +8,30 @@ The internal architecture of OpenNMS ticketing is illustrated below.
 
 image::admin/architecture-2.drawio.png[OpenNMS Event, Alarm and Ticketing Architecture]
 
-OpenNMS is an event driven application and eventd provides an internal unified event bus through which all processes communicate inside OpenNMS core. 
+All of the processes within OpenNMS are gradually being migrated into OSGi but a number of features are still, for historical reasons,  daemons running within the core. 
+This includes a number of the ticketing interfaces developed before OSGi was introduced.
+You can see in this diagram that Eventd, Alarmd and Ticketd are mostly non-OSGi processes. 
+The OSGI Ticketing Service bridges the Ticketd api into Karaf so that ticketing interfaces built as OSGi plugins can be found and used by the Ticketd daemon.
 
+OpenNMS is an event driven application and Eventd provides an internal unified event bus through which all processes communicate inside OpenNMS core. 
+Events can be derived from syslog messages sing syslogd or from SDMP traps using trapd. 
+Internal OpenNMS events are also published by various service assurance processes such as pollerd.
 
+`eventconf.xml` and its related include files in `/etc/events' are used to configure how traps and other events are mapped into alarms and what descriptive text is used to describe the event.
 
-The key processes involved in 
+Alarmd listens for events which are configured to create or clear alarms.
+Jboss rules (Drools) is used to define the lifecycle of alarms.
+Once an event has created an alarm it is a candidate to map to a new trouble ticket and dules can also be used to determine when and how alarms might automatically create trouble tickets. 
+The Alarmd rules files are contained in `etc/alarmd.drools.d' and example alarm ticket rules are contained in the alarm.drl file in this folder.
 
+Ticketd provides a ticketing service which Alarmd uses to create tickets for alarms.
+It also listens for ticket create and update events which are created by users through the Alarm UI.
+The generic ticketing engine must be configured to use the correct api to talk to the correct ticket application.
 
-image::admin/opennmsFolders.drawio.png[OpenNMS Folders]
+Ticketd can be configured to use the in built ticketing interfaces or to use the OSGi ticketing service which allows it to find any ticketing plugin currently active in the system. 
+Only one ticketing plugin can be used at a time so ensure only one is active otherwise the first one found will be used.
 
+Ticketd can optionally use the DroolsTicketerServiceLayer which allow a drools rule file to define how alarm and node data are mapped into the ticket.
+We use this to refine the mapping of data into the Ni2 tickets.
 
-
+The following sections will discuss how to install and configure the ticket plugin in more detail.

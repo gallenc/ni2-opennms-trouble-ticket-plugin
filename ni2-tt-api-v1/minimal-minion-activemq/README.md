@@ -190,7 +190,7 @@ Most of the properties in the example file are self explanatory but some require
 | property | description |
 | :-------  | :----------  |
 |ni2.tt.opennms.instance | This tells Ni2 which instance of OpenNMS raised the ticket. It should be combined with the alarm id to give a unique reference for the alarm |
-|ni2.tt.opennms.fallbackresource | Ni2 mst have a resource which it recognises referenced in every ticket. However some alarms in OpenNMS will not have a resource<BR>In this case, the fallback resource will be used. (probably this shouldl just reference the OpenNMS system itself) |
+|ni2.tt.opennms.fallbackresource | Ni2 must have a resource which it recognises referenced in every ticket. However some alarms in OpenNMS will not have a resource<BR>In this case, the fallback resource will be used. (probably this shouldl just reference the OpenNMS system itself) |
 |opennms.alarmTroubleTicketLinkTemplate | This is used to create a HREF link which will redirect the user to the Ni2 ticket.|
 
 Note that the properties set in this file are used as default values when karaf CLI commands are issued to test ticket generation. 
@@ -198,8 +198,8 @@ Note that the properties set in this file are used as default values when karaf 
 
 ### Ni2 OSGi Drools Ticketer mapping
 
-The DroolsTicketerServiceLayer uses a set of drools rools to map OpenNMS Alarm and Node information into an OpenNMS ticket.
-The Ni2 plugin maps the OpenNMS ticktet to an ni2 trouble ticket.
+The DroolsTicketerServiceLayer uses a set of drools rules to map OpenNMS Alarm and Node information into an OpenNMS ticket.
+The Ni2 plugin maps the OpenNMS ticket to an ni2 trouble ticket.
 
 The `-opennms-home-/etc/drools-ticketer.properties` file tells the DroolsTicketerServiceLayer where the drools rules file is stored
 
@@ -290,6 +290,8 @@ For information, the objects referenced in drools are
 
 
 ## logging ni2 plugin
+
+Note that in these examples the `DEBUG` setting is useful for testing but `INFO` should be used for normal operation.
 
 Logging happens in two places for the Ni2 plugin. 
 

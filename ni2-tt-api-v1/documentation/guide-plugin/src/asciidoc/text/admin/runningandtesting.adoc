@@ -1,0 +1,89 @@
+
+// Allow GitHub image rendering
+:imagesdir: ../../../images
+
+=== Running and Testing the Plugin
+
+Having made the changes above, start OpenNMS and wait for it to start up.
+
+OpenNMS uses Karaf to manage it's OSGi features.
+
+Karaf has a CLI terminal which can be accessed using SSH.
+
+```
+ssh -p 8101 admin@localhost
+```
+(You will need to supply the password for admin to login)
+
+A full list of native karaf commands are available here: https://karaf.apache.org/manual/latest/#_commands[native Karaf 4 commands]
+
+A list of OpenNMS utility commands are documented here: https://opennms.discourse.group/t/karaf-cli-cheat-sheet/149[OpenNMS Karaf cheat sheet]
+
+You can list any Kar files in the deploy directory
+
+```
+kar:list
+KAR Name
+ni2-tt-api-v1-kar-0.0.3-SNAPSHOT
+
+```
+
+You can also list the features available using
+```
+feature:list
+```
+or to see the status of the ticketing plugin use
+
+```
+ feature:list | grep ni2-ticketing
+ni2-ticketing | 0.0.3.SNAPSHOT        | x | Started     | ni2-ticketing-features | OpenNMS :: OPA :: Ticketing :: Ni2
+```
+
+The plugin can be installed automatically (as described above ) or manually from the terminal using
+
+```
+feature:install ni2-ticketing
+```
+
+A number of commands are also provided to allow testing of the plugin
+
+[cols="1,1"]
+|===
+| command | details 
+
+| ni2-ticketing --help 
+|Lists help for commands 
+
+| ni2-ticketing:create-remote-ticket 
+| Create a new ticket in remote system. (Note - this does not link a ticket to an alarm in OpenNMS)
+
+| ni2-ticketing:update-remote-ticket 
+| Update an existing ticket in remote system.
+
+| ni2-ticketing:change-status 
+| Change status of a ticket 
+
+| ni2-ticketing:get-auth-token 
+| Get an authentication token
+
+| ni2-ticketing:get-ticket
+| Get a trouble ticket using a ticket id
+|===
+
+Example which gets an auth token using the default credentials
+```
+ni2-ticketing:get-auth-token
+get-auth-token trying to get auth token serverUrl=https://demo-deck-apigtw.ni2.tech username=APIOpenNMS password not shown trustAllCertificates=true
+received Authentication Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFQSU9wZW5OTVMiLCJpYXQiOjE3MjEyMzA5MTR9.9t0SYbC3WQSUYN3cHii-nTV_9d2iEFKHGCy7I6FD3kg
+
+```
+
+Example which creates a remote ticket using the default credentials
+
+```
+ni2-ticketing:create-remote-ticket --description 'this is a short message' --longdescription 'this is a long message'
+create-remote-ticket trying to create ticket. serverUrl=https://demo-deck-apigtw.ni2.tech username=APIOpenNMS password not shown trustAllCertificates=true
+sending ticket request:TroubleTicketCreateRequest [getClassificationPath()=Event("Event/Support/Incident/Monitoring Incident"), getDescription()=this is a short message, getLongDescription()=this is a long message, getResourceIds()=[monaco_01], getCategory()=Network, getAlarmSource()=OpenNMS1, getAlarmId()=48278, getAlarmSeverity()=Minor, getAlarmStatus()=Unacknowledged]
+success: response=TroubleTicketCreateResponse [universalId=EVT-00012580, url=/api/v1/entity/event/get/event/base/EVT-00012580]
+```
+

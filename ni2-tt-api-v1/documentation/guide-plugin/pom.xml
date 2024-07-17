@@ -7,7 +7,7 @@
       <artifactId>ni2-tt-api-v1-documentation</artifactId>
       <version>0.0.3-SNAPSHOT</version>
    </parent>
-   <artifactId>guide-admin</artifactId>
+   <artifactId>ni2-tt-api-v1-guide-admin</artifactId>
    <packaging>pom</packaging>
    
    <build>

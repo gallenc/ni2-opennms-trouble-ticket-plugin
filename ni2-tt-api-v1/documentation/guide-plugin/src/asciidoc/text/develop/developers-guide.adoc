@@ -4,19 +4,96 @@
 Welcome to the {plugin-product-name} _Developers Guide_. 
 This documentation provides information for developers of the  {plugin-product-name}.
 
+=== Introduction
+
+THe figure below illustrates the relationship between the OpenNMS core and OSGi components running in Karaf
+
 image::admin/architecture-1.drawio.png[OpenNMS Core Architecture]
  
-Historically, OpenNMS was developed as a pure Spring application using Hibernate to implement Data Access Objects (DAO's) which synchronise  with the PostgreSQL database. 
+Historically, OpenNMS was developed as a pure Spring application using Hibernate to implement Data Access Objects (DAO's) which synchronise with the PostgreSQL database. 
 
 Each of the core daemons are managed as JMX beans running within Spring on top of the JVM.
-
-OpenNMS is an event driven application and eventd provides an internal unified event bus through which all processes communicate inside OpenNMS core. The event bus can be extended to minions using Kafka or ActiveMQ.
 
 When minions were developed it was realised that there would be great benefit in moving OpenNMS to use Karaf as an OSGi container framework as this would allow the same OpenNMS modules to be distributed easily and also provide an 'out of the box' plugin mechanism.
 Karaf activates OSGi modules as karaf 'features' and the features internally use OSGi Blueprint instead of Spring manifests (although these are very similar).
 
- New code and enhancements to OpenNMS including plugins are now created as Karaf features however a number of core daemons such as Jetty, Alarmd, Eventd, Provisiond and Collectd still run in Spring. 
+New code and enhancements to OpenNMS including plugins are now usually created as Karaf features however a number of core daemons such as Jetty, Alarmd, Eventd, Provisiond and Collectd still run in Spring. 
 
 For this reason, Karaf currently runs on top of Jetty which allows Karaf features to access the core system.
-Over time these will be migrated so that the whole of OpenNMS runs in Karaf and Jetty is run as a karaf module instead of the other way around.
+Over time all of he daemons will be migrated so that the whole of OpenNMS runs in Karaf and then Jetty is run as a karaf module instead of the other way around.
+
+The {plugin-product-name} has been developed as an OSGi plugin which uses the https://github.com/OpenNMS/opennms-integration-apiOpenNMS Integration API to access the core OpenNMS services.
+
+=== building the plugin
+
+The source code for the plugin is held in github here https://github.com/gallenc/ni2-opennms-trouble-ticket-plugin
+
+Once you have checked out the code, you can build the plugin using maven and (at least) Java 11 JDK.
+
+```
+cd ni2-tt-api-v1
+mvn clean install
+```
+Once built, the plugin will be in a kar file in `ni2-tt-api-v1/assembly/kar/target/ni2-tt-api-v1-kar-x.x.x-SNAPSHOT.kar`
+
+The build tests the plugin against a mock Ni2 API which is run in Jetty during the test phase.
+
+A docker compose project is also provided in which the build will install the plugin kar.
+This project can be used to test the plugin in a test OpenNMS container either against the mock api or, with the right configuration, against a real Ni2 system.
+
+=== Maven Modules
+
+
+[cols="1,1,1"]
+|===
+| folder | maven module name | details
+
+|ni2-tt-api-v1
+|ni2-tt-api-v1
+|parent project
+
+|model
+|ni2-tt-api-v1-model
+|Jackson model used to marshal and unmarshal the API. THe model is built first as it is used in the mock impl as well as the core code.
+
+|jersey-mock-impl
+|ni2-tt-api-v1-mock-impl
+|Mock Ni2 test implementation which can run in Jetty. This can be run stand alone using 'mvn jetty:run'. 
+
+|core
+|ni2-tt-api-v1-core
+|The main code of the plugin including test code. The tests are run against the mock implementation
+
+
+|karaf-features
+|ni2-tt-api-v1-karaf-features
+|Karaf features project used to generate the features file which defines the plugin and is also included in the kar file
+
+|assembly
+|ni2-tt-api-v1-assembly
+|parent project of the assembly
+
+|assembly/kar
+|ni2-tt-api-v1-kar
+|The plugin is built as a kar in the target folder. Note that the bundle dependencies not available in the core OpenNMS will also be package in the kar.
+
+|minimal-minion-activemq
+|ni2-tt-api-v1-minimal-minion-activemq
+|This is a docker compose project which can be used to test and demonstrate the plugin
+
+
+|documentation
+|ni2-tt-api-v1-documentation
+|This is the ascidoc documentation for the plugin. Docs are rendered as PDF and as HTML. The HTML files should be placed in the github docs branch so that they show up as a documentation page on github
+
+|documentation/guide-admin
+|ni2-tt-api-v1-guide-admin
+|Admin Guide
+|===
+
+
+
+
+
+
 
