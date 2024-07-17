@@ -92,6 +92,13 @@ This project can be used to test the plugin in a test OpenNMS container either a
 |===
 
 
+=== publishing documentation
+TBC
+based off https://www.lorenzobettini.it/2020/01/publishing-a-maven-site-to-github-pages/
+
+
+https://gallenc.github.io/ni2-opennms-trouble-ticket-plugin/
+
 
 
 
